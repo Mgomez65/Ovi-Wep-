@@ -1,0 +1,81 @@
+.rbc-calendar {
+    background-color: #333; /* Fondo oscuro para el calendario */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
+/* Estilo para la barra de herramientas */
+.rbc-toolbar {
+    background-color: #222; /* Fondo más oscuro para la barra de herramientas */
+    color: #fff; /* Texto claro para contraste */
+    border-radius: 8px 8px 0 0;
+}
+
+/* Estilo para los eventos */
+.rbc-event {
+    background-color: #000000; /* Color de fondo de los eventos */
+    color: #fff; /* Color de texto blanco */
+    border: none;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+
+/* Estilo para los botones */
+.rbc-toolbar button {
+    color: #ddd; /* Texto claro en los botones */
+    background-color: #000000; /* Fondo oscuro para los botones */
+    border: 1px solid #666; /* Borde ligeramente más claro */
+}
+
+.rbc-toolbar button:hover {
+    background-color: #666; /* Fondo al pasar el ratón sobre el botón */
+}
+
+.rbc-toolbar button:focus {
+    background-color: #777; /* Fondo al enfocar el botón */
+}
+
+/* Estilo para el área de selección del evento */
+.rbc-event:focus, .rbc-day-slot .rbc-background-event:focus {
+    outline: 5px auto #3b99fc; /* Color de contorno al enfocar */
+}
+
+/* Estilo para la fecha actual */
+.rbc-today {
+    background-color: #444; /* Fondo de la fecha actual */
+    color: #fff; /* Texto blanco */
+}
+
+/* Estilo para los días fuera del mes actual */
+.rbc-day-bg.rbc-off-range-bg {
+    background-color: #757575 !important; /* Fondo gris claro para los días fuera del mes actual */
+    color: #000 !important; /* Texto negro para los días fuera del mes actual */
+}
+
+/* Estilo para el texto de los eventos */
+.rbc-event-label {
+    font-size: 80%;
+    color: #fff; /* Texto blanco */
+}
+
+/* Estilo para la fila del calendario */
+.rbc-row-bg {
+    background-color: #555; /* Fondo de las filas del calendario */
+}
+
+/* Estilo para el fondo de los días */
+.rbc-day-bg {
+    background-color: #444; /* Fondo de los días */
+}
+
+/* Estilo para los eventos superpuestos */
+.rbc-event-overlaps {
+    box-shadow: -1px 1px 5px 0px rgba(51, 51, 51, 0.5);
+}
+
+/* Estilo para la superposición de eventos */
+.rbc-overlay {
+    background-color: #000000; /* Fondo oscuro para la superposición de eventos */
+    color: #ffffff; /* Texto claro */
+}
