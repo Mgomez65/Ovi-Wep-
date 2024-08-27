@@ -7,7 +7,7 @@ const Home = () => {
         <div>
             <header className="header">OVI</header>
             <main className="main">
-
+                <p>anda</p>
             </main>
             <footer className="footer">
                 <section>Contactanos</section>
@@ -16,4 +16,4 @@ const Home = () => {
     )
 };
 
-export default Home();
+export default Home;

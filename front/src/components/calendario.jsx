@@ -32,7 +32,7 @@ const Calendario = () => {
 
   return (
     <div>
-      <h1>Calendario con React Big Calendar</h1>
+      <h1>Calendario de OVI</h1>
       <Calendar
         localizer={localizer}
         events={events}

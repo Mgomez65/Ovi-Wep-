@@ -6,3 +6,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     Email VARCHAR(100) NOT NULL UNIQUE,
     DNI VARCHAR(20) NOT NULL UNIQUE
 );
+CREATE TABLE calendario (
+    ID_calendario INT PRIMARY KEY AUTO_INCREMENT,
+    fecha DATE,
+    objetivo VARCHAR(255)
+);
