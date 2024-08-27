@@ -8,7 +8,7 @@ const Home = () => {
         <div>
             <header className="header">OVI</header>
             <main className="main">
-
+                <Clima/>
             </main>
             <footer className="footer">
                 <section>Contactanos</section>
