@@ -17,11 +17,13 @@ app.use(cors({
 
 dotenv.config({path: './.env'})
 
-const puerto = process.env.HOST_PUERTO
 
-app.use( '/',require("./rutas/rutas"))
+
+app.use( '/api',require("./usuarios/rutas/rutas"))
+app.use('/calendario',require('./clima/rutas/rutasCalendario'))
+
 const conexion = require('./dataBase/DB')
 
-app.listen(puerto,(req,res )=>{
-    console.log(`Server is running on port ${puerto}`)
+app.listen(process.env.HOST_PUERTO,(req,res )=>{
+    console.log(`Server is running on port ${process.env.HOST_PUERTO}`)
 })
