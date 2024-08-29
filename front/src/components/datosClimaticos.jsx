@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaCloudRain, FaSun, FaCloudShowersHeavy } from 'react-icons/fa';
-import '../styles/clima.css'; // Asegúrate de importar el archivo CSS
+import '../styles/clima.css';
 
 const Weather = () => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
-  const apiKey = 'c5dd700cd5ba4428a3967e62c1bbca6a';
+  const apiKey = '2ebcb82225b04302b88041a7691f2c6e';
   const url = `https://api.weatherbit.io/v2.0/current?city=Mendoza&key=${apiKey}&lang=es`;
 
   useEffect(() => {
@@ -49,9 +49,6 @@ const Weather = () => {
             </div>
             <div className="weather-item">
               <strong>Velocidad del Viento:</strong> {weather.data[0].wind_spd} km/h
-            </div>
-            <div className="weather-item">
-              <strong>Precipitaciones:</strong> {weather.data[0].precip || 'N/A'} mm
             </div>
             <div className="weather-item">
               <strong>Probabilidad de Precipitaciones:</strong> {weather.data[0].precip_prob || 'N/A'}%

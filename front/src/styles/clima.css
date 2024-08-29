@@ -1,16 +1,12 @@
 .weather-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
     background-color: #010D26;
     color: white;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 5px;
 }
   
 .weather-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     width: 100%;
     max-width: 1200px;
 }
@@ -27,6 +23,7 @@
 }
   
 .temperature {
+    padding-left: 50px;
     font-size: 32px;
     font-weight: bold;
     margin-right: 10px;
@@ -39,14 +36,13 @@
 .weather-details {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
+    gap: 15px;
     width: 100%;
 }
   
 .weather-item {
     font-size: 16px;
-    width: 200px;
+    padding: 2px;
 }
   
 .weather-item strong {
