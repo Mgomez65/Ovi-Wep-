@@ -1,7 +1,7 @@
 .weather-container {
     background-color: #010D26;
     color: white;
-    margin: 10px;
+    margin: 0;
     border-radius: 5px;
     padding: 5px;
 }
@@ -23,8 +23,8 @@
 }
   
 .temperature {
-    padding-left: 50px;
-    font-size: 32px;
+    padding-left: 30px;
+    font-size: 52px;
     font-weight: bold;
     margin-right: 10px;
 }
@@ -36,13 +36,13 @@
 .weather-details {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 5px;
     width: 100%;
 }
   
 .weather-item {
-    font-size: 16px;
-    padding: 2px;
+    font-size: 20px;
+    padding: 1px;
 }
   
 .weather-item strong {

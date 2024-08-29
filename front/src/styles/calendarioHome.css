@@ -1,0 +1,33 @@
+/* Estilo para ocultar el encabezado del calendario */
+.react-calendar__navigation {
+    display: none; /* Oculta el encabezado de navegación */
+}
+
+/* Estilo para ocultar los botones de navegación */
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next-button {
+    display: none; /* Oculta los botones para cambiar de mes */
+}
+
+/* Estilo para ocultar el encabezado de la vista del mes */
+.react-calendar__month-view__days {
+    margin: 0;
+    padding: 0;
+}
+
+/* Asegúrate de que el contenedor del calendario se ajuste correctamente dentro de la cuadrícula */
+.calendario1 {
+    display: flex;
+    align-items: center; /* Centra el contenido verticalmente */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    width: 100%; /* Asegura que ocupe el ancho completo del contenedor */
+    height: 100%; /* Asegura que ocupe la altura completa del contenedor */
+    box-sizing: border-box; /* Incluye padding y border en el tamaño total */
+}
+
+/* Elimina el sombreado y el borde del calendario */
+.react-calendar {
+    border: none; /* Elimina el borde alrededor del calendario */
+    box-shadow: none; /* Elimina la sombra alrededor del calendario */
+    padding: 0; /* Elimina el padding si es necesario */
+}

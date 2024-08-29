@@ -1,93 +1,89 @@
+/* Estilo para el contenedor del calendario */
+.calendario-container {
+    position: relative; /* Permite la superposición del formulario sobre el calendario */
+    padding: 0; /* Elimina el padding para que el calendario ocupe todo el espacio disponible */
+    background-color: #333; /* Fondo oscuro para el contenedor */
+    border-radius: 0; /* Bordes del contenedor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra del contenedor */
+    margin: 0;
+    width: 100vw; /* Ancho completo de la ventana del navegador */
+    height: 100vh; /* Alto completo de la ventana del navegador */
+    overflow: hidden; /* Oculta cualquier contenido que se desborde */
+}
+
 /* Estilo para el calendario */
-.rbc-calendar {
+.react-calendar {
+    width: 100%; /* Ancho completo del contenedor */
+    height: 100%; /* Alto completo del contenedor */
     background-color: #333; /* Fondo oscuro para el calendario */
-    border-radius: 8px;
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     color: #fff;
+    padding: 20px;
+    box-sizing: border-box; /* Incluye padding y borde en el cálculo del ancho y alto */
 }
 
-/* Estilo para la barra de herramientas */
-.rbc-toolbar {
-    background-color: #222; /* Fondo más oscuro para la barra de herramientas */
-    color: #fff; /* Texto claro para contraste */
-    border-radius: 8px 8px 0 0;
+/* Estilo para los días del calendario */
+.react-calendar__month-view__days__day {
+    background-color: #444; /* Fondo de los días */
+    color: #fff; /* Texto blanco */
+    border-radius: 4px; /* Bordes redondeados para los días */
 }
 
-/* Estilo para los eventos */
-.rbc-event {
-    background-color: #000000; /* Color de fondo de los eventos */
-    color: #fff; /* Color de texto blanco */
-    border: none;
-    border-radius: 4px;
-    padding: 2px 4px;
+/* Estilo para los días seleccionados */
+.react-calendar__tile--active {
+    background-color: #000; /* Fondo oscuro para los días seleccionados */
+    color: #fff; /* Texto blanco */
+    border-radius: 4px; /* Bordes redondeados */
 }
 
-/* Estilo para los botones */
-.rbc-toolbar button {
-    color: #ddd; /* Texto claro en los botones */
-    background-color: #000000; /* Fondo oscuro para los botones */
-    border: 1px solid #666; /* Borde ligeramente más claro */
-}
-
-.rbc-toolbar button:hover {
-    background-color: #666; /* Fondo al pasar el ratón sobre el botón */
-}
-
-.rbc-toolbar button:focus {
-    background-color: #777; /* Fondo al enfocar el botón */
-}
-
-/* Estilo para el área de selección del evento */
-.rbc-event:focus, .rbc-day-slot .rbc-background-event:focus {
-    outline: 5px auto #3b99fc; /* Color de contorno al enfocar */
-}
-
-/* Estilo para la fecha actual */
-.rbc-today {
-    background-color: #444; /* Fondo de la fecha actual */
+/* Estilo para el día actual */
+.react-calendar__tile--now {
+    background-color: #686868; /* Fondo de la fecha actual */
     color: #fff; /* Texto blanco */
 }
 
 /* Estilo para los días fuera del mes actual */
-.rbc-day-bg.rbc-off-range-bg {
-    background-color: #757575 !important; /* Fondo gris claro para los días fuera del mes actual */
-    color: #000 !important; /* Texto negro para los días fuera del mes actual */
+.react-calendar__tile--neighboringMonth {
+    background-color: #b4b4b4; /* Fondo gris claro para los días fuera del mes actual */
+    color: #000; /* Texto negro */
 }
 
-/* Estilo para el texto de los eventos */
-.rbc-event-label {
-    font-size: 80%;
+/* Estilo para el encabezado del mes */
+.react-calendar__navigation__label {
     color: #fff; /* Texto blanco */
+    font-size: 1.5em; /* Tamaño de fuente mayor */
 }
 
-/* Estilo para la fila del calendario */
-.rbc-row-bg {
-    background-color: #555; /* Fondo de las filas del calendario */
+/* Estilo para los botones de navegación */
+.react-calendar__navigation button {
+    background-color: #000; /* Fondo oscuro para los botones */
+    color: #ddd; /* Texto claro en los botones */
+    border: 1px solid #666; /* Borde ligeramente más claro */
+    border-radius: 4px; /* Bordes redondeados */
+    padding: 8px; /* Espaciado interno */
+    cursor: pointer; /* Cursor en forma de mano */
+    transition: background-color 0.3s ease; /* Transición para el cambio de color */
 }
 
-/* Estilo para el fondo de los días */
-.rbc-day-bg {
-    background-color: #444; /* Fondo de los días */
+.react-calendar__navigation button:hover {
+    background-color: #666; /* Fondo más claro al pasar el ratón sobre el botón */
 }
 
-/* Estilo para los eventos superpuestos */
-.rbc-event-overlaps {
-    box-shadow: -1px 1px 5px 0px rgba(51, 51, 51, 0.5);
+.react-calendar__navigation button:focus {
+    background-color: #777; /* Fondo al enfocar el botón */
 }
 
-/* Estilo para la superposición de eventos */
-.rbc-overlay {
-    background-color: #000000; /* Fondo oscuro para la superposición de eventos */
-    color: #ffffff; /* Texto claro */
+/* Estilo para el área de selección del día */
+.react-calendar__tile:focus {
+    outline: 5px auto #3b99fc; /* Color de contorno al enfocar */
 }
 
-/* Estilo para el contenedor del calendario */
-.calendario-container {
-    position: relative; /* Permite que el formulario se superponga al calendario */
-    padding: 20px; /* Espaciado interno alrededor del calendario */
-    background-color: #333; /* Fondo oscuro para el contenedor */
-    border-radius: 8px; /* Bordes redondeados del contenedor */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra del contenedor */
+/* Estilo para los eventos en el calendario */
+.react-calendar__tile--event {
+    background-color: #000; /* Fondo oscuro para los eventos */
+    color: #fff; /* Texto blanco */
+    border-radius: 4px; /* Bordes redondeados */
 }
 
 /* Estilo para el encabezado del calendario */
@@ -103,6 +99,8 @@
     color: #fff; /* Texto blanco */
     font-size: 2em; /* Tamaño de fuente mayor para el título */
     margin: 0; /* Elimina el margen */
+    text-align: center;
+    padding: 10px;
 }
 
 /* Estilo para el botón de agregar evento */
@@ -111,10 +109,11 @@
     color: #fff; /* Texto blanco */
     border: none; /* Sin borde */
     padding: 10px 20px; /* Espaciado interno */
-    border-radius: 4px; /* Bordes redondeados */
+    border-radius: 5px; /* Bordes redondeados */
     cursor: pointer; /* Cursor en forma de mano */
     font-size: 1em; /* Tamaño de fuente del botón */
     transition: background-color 0.3s ease; /* Transición para el cambio de color */
+    margin: 10px;
 }
 
 .botonAgregarEvento:hover {
@@ -161,7 +160,7 @@
 
 /* Estilo para el botón de agregar evento */
 .formulario-agregar-evento .header button[type="button"] {
-    background-color: #000000; /* Fondo oscuro para el botón */
+    background-color: #000; /* Fondo oscuro para el botón */
     color: #fff; /* Texto blanco */
     padding: 8px 12px; /* Espaciado interno */
     border: none; /* Sin borde */
@@ -191,7 +190,7 @@
 
 /* Estilo para el botón de enviar */
 .formulario-agregar-evento button[type="submit"] {
-    background-color: #000000; /* Fondo oscuro para el botón */
+    background-color: #000; /* Fondo oscuro para el botón */
     color: #fff; /* Texto blanco */
     padding: 8px 12px; /* Espaciado interno */
     border: none; /* Sin borde */
@@ -202,18 +201,5 @@
 }
 
 .formulario-agregar-evento button[type="submit"]:hover {
-    background-color: #666; /* Fondo más claro al pasar el ratón */
-}
-
-/* Asegura que el formulario se vea bien en dispositivos pequeños */
-@media (max-width: 600px) {
-    .formulario-agregar-evento {
-        padding: 10px;
-        max-width: 100%; /* Ancho completo en pantallas pequeñas */
-    }
-    
-    .formulario-agregar-evento button[type="submit"],
-    .formulario-agregar-evento .header button[type="button"] {
-        padding: 6px 10px; /* Espaciado interno reducido */
-    }
+    background-color: #444; /* Fondo más claro al pasar el ratón */
 }

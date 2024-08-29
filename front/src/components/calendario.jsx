@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, dayjsLocalizer } from 'react-big-calendar';
-import dayjs from 'dayjs';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; // Importa los estilos de react-calendar
 import '../styles/calendario.css'; // Asegúrate de que este archivo tenga los estilos del formulario
-import 'dayjs/locale/es';
 
-const localizer = dayjsLocalizer(dayjs);
-dayjs.locale('es');
-
-const Calendario = () => {
+const Calendario = ({ view, hideHeader }) => {
+  const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [newEvent, setNewEvent] = useState({ title: '', start: '', end: '' });
@@ -64,12 +60,14 @@ const Calendario = () => {
 
   return (
     <div className="calendario-container">
-      <div className="calendario-header">
-        <h1 className='tituloCalendario'>Calendario de OVI</h1>
-        <button className='botonAgregarEvento' onClick={() => setShowForm(true)}>Agregar evento</button>
-      </div>
+      {!hideHeader && (
+        <div className="calendario-header">
+          <h1 className='tituloCalendario'>Calendario de OVI</h1>
+          <button className='botonAgregarEvento' onClick={() => setShowForm(true)}>Agregar evento</button>
+        </div>
+      )}
 
-      {showForm && (
+      {!hideHeader && showForm && (
         <div className='formulario-agregar-evento'>
           <div className="header">
             <h2>Nuevo Evento</h2>
@@ -99,25 +97,21 @@ const Calendario = () => {
 
       <div className="calendario">
         <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500 }}
-          messages={{
-            next: "Sig",
-            previous: "Ant",
-            today: "Hoy",
-            month: "Mes",
-            week: "Semana",
-            day: "Día",
-            agenda: "Agenda",
-            date: "Fecha",
-            time: "Hora",
-            event: "Evento",
-            allDay: "Todo el día",
-            noEventsInRange: "No hay eventos en este rango.",
-            showMore: total => `+ Ver más (${total})`
+          value={date}
+          onChange={setDate}
+          tileContent={({ date, view }) => {
+            const eventsForDay = events.filter(event =>
+              date >= new Date(event.start).setHours(0, 0, 0, 0) &&
+              date <= new Date(event.end).setHours(0, 0, 0, 0)
+            );
+
+            return (
+              <ul>
+                {eventsForDay.map((event, index) => (
+                  <li key={index}>{event.title}</li>
+                ))}
+              </ul>
+            );
           }}
         />
       </div>
@@ -126,3 +120,4 @@ const Calendario = () => {
 };
 
 export default Calendario;
+
