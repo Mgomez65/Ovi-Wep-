@@ -1,0 +1,46 @@
+.calendario-container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #2c2c2c; /* Dark background for the entire container */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .calendario1 {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .week-view {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .day-tile {
+    flex: 1;
+    border: 1px solid #444; /* Darker border */
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #3c3c3c; /* Darker background for the day tiles */
+    text-align: center;
+    color: #fff; /* White text color */
+  }
+  
+  .day-tile h3 {
+    margin-bottom: 10px;
+    color: #f9c74f; /* A bright color for the day names */
+  }
+  
+  .day-tile ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .day-tile li {
+    margin-bottom: 5px;
+    color: #eee; /* Light grey for event titles */
+  }
+  
