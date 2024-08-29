@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Calendario from './components/calendario';
+import Calendario from './pages/calendario';
 import Home from './pages/home';
 
 const App = () => {
