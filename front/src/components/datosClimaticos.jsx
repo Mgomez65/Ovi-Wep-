@@ -59,20 +59,11 @@ const Weather = () => {
             <div className="weather-list">
               <ul>
                 <li className="weather-item">
-                  <strong>Temperatura:</strong> {weather.data[0].temp}°C
-                </li>
-                <li className="weather-item">
                   <strong>Humedad:</strong> {weather.data[0].rh}%
                 </li>
                 <li className="weather-item">
                   <strong>Velocidad del Viento:</strong>{" "}
                   {weather.data[0].wind_spd} km/h
-                </li>
-                <li className="weather-item">
-                  <strong>Presión Atmosférica:</strong> {weather.data[0].pres} hPa
-                </li>
-                <li className="weather-item">
-                  <strong>Visibilidad:</strong> {weather.data[0].vis} km
                 </li>
                 <li className="weather-item">
                   <strong>Probabilidad de Precipitaciones:</strong>{" "}

@@ -14,7 +14,7 @@
 .weather-row {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 2px;
 }
   
 .temperature-container {
@@ -24,7 +24,7 @@
   
 .temperature {
     padding-left: 30px;
-    padding-top: 15px;
+    padding-top: 0px;
     font-size: 52px;
     font-weight: bold;
     margin-right: 10px;
@@ -42,7 +42,7 @@
 }
   
 .weather-item {
-    font-size: 20px;
+    font-size: 16px;
     padding: 1px;
 }
   
