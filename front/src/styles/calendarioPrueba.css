@@ -1,0 +1,54 @@
+/* Estilos para el encabezado del calendario */
+.fc-toolbar-title {
+    color: #4CAF50;
+    /* Cambia el color del título */
+    font-size: 1.5em;
+    /* Cambia el tamaño de la fuente del título */
+}
+
+.fc-button {
+    background-color: #008CBA;
+    /* Cambia el color de fondo de los botones */
+    color: white;
+    /* Cambia el color del texto de los botones */
+}
+
+.fc-button:hover {
+    background-color: #005f6b;
+    /* Cambia el color de fondo al pasar el ratón */
+}
+
+/* Estilos para los eventos */
+.fc-event {
+    border: 1px solid #d0d0d0;
+    /* Cambia el color del borde de los eventos */
+    border-radius: 4px;
+    /* Redondea las esquinas de los eventos */
+    color: #333;
+    /* Cambia el color del texto de los eventos */
+    padding: 2px 5px;
+    /* Añade espacio interior a los eventos */
+}
+
+.fc-event-title {
+    color: #333;
+    /* Cambia el color del título del evento */
+}
+
+/* Estilos para la vista del calendario en general */
+.fc {
+    font-family: 'Arial', sans-serif;
+    /* Cambia la fuente del calendario */
+    background-color: #f9f9f9;
+    /* Cambia el color de fondo del calendario */
+}
+
+.fc-daygrid-day {
+    border: 1px solid #e0e0e0;
+    /* Cambia el color del borde de los días */
+}
+
+.fc-daygrid-day-number {
+    color: #333;
+    /* Cambia el color de los números de los días */
+}

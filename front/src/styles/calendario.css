@@ -42,182 +42,263 @@
 
 /* Estilo para los días seleccionados */
 .react-calendar__tile--active {
-    background-color: #374151; /* Fondo oscuro para los días seleccionados */
-    color: #fff; /* Texto blanco */
-    border-radius: 4px; /* Bordes redondeados */
+    background-color: #374151;
+    color: #fff;
+    border-radius: 4px;
 }
 
 /* Estilo para el día actual */
 .react-calendar__tile--now {
-    background-color: #161726; /* Fondo de la fecha actual */
-    color: #fff; /* Texto blanco */
+    background-color: #161726;
+    color: #fff;
 }
 
 .react-calendar__month-view__days {
     display: flex;
-    flex-wrap: wrap; /* Permitir que los días se distribuyan en múltiples líneas */
+    flex-wrap: wrap;
 }
 
 /* Estilo para los días fuera del mes actual */
 .react-calendar__tile--neighboringMonth {
-    background-color: #272e3a3a; /* Fondo gris claro para los días fuera del mes actual */
-    color: #fff; /* Texto negro */
+    background-color: #272e3a3a;
+    color: #fff;
 }
 
 /* Estilo para el encabezado del mes */
 .react-calendar__navigation__label {
-    color: #fff; /* Texto blanco */
-    font-size: 1.5em; /* Tamaño de fuente mayor */
+    color: #fff;
+    font-size: 1.5em;
 }
 
 /* Estilo para los botones de navegación */
 .react-calendar__navigation button {
-    background-color: #272e3a3a; /* Fondo oscuro para los botones */
-    color: #fff; /* Texto claro en los botones */
-    border: 1px solid #272e3a3a; /* Borde ligeramente más claro */
-    border-radius: 4px; /* Bordes redondeados */
-    padding: 8px; /* Espaciado interno */
-    cursor: pointer; /* Cursor en forma de mano */
-    transition: background-color 0.3s ease; /* Transición para el cambio de color */
+    background-color: #272e3a3a;
+    color: #fff;
+    border: 1px solid #272e3a3a;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .react-calendar__navigation button:hover {
-    background-color: #374151; /* Fondo más claro al pasar el ratón sobre el botón */
+    background-color: #374151;
 }
 
 .react-calendar__navigation button:focus {
-    background-color: #374151; /* Fondo al enfocar el botón */
+    background-color: #374151;
 }
 
 /* Estilo para el área de selección del día */
 .react-calendar__tile:focus {
-    outline: 5px auto #374151; /* Color de contorno al enfocar */
+    outline: 5px auto #374151;
 }
 
 /* Estilo para los eventos en el calendario */
 .react-calendar__tile--event {
-    background-color: #161726; /* Fondo oscuro para los eventos */
-    color: #fff; /* Texto blanco */
-    border-radius: 4px; /* Bordes redondeados */
+    background-color: #161726;
+    color: #fff;
+    border-radius: 4px;
 }
 
 /* Estilo para el encabezado del calendario */
 .calendario-header {
-    display: flex; /* Usa flexbox para alinear los elementos */
-    justify-content: space-between; /* Espacio entre el título y el botón */
-    align-items: center; /* Alinea verticalmente los elementos */
-    margin-bottom: 10px; /* Espaciado inferior */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
     margin-top: 10px;
 }
 
 /* Estilo para el título del calendario */
 .tituloCalendario {
-    color: #fff; /* Texto blanco */
-    font-size: 2em; /* Tamaño de fuente mayor para el título */
-    margin: 0; /* Elimina el margen */
+    color: #fff;
+    font-size: 2em;
+    margin: 0;
     text-align: center;
     padding: 10px;
 }
 
 /* Estilo para el botón de agregar evento */
 .botonAgregarEvento {
-    background-color: #374151; /* Fondo oscuro para el botón */
-    color: #fff; /* Texto blanco */
-    border: none; /* Sin borde */
-    padding: 10px 20px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor en forma de mano */
-    font-size: 1em; /* Tamaño de fuente del botón */
-    transition: background-color 0.3s ease; /* Transición para el cambio de color */
+    background-color: #374151;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
     margin: 10px;
 }
 
 .botonAgregarEvento:hover {
-    background-color: #3741519a; /* Fondo más claro al pasar el ratón */
+    background-color: #3741519a;
 }
 
 .botonAgregarEvento:focus {
-    outline: none; /* Elimina el contorno por defecto al enfocar */
-    background-color: #3741519a; /* Fondo más claro al enfocar el botón */
+    outline: none;
+    background-color: #3741519a;
 }
 
 /* Formulario de agregar evento */
 
 /* Estilo general para el formulario */
 .formulario-agregar-evento {
-    position: fixed; /* Fija el formulario en la pantalla */
-    top: 50%; /* Centra verticalmente */
-    left: 50%; /* Centra horizontalmente */
-    transform: translate(-50%, -50%); /* Ajusta la posición para que el centro del formulario esté en el centro de la pantalla */
-    background-color: #374151; /* Fondo oscuro para el formulario */
-    color: #fff; /* Texto claro */
-    padding: 15px; /* Espaciado interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra del formulario */
-    max-width: 400px; /* Ancho máximo del formulario */
-    z-index: 10; /* Asegura que el formulario esté encima de otros elementos */
-    display: flex; /* Usa flexbox para alinear el contenido */
-    flex-direction: column; /* Ordena los elementos verticalmente */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #374151;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
 }
 
 
 /* Contenedor para el título y el botón */
 .formulario-agregar-evento .header {
-    display: flex; /* Usa flexbox para alinear los elementos */
-    justify-content: space-between; /* Espacio entre el título y el botón */
-    align-items: center; /* Alinea verticalmente los elementos */
-    margin-bottom: 15px; /* Espaciado inferior */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 /* Estilo para el título del formulario */
 .formulario-agregar-evento h2 {
-    color: #fff; /* Texto blanco */
-    font-size: 1.2em; /* Tamaño de fuente */
-    margin: 0; /* Elimina el margen */
+    color: #fff;
+    font-size: 1.2em;
+    margin: 0;
 }
 
 /* Estilo para el botón de agregar evento */
 .formulario-agregar-evento .header button[type="button"] {
-    background-color: #272e3a3a; /* Fondo oscuro para el botón */
-    color: #fff; /* Texto blanco */
-    padding: 8px 12px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor en forma de mano */
-    transition: background-color 0.3s ease; /* Transición para el cambio de color */
-    font-size: 0.9em; /* Tamaño de fuente más pequeño */
+    background-color: #272e3a3a;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
 }
 
 .formulario-agregar-evento .header button[type="button"]:hover {
-    background-color: #272e3a3a; /* Fondo más claro al pasar el ratón */
+    background-color: #272e3a3a;
 }
 
 /* Estilo para los campos del formulario */
 .formulario-agregar-evento input,
 .formulario-agregar-evento textarea,
 .formulario-agregar-evento select {
-    width: calc(100% - 22px); /* Ajusta el ancho para considerar el padding */
-    padding: 8px; /* Espaciado interno */
-    margin: 8px 0; /* Espaciado entre campos */
-    border-radius: 4px; /* Bordes redondeados */
-    border: 1px solid #272e3a3a; /* Borde del campo */
-    background-color: #272e3a3a; /* Fondo de los campos */
-    color: #fff; /* Texto blanco */
-    font-size: 0.9em; /* Tamaño de fuente más pequeño */
+    width: calc(100% - 22px);
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #272e3a3a;
+    background-color: #272e3a3a;
+    color: #fff;
+    font-size: 0.9em;
 }
 
 /* Estilo para el botón de enviar */
-.formulario-agregar-evento button[type="submit"] {
-    background-color: #272e3a3a; /* Fondo oscuro para el botón */
-    color: #fff; /* Texto blanco */
-    padding: 8px 12px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor en forma de mano */
-    transition: background-color 0.3s ease; /* Transición para el cambio de color */
-    font-size: 0.9em; /* Tamaño de fuente más pequeño */
+.formulario-agregar-evento .boton {
+    background-color: #272e3a3a;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    margin-top: 5px;
 }
 
-.formulario-agregar-evento button[type="submit"]:hover {
-    background-color: #272e3a3a; /* Fondo más claro al pasar el ratón */
+.formulario-agregar-evento .boton:hover {
+    background-color: #1617268e;
+}
+
+.color-picker-wrapper {
+    display: inline-block;
+    padding: 7px;
+    border: 0px solid #000;
+    border-radius: 4px;
+    background-color: #272e3a3a;
+}
+
+.color-picker-wrapper input[type="color"] {
+    border: none;
+    width: 200px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 4px;
+
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #272e3a;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.192);
+}
+
+.botonAgregar {
+    background-color: #374151;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+}
+
+.botonCerrar {
+    background-color: #374151;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.botonCerrar:hover,
+.botonAgregar:hover {
+    background-color: #1617268e;
 }
