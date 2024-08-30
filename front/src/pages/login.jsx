@@ -16,9 +16,11 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
+      {console.log(data)}
       // Envío de los datos al backend
-      const respuesta = await axios.post('/api/login', data);
-      if (respuesta.data.success) {
+      const respuesta = await axios.post('http://localhost:3000/api/login', data,);
+
+      if (respuesta.status == 200) {
         // Manejo de la respuesta exitosa (redirección a la página principal por ejemplo)
         console.log('Inicio de sesión exitoso');
         navigate("/home"); // Redirect to main page after successful login
@@ -28,16 +30,14 @@ const Login = () => {
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
-    } finally {
-      reset(); // Resetear el formulario
-    }
+    } 
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label>Email:</label>
       <input
-        {...register("email", {
+        {...register("Email", {
           required: "El email es requerido",
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
