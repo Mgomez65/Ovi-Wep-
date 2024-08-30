@@ -1,8 +1,6 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const cors = require('cors');
-const userController = require('./controllers/userController');
-
 const app = express()
 
 app.use(express.urlencoded({extends:false}))
@@ -17,8 +15,6 @@ app.use(cors({
 dotenv.config({path: './.env'})
 
 
-app.post('/api/register', userController.register);
-app.post('/api/login', userController.login);
 
 app.use( '/api',require("./usuarios/rutas/rutas"))
 app.use('/calendario',require('./clima/rutas/rutasCalendario'))
