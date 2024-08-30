@@ -1,28 +1,23 @@
 import React from "react";
 import Clima from '../components/datosClimaticos'
 import Calendario from '../components/calendarioHome'
-import Menu from '../components/menuDesplegable'
+import Header from "../components/header";
+import { Link } from 'react-router-dom'
 import '../styles/home.css'
-import iconoVolver from '../assets/icon-volver.png';
+
 
 const Home = () => {
     return (
         <div>
-            <header className="header">
-                <a href="#"><img src={iconoVolver} alt="Volver" className="Volver"/></a>
-                <div className="header">
-                    <a href="#" className="botonInforme">Informe</a>
-                    <Menu className="Menu"/>
-                </div>
-            </header>
+            <Header/>
             <main className="main">
                 <div className="contenedorClimaCalendario">
                     <div>
                         <Clima className="clima"/>
                     </div>
-                    <div>
+                    <Link href="/calendario" className="calendario">
                         <Calendario className="CalendarioHome"/>
-                    </div>   
+                    </Link>   
                 </div>
                 <div>
                     <h3 className="humedad">Datos de humedad<br/>En proceso</h3>

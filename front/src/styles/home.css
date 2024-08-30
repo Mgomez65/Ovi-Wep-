@@ -4,46 +4,6 @@ body {
     background-color: #161726;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-    background-color: #374151;
-}
-
-.tituloHeader {
-    font-size: 30px;
-    padding-left: 40px;
-    text-align: left;
-}
-
-.Volver {
-    width: 40px;
-    padding-left: 15px;
-    padding-top: 3px;
-}
-
-.botonInforme{
-    text-align: right;
-    margin-right: 15px;
-    text-decoration: none;
-    color: #fff;
-    padding-right: 10px;
-    border-right: 3px solid rgba(255, 255, 255, 0.192);
-    font-size: 20px;
-    padding-top: 3px;
-}
-
-.botonInforme:hover{
-    color: cadetblue;
-}
-
-.Menu {
-    text-align: right;
-    padding-top: 3px;
-}
-
 .contenedorClimaCalendario {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -66,6 +26,10 @@ body {
 
 .CalendarioHome {
     height: 300px;
+}
+
+.calendario {
+    text-decoration: none;
 }
 
 .humedad{
