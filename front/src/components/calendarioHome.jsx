@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
 import '../styles/calendarioHome.css';
 
 const Calendario = ({ hideHeader }) => {
@@ -48,7 +47,7 @@ const Calendario = ({ hideHeader }) => {
         <div className="week-view">
           {daysOfWeek.map((day, index) => (
             <div key={index} className="day-tile">
-              <h3>{day.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</h3>
+              <h3>{day.toLocaleDateString('es', { weekday: 'long', month: 'short', day: 'numeric' })}</h3>
               <ul>
                 {events
                   .filter(event => {

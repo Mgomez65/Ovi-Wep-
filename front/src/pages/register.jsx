@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import styled from 'styled-components';
+/* import styled from 'styled-components'; */
 import { useNavigate } from 'react-router-dom';
 
 // Omitir estilos innecesarios para el ejemplo (puedes importarlos si los usas)

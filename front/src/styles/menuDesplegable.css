@@ -1,0 +1,49 @@
+/* Estilos para el contenedor del menú desplegable */
+.menu-desplegable {
+    position: relative;
+    text-align: right;
+}
+
+/* Estilos para el botón del menú */
+.boton-menu {
+    text-align: right;
+    border: none;
+    cursor: pointer;
+}
+
+.icono-menu {
+    width: 40px;
+}
+
+/* Estilos para la lista desplegable */
+.lista-menu {
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    right: 0;
+    background-color: #161726;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    padding: 0;
+    margin: 5px 0 0 0;
+    list-style: none;
+    z-index: 1000;
+}
+
+/* Estilos para los elementos de la lista */
+.lista-menu li {
+    padding: 12px 16px;
+}
+
+/* Estilos para los enlaces de las opciones */
+.lista-menu li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+/* Cambio de fondo al pasar el mouse sobre una opción */
+.lista-menu li:hover {
+    background-color: #374151;
+}

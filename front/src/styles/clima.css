@@ -1,9 +1,9 @@
 .weather-container {
-    background-color: #010D26;
+    background-color: #374151;
     color: white;
     margin: 0;
     border-radius: 5px;
-    padding: 5px;
+    padding: 7px;
 }
   
 .weather-info {

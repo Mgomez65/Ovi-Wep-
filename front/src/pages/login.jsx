@@ -21,7 +21,7 @@ const Login = () => {
       if (respuesta.data.success) {
         // Manejo de la respuesta exitosa (redirección a la página principal por ejemplo)
         console.log('Inicio de sesión exitoso');
-        navigate("/"); // Redirect to main page after successful login
+        navigate("/home"); // Redirect to main page after successful login
       } else {
         // Manejo de errores (por ejemplo, mostrar un mensaje de error)
         console.error('Error al iniciar sesión:', respuesta.data.error);

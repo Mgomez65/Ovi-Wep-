@@ -1,11 +1,15 @@
 body {
     margin: 0;
     color: white;
+    background-color: #161726;
 }
 
 .header {
-    padding: 20px;
-    background-color: #024059;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: #374151;
 }
 
 .tituloHeader {
@@ -14,11 +18,38 @@ body {
     text-align: left;
 }
 
-.main {
+.Volver {
+    width: 40px;
+    padding-left: 15px;
+    padding-top: 3px;
+}
+
+.botonInforme{
+    text-align: right;
+    margin-right: 15px;
+    text-decoration: none;
+    color: #fff;
+    padding-right: 10px;
+    border-right: 3px solid rgba(255, 255, 255, 0.192);
+    font-size: 20px;
+    padding-top: 3px;
+}
+
+.botonInforme:hover{
+    color: cadetblue;
+}
+
+.Menu {
+    text-align: right;
+    padding-top: 3px;
+}
+
+.contenedorClimaCalendario {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
-    gap: 20px; /* Espacio entre los dos componentes */
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
     padding: 20px;
+    padding-bottom: 0;
 }
 
 .clima, .CalendarioHome {
@@ -26,25 +57,51 @@ body {
     align-items: center;
     justify-content: center;
     border: none;
-    background-color: #fff; /* Color de fondo para mejor visibilidad */
-    /* Ajusta la altura y el ancho según el diseño que prefieras */
+    background-color: #fff; 
 }
 
 .clima {
-    height: 300px; /* Ajusta este valor según el tamaño deseado */
+    height: 300px;
 }
 
 .CalendarioHome {
-    height: 300px; /* Ajusta este valor según el tamaño deseado */
+    height: 300px;
+}
+
+.humedad{
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #374151;
+    height: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.mapa{
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #374151;
+    height: 300px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .footer {
     padding: 10px;
-    background-color: #024059;
+    background-color: #374151;
+    padding-right: 25px;
 }
 
 .seccionFooter {
     text-align: right;
-    font-size: 15px;
-    margin: 8px;
+    margin: 5px;
+    font-size: 18px;
 }
