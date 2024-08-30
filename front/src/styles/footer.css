@@ -1,0 +1,11 @@
+.footer {
+    padding: 10px;
+    background-color: #374151;
+    padding-right: 25px;
+}
+
+.seccionFooter {
+    text-align: right;
+    margin: 5px;
+    font-size: 18px;
+}

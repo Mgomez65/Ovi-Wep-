@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import iconoMenu from '../assets/icon-menu.png'
 import '../styles/menuDesplegable.css'
+import { Link } from 'react-router-dom';
 
 function MenuDesplegable() {
     const [estaAbierto, setEstaAbierto] = useState(false);
@@ -38,9 +39,9 @@ function MenuDesplegable() {
             </a>
             {estaAbierto && (
                 <ul className="lista-menu">
-                    <li><a href="#opcion1">Opción 1</a></li>
-                    <li><a href="#opcion2">Opción 2</a></li>
-                    <li><a href="#opcion3">Opción 3</a></li>
+                    <li><Link to="/informe">Informe</Link></li>
+                    <li><Link to="/calendario">Calendario</Link></li>
+                    <li><Link to="/">Cerrar Seción</Link></li>
                 </ul>
             )}
         </div>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import iconoVolver from '../assets/icon-volver.png';
 import Menu from '../components/menuDesplegable'
 import "../styles/header.css";
@@ -5,13 +6,13 @@ import "../styles/header.css";
 function Header() {
   return (
     <header className="header">
-      <a href="#">
+      <Link to="/home">
         <img src={iconoVolver} alt="Volver" className="Volver" />
-      </a>
+      </Link>
       <div className="header">
-        <a href="#" className="botonInforme">
+        <Link to="/informe" className="botonInforme">
           Informe
-        </a>
+        </Link>
         <Menu className="Menu" />
       </div>
     </header>
