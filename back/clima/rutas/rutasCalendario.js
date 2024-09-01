@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/controllersCalendario')
 
-router.post('/getCalendario',controllers.getCalendario)
+router.get('/getCalendario',controllers.getCalendario)
+router.post('/getCalendarioID',controllers.getCalendarioId)
+
 router.post('/createCalendario',controllers.CreateCalendario)
 router.delete('/deleteCalendario/:id',controllers.DeleteCalendario)
 

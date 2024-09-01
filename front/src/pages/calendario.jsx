@@ -23,7 +23,7 @@ const Calendario = ({ view, hideHeader }) => {
     const fetchEvents = async () => {
       try {
         const formattedDate = date.toISOString().slice(0, 16);
-        const response = await fetch("http://localhost:3000/calendario/getCalendario", {
+        const response = await fetch("http://localhost:3000/calendario/getCalendarioID", {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
