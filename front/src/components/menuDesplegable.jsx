@@ -39,8 +39,7 @@ function MenuDesplegable() {
             </a>
             {estaAbierto && (
                 <ul className="lista-menu">
-                    <li><Link to="/informe">Informe</Link></li>
-                    <li><Link to="/calendario">Calendario</Link></li>
+                    <li><Link to="/register">Agregar usuario</Link></li>
                     <li><Link to="/">Cerrar Seción</Link></li>
                 </ul>
             )}

@@ -23,7 +23,7 @@ exports.CreateCalendario = async (req, res) => {
     try {
         let calendario = req.body
         console.log(calendario)
-        conexion.query("INSERT INTO calendario SET ? ", { titulo: calendario.titulo, inicio: calendario.inicio, fin:calendario.fin,color:calendario.color}, (error, resultado) => {
+        conexion.query("INSERT INTO calendario SET ? ", { titulo: calendario.titulo, inicio: calendario.inicio, fin:calendario.fin, color:calendario.color}, (error, resultado) => {
             if (error) {
                 console.error(error);
                 return res.status(500).json({ error: "Error al Agregar datos al  calendario." });
@@ -38,6 +38,7 @@ exports.CreateCalendario = async (req, res) => {
     }
 
 }
+
 exports.DeleteCalendario = async (req, res) => {
     try {
         const calendarioId = req.params.id;
@@ -57,6 +58,7 @@ exports.DeleteCalendario = async (req, res) => {
         res.status(500).json({ error: "Error del servidor." });
     }
 }
+
 exports.UpdataCalendarioPatch = async (req, res) => {
     try {
         
@@ -64,6 +66,7 @@ exports.UpdataCalendarioPatch = async (req, res) => {
         
     }
 }
+
 exports.UpdataCalendarioPut = async (req, res) => {
     try {
         
