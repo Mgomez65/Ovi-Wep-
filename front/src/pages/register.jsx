@@ -42,7 +42,10 @@ const Register = () => {
 
       setValue("Username", userData.Username);
       setValue("Email", userData.Email);
-      setValue("DNI", userData.DNI);
+      setValue("CUIL", userData.CUIL);
+      setValue("Apellido", userData.Apellido);
+      setValue("Num_empleado", userData.Num_empleado);
+      setValue("Direccion", userData.Direccion);
       setValue("Password", userData.Password);
 
       setSelectedUser(userData);
@@ -103,7 +106,10 @@ const Register = () => {
         <div className="usuarios-container">
           <div className="usuarios-header">
             <h2>Lista de Usuarios</h2>
-            <button onClick={handleBackToRegister} className="back-to-register-button">
+            <button
+              onClick={handleBackToRegister}
+              className="back-to-register-button"
+            >
               Volver a Registro
             </button>
           </div>
@@ -133,6 +139,22 @@ const Register = () => {
               {errors.Username && <span>{errors.Username.message}</span>}
 
               <input
+                type="text"
+                placeholder="Apellido"
+                {...register("Apellido", {
+                  required: "El apellido es requerido",
+                })}
+              />
+              {errors.Apellido && <span>{errors.Apellido.message}</span>}
+
+              <input
+                type="text"
+                placeholder="CUIL"
+                {...register("CUIL", { required: "El CUIL es requerido" })}
+              />
+              {errors.CUIL && <span>{errors.CUIL.message}</span>}
+
+              <input
                 type="email"
                 placeholder="Email"
                 {...register("Email", {
@@ -147,10 +169,23 @@ const Register = () => {
 
               <input
                 type="text"
-                placeholder="DNI"
-                {...register("DNI", { required: "El DNI es requerido" })}
+                placeholder="Número de empleado"
+                {...register("Num_empleado", {
+                  required: "El número de empleado es requerido",
+                })}
               />
-              {errors.DNI && <span>{errors.DNI.message}</span>}
+              {errors.Num_empleado && (
+                <span>{errors.Num_empleado.message}</span>
+              )}
+
+              <input
+                type="text"
+                placeholder="Dirección"
+                {...register("Direccion", {
+                  required: "La dirección es requerida",
+                })}
+              />
+              {errors.Direccion && <span>{errors.Direccion.message}</span>}
 
               <input
                 type="password"
@@ -175,13 +210,20 @@ const Register = () => {
               {errors.Username && <span>{errors.Username.message}</span>}
 
               <input
-                type="password"
-                placeholder="Contraseña"
-                {...register("Password", {
-                  required: "La contraseña es requerida",
+                type="text"
+                placeholder="Apellido"
+                {...register("Apellido", {
+                  required: "El apellido es requerido",
                 })}
               />
-              {errors.Password && <span>{errors.Password.message}</span>}
+              {errors.Apellido && <span>{errors.Apellido.message}</span>}
+
+              <input
+                type="text"
+                placeholder="CUIL"
+                {...register("CUIL", { required: "El CUIL es requerido" })}
+              />
+              {errors.CUIL && <span>{errors.CUIL.message}</span>}
 
               <input
                 type="email"
@@ -198,10 +240,32 @@ const Register = () => {
 
               <input
                 type="text"
-                placeholder="DNI"
-                {...register("DNI", { required: "El DNI es requerido" })}
+                placeholder="Número de empleado"
+                {...register("Num_empleado", {
+                  required: "El número de empleado es requerido",
+                })}
               />
-              {errors.DNI && <span>{errors.DNI.message}</span>}
+              {errors.Num_empleado && (
+                <span>{errors.Num_empleado.message}</span>
+              )}
+
+              <input
+                type="text"
+                placeholder="Dirección"
+                {...register("Direccion", {
+                  required: "La dirección es requerida",
+                })}
+              />
+              {errors.Direccion && <span>{errors.Direccion.message}</span>}
+
+              <input
+                type="password"
+                placeholder="Contraseña"
+                {...register("Password", {
+                  required: "La contraseña es requerida",
+                })}
+              />
+              {errors.Password && <span>{errors.Password.message}</span>}
 
               {errorMessage && <p>{errorMessage}</p>}
 
