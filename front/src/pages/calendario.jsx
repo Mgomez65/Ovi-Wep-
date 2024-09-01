@@ -200,9 +200,9 @@ const Calendario = ({ view, hideHeader }) => {
             );
 
             return (
-              <ul>
+              <ul className="event-list">
                 {eventsForDay.map((event) => (
-                  <li key={event.id}>{event.title}</li>
+                  <li key={event.id} style={{ backgroundColor: event.color, color: '#fff', padding: '2px' }}>{event.title}</li>
                 ))}
               </ul>
             );
@@ -230,7 +230,7 @@ const Calendario = ({ view, hideHeader }) => {
               </button>
             </div>
             <h2>Eventos para {selectedDate.toLocaleDateString()}</h2>
-            <ul>
+            <ul className="event-list">
               {events
                 .filter(
                   (event) =>
@@ -238,7 +238,7 @@ const Calendario = ({ view, hideHeader }) => {
                     selectedDate <= new Date(event.end).setHours(0, 0, 0, 0)
                 )
                 .map((event) => (
-                  <li key={event.id}>
+                  <li key={event.id} style={{ backgroundColor: event.color, color: '#fff', padding: '2px' }}>
                     {event.title}
                     <button onClick={() => {
                       setEventToEdit(event);
