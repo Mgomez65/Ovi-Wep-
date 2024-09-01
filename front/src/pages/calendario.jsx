@@ -135,12 +135,12 @@ const Calendario = ({ view, hideHeader }) => {
   const handleUpdateEvent = async () => {
     try {
       const response = await fetch(`http://localhost:3000/calendario/actualizarCalendario/${eventToEdit.id}`, {
-        method: "PATCH",
+        method: "put",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          evento: newEvent.title,
+          titulo: newEvent.title,
           inicio: newEvent.start,
           fin: newEvent.end,
           color: newEvent.color,

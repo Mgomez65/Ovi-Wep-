@@ -86,8 +86,18 @@ exports.UpdataCalendarioPatch = async (req, res) => {
 
 exports.UpdataCalendarioPut = async (req, res) => {
     try {
+        const calendarioId = req.params.id;
+        const datos = req.body       
+        conexion.query("update calendario set ? where id = ? ",[datos,calendarioId],(error,resultado)=>{
+            if (error) {
+                console.error(error);
+                return res.status(500).json({ error: "Error interno al actualizar." });
+            }
+            res.status(200).json({ message: 'Usuario actualizado exitosamente' });
+        })
         
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).json({ error: "Error del servidor." });
     }
 }
