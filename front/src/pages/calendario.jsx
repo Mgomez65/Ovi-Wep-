@@ -56,6 +56,44 @@ const Calendario = ({ view, hideHeader }) => {
     fetchEvents();
   }, [date]);
 
+  const fetchAllEvents = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/calendario/getCalendario", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+  
+      if (data.length) {
+        const formattedEvents = data.map((event) => ({
+          id: event.id, 
+          title: event.titulo,
+          start: new Date(event.inicio),
+          end: new Date(event.fin),
+          color: event.color || "#000000",
+        }));
+        setEvents(formattedEvents);
+      } else {
+        console.log('No se encontraron eventos.');
+        setEvents([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener eventos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllEvents(); // Cargar todos los eventos al montar el componente
+  }, []);
+  
+
   const handleDayClick = (date) => {
     setSelectedDate(date);
     setShowModal(true);
@@ -68,7 +106,7 @@ const Calendario = ({ view, hideHeader }) => {
   const handleAddEvent = async () => {
     const start = newEvent.start || selectedDate.toISOString().slice(0, 16);
     const end = newEvent.end || new Date(selectedDate.getTime() + 60 * 60 * 1000).toISOString().slice(0, 16);
-
+  
     try {
       const response = await fetch("http://localhost:3000/calendario/createCalendario", {
         method: "POST",
@@ -82,19 +120,9 @@ const Calendario = ({ view, hideHeader }) => {
           color: newEvent.color,
         }),
       });
-
+  
       if (response.ok) {
-        const addedEvent = await response.json();
-        setEvents([
-          ...events,
-          {
-            id: addedEvent._id,
-            title: addedEvent.evento,
-            start: new Date(addedEvent.inicio),
-            end: new Date(addedEvent.fin),
-            color: addedEvent.color,
-          },
-        ]);
+        await fetchAllEvents(); // Actualiza la lista de eventos
         setShowForm(false);
       } else {
         console.error("Error al agregar el evento:", response.statusText);
@@ -118,20 +146,9 @@ const Calendario = ({ view, hideHeader }) => {
           color: newEvent.color,
         }),
       });
-
+  
       if (response.ok) {
-        const updatedEvent = await response.json();
-        setEvents(events.map((event) =>
-          event.id === updatedEvent._id
-            ? {
-                ...event,
-                title: updatedEvent.evento,
-                start: new Date(updatedEvent.inicio),
-                end: new Date(updatedEvent.fin),
-                color: updatedEvent.color,
-              }
-            : event
-        ));
+        await fetchAllEvents(); // Actualiza la lista de eventos
         setShowEditForm(false);
       } else {
         console.error("Error al actualizar el evento:", response.statusText);
@@ -140,22 +157,22 @@ const Calendario = ({ view, hideHeader }) => {
       console.error("Error al actualizar el evento:", error);
     }
   };
-
+  
   const handleDeleteEvent = async (eventId) => {
     try {
       const response = await fetch(`http://localhost:3000/calendario/deleteCalendario/${eventId}`, {
         method: "DELETE",
       });
-
+  
       if (response.ok) {
-        setEvents(events.filter((event) => event.id !== eventId));
+        await fetchAllEvents(); // Actualiza la lista de eventos
       } else {
         console.error("Error al eliminar el evento:", response.statusText);
       }
     } catch (error) {
       console.error("Error al eliminar el evento:", error);
     }
-  };
+  };  
 
   return (
     <div className="calendario-container">
