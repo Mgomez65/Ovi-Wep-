@@ -342,8 +342,15 @@ const Calendario = ({ view, hideHeader }) => {
                     }
                   />
                 </div>
-                <button onClick={handleUpdateEvent} className="botonActualizar">
+                <button onClick={handleUpdateEvent} className="boton">
                   Actualizar Evento
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowEditForm(false)}
+                  className="boton"
+                >
+                  Cancelar
                 </button>
               </div>
             )}
