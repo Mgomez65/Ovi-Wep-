@@ -60,7 +60,7 @@ exports.DeleteCalendario = async (req, res) => {
     try {
         const calendarioId = req.params.id;
         console.log(calendarioId)
-        conexion.query("DELETE FROM calendario WHERE ID_calendario = ?", [calendarioId], (error, resultado) => {
+        conexion.query("DELETE FROM calendario WHERE id = ?", [calendarioId], (error, resultado) => {
             if (error) {
                 console.error(error);
                 return res.status(500).json({ error: "Error al eliminar el calendario." });

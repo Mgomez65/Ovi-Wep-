@@ -19,7 +19,7 @@ const Calendario = ({ view, hideHeader }) => {
   });
   const [eventToEdit, setEventToEdit] = useState(null);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchEvents = async () => {
       try {
         const formattedDate = date.toISOString().slice(0, 16);
@@ -54,7 +54,7 @@ const Calendario = ({ view, hideHeader }) => {
     };
 
     fetchEvents();
-  }, [date]);
+  }, [date]); */
 
   const fetchAllEvents = async () => {
     try {
@@ -162,12 +162,16 @@ const Calendario = ({ view, hideHeader }) => {
     try {
       const response = await fetch(`http://localhost:3000/calendario/deleteCalendario/${eventId}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
   
       if (response.ok) {
-        await fetchAllEvents(); // Actualiza la lista de eventos
+        await fetchAllEvents(); // Actualiza la lista de eventos después de eliminar
       } else {
-        console.error("Error al eliminar el evento:", response.statusText);
+        const errorData = await response.json();
+        console.error("Error al eliminar el evento:", errorData.error || response.statusText);
       }
     } catch (error) {
       console.error("Error al eliminar el evento:", error);
