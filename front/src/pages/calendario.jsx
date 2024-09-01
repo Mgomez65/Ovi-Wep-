@@ -22,17 +22,27 @@ const Calendario = ({ view, hideHeader }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:3000/calendario/getCalendario");
+        const formattedDate = date.toISOString().slice(0, 16); // Formato: YYYY-MM-DDTHH:MM
+      
+        const response = await fetch("http://localhost:3000/calendario/getCalendario", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ inicio: formattedDate }),
+      });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log(data)
+
         if (data.mensaje) {
           console.log(data.mensaje);
         } else {
           const formattedEvents = data.map((event) => ({
             id: event._id,
-            title: event.evento,
+            title: event.titulo,
             start: new Date(event.inicio),
             end: new Date(event.fin),
             color: event.color || "#000000",
@@ -45,11 +55,15 @@ const Calendario = ({ view, hideHeader }) => {
     };
 
     fetchEvents();
-  }, []);
+  }, [date]);
 
   const handleDayClick = (date) => {
     setSelectedDate(date);
     setShowModal(true);
+    // Preestablecer los campos de fecha y hora para el nuevo evento
+    const start = date.toISOString().slice(0, 16);
+    const end = new Date(date.getTime() + 60 * 60 * 1000).toISOString().slice(0, 16); // Default to 1 hour later
+    setNewEvent({ ...newEvent, start, end });
   };
 
   const handleAddEvent = async () => {
@@ -63,7 +77,7 @@ const Calendario = ({ view, hideHeader }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          evento: newEvent.title,
+          titulo: newEvent.title,
           inicio: start,
           fin: end,
           color: newEvent.color,
@@ -308,15 +322,8 @@ const Calendario = ({ view, hideHeader }) => {
                     }
                   />
                 </div>
-                <button onClick={handleUpdateEvent} className="boton">
-                  Actualizar evento
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowEditForm(false)}
-                  className="boton"
-                >
-                  Cancelar
+                <button onClick={handleUpdateEvent} className="botonActualizar">
+                  Actualizar Evento
                 </button>
               </div>
             )}

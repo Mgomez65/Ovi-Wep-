@@ -26,7 +26,7 @@ const Register = () => {
       console.error('Error al registrar:', error);
       setErrorMessage('Error al registrar. Por favor, inténtalo de nuevo.');
     } finally {
-      reset(); // Resetear el formulario
+      reset(); 
     }
   };
 

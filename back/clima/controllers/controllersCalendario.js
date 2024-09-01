@@ -4,7 +4,7 @@ const conexion = require("../../dataBase/DB")
 exports.getCalendario = async (req, res) => {
     try {
         let calendario = req.body
-        conexion.query("select * from  calendario where fecha = ? ", [calendario.fecha], (error, resultado) => {
+        conexion.query("select * from  calendario where inicio = ? ", [calendario.inicio], (error, resultado) => {
             if (error) {
                 console.error(error);
                 return res.status(500).json({ error: "Error al mostrar datos al  calendario." });
@@ -12,7 +12,7 @@ exports.getCalendario = async (req, res) => {
             if (resultado.length === 0) {
                 return res.status(404).send('No hay eventos para la fecha');
             }
-            res.status(200).json(resultado[0]);
+            res.status(200).json(resultado);
         })
     } catch (error) {
         console.log(error)
@@ -23,12 +23,14 @@ exports.CreateCalendario = async (req, res) => {
     try {
         let calendario = req.body
         console.log(calendario)
-        conexion.query("INSERT INTO calendario SET ? ", { objetivo: calendario.objetivo, fecha: calendario.fecha  }, (error, resultado) => {
+        conexion.query("INSERT INTO calendario SET ? ", { titulo: calendario.titulo, inicio: calendario.inicio, fin:calendario.fin,color:calendario.color}, (error, resultado) => {
             if (error) {
                 console.error(error);
                 return res.status(500).json({ error: "Error al Agregar datos al  calendario." });
             }
             res.status(201).json(resultado);
+            console.log(resultado)
+            
             
         })
     } catch (error) {
