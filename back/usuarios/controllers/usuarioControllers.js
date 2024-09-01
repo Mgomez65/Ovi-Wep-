@@ -91,3 +91,11 @@ exports.getUsuario = async (req, res) => {
         console.log(error)
     }
 }
+
+exports.UpdataUsersPut = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}

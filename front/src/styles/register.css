@@ -1,0 +1,116 @@
+.register-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.usuarios-container {
+    width: 20%;
+    background-color: #374151;
+    padding: 20px;
+    margin: 15px;
+    border-radius: 3px;
+    overflow-y: auto;
+    height: 71vh;
+}
+
+.usuarios-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.usuarios-container li {
+    background-color: #272e3a81;
+    margin: 5px 0;
+    padding: 0px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.usuarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.usuarios-header h2 {
+    margin: 0;
+}
+
+.back-to-register-button {
+    background-color: #272e3a81;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.back-to-register-button:hover {
+    background-color: #1617268e;
+}
+
+.user-button {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-button:hover {
+    background-color: #1617268e;
+}
+
+.formulario-conteiner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #374151;
+    margin: 15px;
+    border-radius: 3px;
+    height: 77vh;
+}
+
+.formulario-conteiner form {
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.formulario-conteiner input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #dfdfdf;
+    color: #000000;
+    font-size: 20px;
+}
+
+.formulario-conteiner button {
+    width: 104%;
+    padding: 15px;
+    background-color: #272e3a81;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 15px;
+}
+
+.formulario-conteiner button:hover {
+    background-color: #1617268e;
+}

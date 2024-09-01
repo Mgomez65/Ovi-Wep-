@@ -21,15 +21,13 @@ const Home = () => {
         </div>
         <div>
           <h3 className="humedad">
-            Datos de humedad
-            <br />
+            Datos de humedad:
             En proceso
           </h3>
         </div>
         <div>
           <h3 className="mapa">
-            Mapa
-            <br />
+            Mapa:
             En proceso
           </h3>
         </div>
