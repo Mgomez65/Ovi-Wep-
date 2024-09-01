@@ -22,8 +22,7 @@ const Calendario = ({ view, hideHeader }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const formattedDate = date.toISOString().slice(0, 16); // Formato: YYYY-MM-DDTHH:MM
-      
+        const formattedDate = date.toISOString().slice(0, 16);
         const response = await fetch("http://localhost:3000/calendario/getCalendario", {
           method: "POST",
           headers: {
