@@ -1,4 +1,9 @@
-/* Estilos para el contenedor del menú desplegable */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: Roboto;
+}
+
 .menu-desplegable {
     position: relative;
     text-align: right;

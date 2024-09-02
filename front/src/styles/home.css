@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
     margin: 0;
     color: white;
     background-color: #161726;
+    font-family: Roboto;
 }
 
 .contenedorClimaCalendario {

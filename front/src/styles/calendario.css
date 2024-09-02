@@ -1,4 +1,8 @@
-/* Agrega estos estilos al final de tu archivo CSS */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: Roboto;
+}
 
 /* Estilo para el contenedor del calendario */
 .calendario-container {
@@ -10,6 +14,11 @@
     width: 100vw;
     height: 100vh;
     overflow: auto;
+    color: #fff !important;
+}
+
+span {
+    color: #fff !important;
 }
 
 /* Estilo para el calendario */
@@ -26,10 +35,17 @@
     margin-top: 0px;
 }
 
+.react-calendar, .react-calendar *, .react-calendar *:before, .react-calendar *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #fff !important;
+}
+
 /* Estilo para los días del calendario */
 .react-calendar .react-calendar__month-view__days__day {
     background-color: #272e3a3a;
-    color: #fff;
+    color: #fff !important;
     border: 1px solid #161726 !important;
     border-radius: 4px;
     width: 50px !important;
