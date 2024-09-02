@@ -28,10 +28,12 @@
     font-size: 52px;
     font-weight: bold;
     margin-right: 10px;
+    color: #fff;
 }
   
 .icon {
     font-size: 48px;
+    color: #fff;
 }
   
 .weather-details {

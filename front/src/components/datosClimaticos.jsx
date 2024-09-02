@@ -12,6 +12,21 @@ const getWeatherIcon = (description) => {
   return <FaCloudSun />; // Por defecto, si no coincide con los anteriores
 };
 
+const requestNotificationPermission = async () => {
+  if (Notification.permission !== "granted") {
+    await Notification.requestPermission();
+  }
+};
+
+const showNotification = (title, body) => {
+  if (Notification.permission === "granted") {
+    new Notification(title, {
+      body,
+      icon: 'https://example.com/icon.png',
+    });
+  }
+};
+
 const Weather = () => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
@@ -19,17 +34,31 @@ const Weather = () => {
   const url = `https://api.weatherbit.io/v2.0/current?city=Mendoza&key=${apiKey}&lang=es`;
 
   useEffect(() => {
-    axios
-      .get(url)
-      .then((response) => {
-        console.log(response);
-        setWeather(response.data);
+    // Solicitar permiso para notificaciones al cargar el componente
+    requestNotificationPermission();
+
+    const fetchWeather = async () => {
+      try {
+        const response = await axios.get(url);
+        const weatherData = response.data;
+        setWeather(weatherData);
         setError(null);
-      })
-      .catch((err) => {
+
+        // Verificar si hay probabilidad de lluvia y enviar notificación si es necesario
+        const precipProbability = weatherData.data[0].precip;
+        if (precipProbability > 0) {
+          showNotification(
+            "¡Aviso de Lluvia!",
+            `Se espera lluvia con una probabilidad de ${precipProbability}%`
+          );
+        }
+      } catch (err) {
         console.error(err);
         setError("Error al obtener datos del clima");
-      });
+      }
+    };
+
+    fetchWeather();
   }, [url]);
 
   const getPrecipitationIcon = (precip, precipProb) => {

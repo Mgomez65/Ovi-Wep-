@@ -129,24 +129,29 @@ const Register = () => {
         <div className="formulario-conteiner">
           {selectedUser ? (
             <form onSubmit={handleSubmit(onUpdate)}>
-              <input
-                type="text"
-                placeholder="Nombre de usuario"
-                {...register("Username", {
-                  required: "El nombre de usuario es requerido",
-                })}
-              />
-              {errors.Username && <span>{errors.Username.message}</span>}
-
-              <input
-                type="text"
-                placeholder="Apellido"
-                {...register("Apellido", {
-                  required: "El apellido es requerido",
-                })}
-              />
-              {errors.Apellido && <span>{errors.Apellido.message}</span>}
-
+              <h2>Actualizar Usuario</h2>
+              <div className="form-fields-container">
+                <div className="form-field">
+                  <input
+                    type="text"
+                    placeholder="Nombre de usuario"
+                    {...register("Username", {
+                      required: "El nombre de usuario es requerido",
+                    })}
+                  />
+                  {errors.Username && <span>{errors.Username.message}</span>}
+                </div>
+                <div className="form-field">
+                  <input
+                    type="text"
+                    placeholder="Apellido"
+                    {...register("Apellido", {
+                      required: "El apellido es requerido",
+                    })}
+                  />
+                  {errors.Apellido && <span>{errors.Apellido.message}</span>}
+                </div>
+              </div>
               <input
                 type="text"
                 placeholder="CUIL"
@@ -200,24 +205,29 @@ const Register = () => {
             </form>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)}>
-              <input
-                type="text"
-                placeholder="Nombre de usuario"
-                {...register("Username", {
-                  required: "El nombre de usuario es requerido",
-                })}
-              />
-              {errors.Username && <span>{errors.Username.message}</span>}
-
-              <input
-                type="text"
-                placeholder="Apellido"
-                {...register("Apellido", {
-                  required: "El apellido es requerido",
-                })}
-              />
-              {errors.Apellido && <span>{errors.Apellido.message}</span>}
-
+              <h2>Crear Nuevo Usuario</h2>
+              <div className="form-fields-container">
+                <div className="form-field">
+                  <input
+                    type="text"
+                    placeholder="Nombre de usuario"
+                    {...register("Username", {
+                      required: "El nombre de usuario es requerido",
+                    })}
+                  />
+                  {errors.Username && <span>{errors.Username.message}</span>}
+                </div>
+                <div className="form-field">
+                  <input
+                    type="text"
+                    placeholder="Apellido"
+                    {...register("Apellido", {
+                      required: "El apellido es requerido",
+                    })}
+                  />
+                  {errors.Apellido && <span>{errors.Apellido.message}</span>}
+                </div>
+              </div>
               <input
                 type="text"
                 placeholder="CUIL"

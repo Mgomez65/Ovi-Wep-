@@ -87,6 +87,16 @@
     text-align: center;
 }
 
+.form-fields-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.form-field {
+    flex: 1;
+}
+
 .formulario-conteiner input {
     width: 100%;
     padding: 10px;
@@ -97,6 +107,16 @@
     background-color: #dfdfdf;
     color: #000000;
     font-size: 20px;
+}
+
+input {
+    width: 100%;
+}
+
+span {
+    display: block;
+    color: red;
+    font-size: 0.875em;
 }
 
 .formulario-conteiner button {
@@ -114,3 +134,4 @@
 .formulario-conteiner button:hover {
     background-color: #1617268e;
 }
+
