@@ -8,12 +8,17 @@ const Calendario = ({ hideHeader }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('http://localhost:3000/getCalendario');
+        const response = await fetch('http://localhost:3000/calendario/getCalendario');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         const formattedEvents = data.map(event => ({
-          title: event.evento,
+          id: event._id,
+          title: event.titulo,
           start: new Date(event.inicio),
           end: new Date(event.fin),
+          color: event.color || '#000000',
         }));
         setEvents(formattedEvents);
       } catch (error) {
@@ -26,14 +31,14 @@ const Calendario = ({ hideHeader }) => {
 
   const startOfWeek = (date) => {
     const day = date.getDay();
-    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
     return new Date(date.setDate(diff));
   };
 
   const getDaysOfWeek = (startDate) => {
     const days = [];
     for (let i = 0; i < 7; i++) {
-      days.push(new Date(startDate.getTime() + i * 86400000)); // 86400000ms in a day
+      days.push(new Date(startDate.getTime() + i * 86400000));
     }
     return days;
   };
@@ -51,11 +56,16 @@ const Calendario = ({ hideHeader }) => {
               <ul>
                 {events
                   .filter(event => {
-                    const eventDate = new Date(event.start);
-                    return eventDate.toDateString() === day.toDateString();
+                    const eventStart = new Date(event.start);
+                    return (
+                      eventStart.toDateString() === day.toDateString() ||
+                      (event.end && new Date(event.end).toDateString() === day.toDateString())
+                    );
                   })
                   .map((event, index) => (
-                    <li key={index}>{event.title}</li>
+                    <li key={index} style={{ backgroundColor: event.color }}>
+                      {event.title}
+                    </li>
                   ))}
               </ul>
             </div>
