@@ -56,6 +56,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
+      console.log(data);
       const response = await axios.post(
         "http://localhost:3000/api/register",
         data
@@ -120,7 +121,9 @@ const Register = () => {
                   onClick={() => handleUserClick(user.id)}
                   className="user-button"
                 >
-                  {user.Username}
+                  <p>
+                    {user.Username} {user.Apellido}
+                  </p>
                 </button>
               </li>
             ))}

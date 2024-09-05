@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
-  font-family: Roboto !important;
+    font-family: Roboto !important;
 }
 
 .Titulo-Login {
@@ -97,4 +97,10 @@ body {
     padding-top: 15px;
     padding-bottom: 15px;
     flex: 1;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }

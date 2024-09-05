@@ -52,7 +52,7 @@ const Login = () => {
             de las cosechas y asegurar una producción agrícola de alta calidad.
           </p>
           <h3>¿Por qué Elegir OVI?</h3>
-          <ul>
+          <ul className="item">
             <li>
               Innovación en la Gestión: Utiliza nuestra herramienta digital
               avanzada para evaluar las condiciones de tus viñedos y recibir
