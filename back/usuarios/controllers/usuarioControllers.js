@@ -4,23 +4,23 @@ const conexion = require("../../dataBase/DB")
 exports.register = async (req, res) => {
     try {
         const data = req.body;
-        conexion.query("select * from usuarios where Email = ? ", [data.Email], async (error, resultado) => {
+        conexion.query("select * from usuario where Email = ? ", [data.Email], async (error, resultado) => {
             if (error) throw error;
             if (resultado.length > 0) {
                 return res.status(409).send('El email ya está en uso');
             }
-            conexion.query("select * from usuarios where Username = ?", [data.Username], async (error, resultado) => {
+            conexion.query("select * from usuario where Username = ?", [data.Username], async (error, resultado) => {
                 if (error) throw error;
                 if (resultado.length > 0) {
                     return res.status(409).send('El nombre de usuario ya está en uso');
                 }
-                conexion.query("select * from usuarios where DNI = ? ", [data.DNI], async (error, resultado) => {
+                conexion.query("select * from usuario where CUIL = ? ", [data.CUIL], async (error, resultado) => {
                     if (error) throw error;
                     if (resultado.length > 0) {
-                        return res.status(409).send('El DNI ya está en uso');
+                        return res.status(409).send('El CUIL ya está en uso');
                     }
                     let passHash = await bcryptjs.hash(data.Password, 10)
-                    conexion.query("INSERT into usuarios set ?", { Username: data.Username, Password: passHash, Email: data.Email, DNI: data.DNI }, async (error, resultado) => {
+                    conexion.query("INSERT into usuario set ?", {Num_empleado:data.Num_empleado, Username: data.Username, Apellido:data.Apellido,CUIL: data.CUIL, Direccion:data.Direccion, Email: data.Email,Password: passHash }, async (error, resultado) => {
                         if (error) {
                             console.log(error)
                             return res.status(500).send('Error interno del servidor');
@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
     try {
         const data = req.body;
         console.log(data)
-        conexion.query("select * from usuarios where Email =? ", [data.Email], async (error, resultado) => {
+        conexion.query("select * from usuario where Email =? ", [data.Email], async (error, resultado) => {
             if (error) throw error;
             if (resultado.length === 0) {
                 return res.status(404).send('No se ha encontrado un usuario con este email');
@@ -60,7 +60,7 @@ exports.login = async (req, res) => {
 exports.getUsuarioId = async (req, res) => {
     try {
         const usuarioId = req.params.id;
-        conexion.query("select * from usuarios where id = ?  ", [usuarioId], (error, resultado) => {
+        conexion.query("select * from usuario where id = ?  ", [usuarioId], (error, resultado) => {
             if (error) {
                 console.error('Error en la consulta a la base de datos:', error);
                 return res.status(500).send('Error interno del servidor');
@@ -77,7 +77,7 @@ exports.getUsuarioId = async (req, res) => {
 }
 exports.getUsuario = async (req, res) => {
     try {
-        conexion.query("select * from usuarios", (error, resultado) => {
+        conexion.query("select * from usuario", (error, resultado) => {
             if (error) {
                 console.error('Error en la consulta a la base de datos:', error);
                 return res.status(500).send('Error interno del servidor');

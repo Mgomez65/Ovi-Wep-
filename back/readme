@@ -1,16 +1,18 @@
-tabla de la base de datos 
-CREATE TABLE IF NOT EXISTS usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    Username VARCHAR(50) NOT NULL UNIQUE,
-    Password VARCHAR(255) NOT NULL,
-    Email VARCHAR(100) NOT NULL UNIQUE,
-    DNI VARCHAR(20) NOT NULL UNIQUE
-);
+-- tabla de la base de datos 
+-- CREATE TABLE usuarios (
+--     Num_empleado INT PRIMARY KEY,
+--     Username VARCHAR(50),
+--     Apellido VARCHAR(50),
+--     CUIL VARCHAR(20),
+--     Direccion VARCHAR(100),
+--     Email VARCHAR(100),
+--     Password VARCHAR(50)
+-- );
 
-CREATE TABLE calendario (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(255) NOT NULL,
-    inicio DATETIME NOT NULL,
-    fin DATETIME NOT NULL,
-    color VARCHAR(7) -- formato de color hexadecimal
-);
+-- CREATE TABLE calendario (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     titulo VARCHAR(255) NOT NULL,
+--     inicio DATETIME NOT NULL,
+--     fin DATETIME NOT NULL,
+--     color VARCHAR(7) -- formato de color hexadecimal
+-- );
