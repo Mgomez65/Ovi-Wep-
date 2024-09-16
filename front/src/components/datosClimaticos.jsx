@@ -14,10 +14,12 @@ const getWeatherIcon = (description) => {
 
 const requestNotificationPermission = async () => {
   if (Notification.permission !== "granted") {
-    await Notification.requestPermission();
+    const permission = await Notification.requestPermission();
+    console.log("Permiso de notificación:", permission);
+  } else {
+    console.log("Notificación ya está permitida");
   }
 };
-
 const showNotification = (title, body) => {
   if (Notification.permission === "granted") {
     new Notification(title, {
@@ -46,6 +48,8 @@ const Weather = () => {
 
         // Verificar si hay probabilidad de lluvia y enviar notificación si es necesario
         const precipProbability = weatherData.data[0].precip;
+        console.log("Probabilidad de precipitación:", precipProbability);
+
         if (precipProbability > 0) {
           showNotification(
             "¡Aviso de Lluvia!",
