@@ -7,6 +7,11 @@ import "../styles/login.css";
 const Login = () => {
   const navigate = useNavigate();
 
+  const handleCancelClick = (e) => {
+    e.preventDefault();
+    navigate("/");
+  };
+
   const {
     register,
     handleSubmit,
@@ -61,6 +66,7 @@ const Login = () => {
           {errors.password && <span>{errors.password.message}</span>}
 
           <button type="submit">Iniciar sesión</button>
+          <button type="submit" onClick={handleCancelClick} className="BotonCancelar">Cancelar</button>
         </form>
       </div>
     </>

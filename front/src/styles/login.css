@@ -53,3 +53,7 @@ body {
 .login-form button:hover {
     background-color: #1617268e;
 }
+
+.BotonCancelar{
+    margin-top: 12px;
+}
