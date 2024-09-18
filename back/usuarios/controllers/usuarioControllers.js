@@ -44,10 +44,11 @@ exports.login = async (req, res) => {
         conexion.query("select * from usuario where Email =? ", [data.Email], async (error, resultado) => {
             if (error) throw error;
             if (resultado.length === 0) {
-                return res.status(404).send('No se ha encontrado un usuario con este email');
+                console.log("entre")
+                return res.status(400).json({ message: 'No se ha encontrado un usuario con este email' });
             }
             if (!(await bcryptjs.compare(data.password, resultado[0].Password))) {
-                return res.status(401).send('Contraseña incorrecta');
+                return res.status(400).json({ message: 'Correo electrónico o contraseña no son válidos' });
             }
             console.log("exicto")
             return res.status(200).json({ message: 'Inicio de sesión exitoso' });
