@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
-  font-family: Roboto;
+    font-family: Roboto;
 }
 
 .header {
@@ -24,7 +24,7 @@ body {
     padding-top: 3px;
 }
 
-.botonInforme{
+.botonInforme {
     text-align: right;
     margin-right: 15px;
     text-decoration: none;
@@ -35,11 +35,40 @@ body {
     padding-top: 3px;
 }
 
-.botonInforme:hover{
+.botonInforme:hover {
     color: cadetblue;
 }
 
 .Menu {
     text-align: right;
     padding-top: 3px;
+}
+
+.searchMenu {
+    height: 87%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    background-color: #1a1d42;
+    border: 0px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.searchMenu input {
+    width: 95%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.searchMenu button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
 }
