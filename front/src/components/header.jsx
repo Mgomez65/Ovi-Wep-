@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import iconoVolver from '../assets/icon-volver.png';
-import Menu from '../components/menuDesplegable'
+import Menu from './menuDesplegable'
 import "../styles/header.css";
 
 function Header() {

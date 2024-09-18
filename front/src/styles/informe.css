@@ -1,0 +1,171 @@
+.containerTituloFechas {
+    background-color: #374151;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 3px;
+}
+
+.containerTituloFechas h2 {
+    font-size: 17px;
+    margin: 0;
+    text-indent: 25px;
+}
+
+.containerTituloFechas input {
+    width: 98%;
+    margin: 10px;
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+.Fechas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.Fechas input {
+    width: 95.5%;
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+.containerDescripcion {
+    margin: 10px;
+    padding: 10px;
+    background-color: #374151;
+    border-radius: 3px;
+}
+
+.containerDescripcion h2 {
+    font-size: 17px;
+    margin: 0;
+    text-indent: 25px;
+}
+
+.inputDescripcion {
+    width: 98.5%;
+    height: 300px;
+    margin: 10px;
+    box-sizing: border-box;
+    resize: none;
+    display: block;
+}
+
+.inputDescripcion::placeholder {
+    font-family: Arial, sans-serif;
+}
+
+.containerImagenes h2 {
+    font-size: 17px;
+    margin: 0;
+    text-indent: 25px;
+    margin: 10px;
+    margin-top: 0;
+}
+
+.containerImagenes {
+    background-color: #374151;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 3px;
+    position: relative;
+}
+
+.upload-container {
+    width: 98%;
+}
+
+input[type="file"] {
+    margin: 0;
+    margin-bottom: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 3px;
+    display: none;
+}
+
+.divBotonSubir{
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+}
+
+.botonSubir {
+    text-decoration: none;
+    border: none;
+    display: block;
+    cursor: pointer;
+    background-color: #161726;
+    color: white;
+    font-size: 16px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 30%;
+    text-align: center;
+    font-size: 14px;
+    margin-left: 5%;
+}
+
+.botonSubir:hover {
+    background-color: #272e3a;
+}
+
+.image-preview {
+    max-width: 250px;
+    height: auto;
+    display: block;
+    margin: 10px;
+    margin-left: 0;
+}
+
+.remove-button {
+    display: block;
+    margin-top: 5px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border: none;
+}
+
+.remove-button:hover {
+    background-color: darkred;
+}
+
+.image-preview-container {
+    display: inline-block;
+    margin: 5px;
+}
+
+.custom-file-upload {
+    display: block;
+    cursor: pointer;
+    background-color: #161726;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 30%;
+    text-align: center;
+    font-size: 14px;
+    margin-left: 5%;
+}
+
+.custom-file-upload:hover {
+    background-color: #272e3a;
+}
+
+.botonesForm{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+}

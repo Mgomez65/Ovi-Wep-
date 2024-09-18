@@ -1,8 +1,9 @@
 import React from "react";
-import axios from "axios";
+
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
+import imagen from "../assets/Login/Racimo-de-uva.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,19 +22,21 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      {
-        console.log(data);
-      }
-      const respuesta = await axios.post(
-        "http://localhost:3000/api/login",
-        data
-      );
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
+      const respuesta = await response.json();
 
-      if (respuesta.status == 200) {
-        console.log("Inicio de sesión exitoso");
+      console.log(respuesta, "entre");
+      if (response.status == 200) {
         navigate("/home");
       } else {
-        console.error("Error al iniciar sesión:", respuesta.data.error);
+        alert(respuesta.message);
       }
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
@@ -66,8 +69,15 @@ const Login = () => {
           {errors.password && <span>{errors.password.message}</span>}
 
           <button type="submit">Iniciar sesión</button>
-          <button type="submit" onClick={handleCancelClick} className="BotonCancelar">Cancelar</button>
+          <button
+            type="submit"
+            onClick={handleCancelClick}
+            className="BotonCancelar"
+          >
+            Cancelar
+          </button>
         </form>
+        <img src={imagen} alt="Imagen" className="imagen" />
       </div>
     </>
   );

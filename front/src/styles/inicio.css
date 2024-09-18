@@ -1,6 +1,10 @@
+/* .container{
+    @apply ma
+} */
+
 .containerNavbar{
     justify-content: center;
-    background-color: black;
+    background-color: #374151;
     text-align: right;
     position: fixed;
     width: 100%;
@@ -20,6 +24,7 @@
 
 .login{
     cursor: pointer;
+    color: yellow;
 }
 
 .containerImagenInicio {
@@ -104,8 +109,8 @@
 
 .containerFormularioConsulta{
     width: 100%;
-    background-color: orange;
-    color: black;
+    background-color: #374151;
+    color: white;
     text-align: center;
 }
 
@@ -119,8 +124,8 @@
 
 .containerFormularioConsulta input{
     width: 90%;
-    background-color: rgb(0, 0, 0);
-    color: white;
+    background-color: white;
+    color: black;
     padding: 5px;
     border: none;
     border-radius: 5px;
@@ -131,8 +136,8 @@
 .containerFormularioConsulta button{
     width: 10%;
     padding: 10px;
-    background-color: #000000f1;
-    color: white;
+    background-color: white;
+    color: black;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -142,7 +147,7 @@
 }
 
 .containerFormularioConsulta button:hover {
-    background-color: #0c0c0cde;
+    background-color: #222933;
 }
 
 .containerDivision{

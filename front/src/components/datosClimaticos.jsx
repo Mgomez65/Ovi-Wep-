@@ -50,7 +50,7 @@ const Weather = () => {
         const precipProbability = weatherData.data[0].precip;
         console.log("Probabilidad de precipitación:", precipProbability);
 
-        if (precipProbability > 0) {
+        if (precipProbability > 80) {
           showNotification(
             "¡Aviso de Lluvia!",
             `Se espera lluvia con una probabilidad de ${precipProbability}%`
