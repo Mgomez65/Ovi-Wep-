@@ -61,7 +61,7 @@ dotenv.config({path: './.env'})
 app.use( '/api',require("./usuarios/rutas/rutas"))
 app.use('/calendario',require('./clima/rutas/rutasCalendario'))
 
-const conexion = require('./dataBase/DB')
+const conexion = require('../dataBase/DB')
 
 app.listen(process.env.HOST_PUERTO,(req,res )=>{
     console.log(`Server is running on port ${process.env.HOST_PUERTO}`)

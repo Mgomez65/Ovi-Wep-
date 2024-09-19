@@ -8,7 +8,7 @@ router.post('/getCalendarioID',controllers.getCalendarioId)
 router.post('/createCalendario',controllers.CreateCalendario)
 router.delete('/deleteCalendario/:id',controllers.DeleteCalendario)
 
-router.patch('/actualizarCalendario/:id',controllers.UpdataCalendarioPatch)
+
 router.put('/actualizarCalendario/:id',controllers.UpdataCalendarioPut)
 
 
