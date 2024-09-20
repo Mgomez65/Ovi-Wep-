@@ -1,26 +1,39 @@
+import { Link } from "react-router-dom";
 import "../styles/footer.css";
 
 function Footer() {
+  const openInNewTab = (url) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <footer className="footer">
       <section className="seccionFooter">Ovi</section>
-      {/* Créditos y Derechos Reservados */}
-      <div className="footer-section">
-        <p>© 2024 OVI S.A.S. Todos los derechos reservados.</p>
-      </div>
 
-      {/* Enlaces Importantes */}
-      <div className="footer-section">
-        <nav>
-          <a href="/about" className="footer-link">Sobre Nosotros</a>
-          <a href="/terms" className="footer-link">Términos y Condiciones</a>
-          <a href="/privacy" className="footer-link">Política de Privacidad</a>
-        </nav>
-      </div>
+      <div className="containerSeccion2">
 
-      {/* Información de Contacto */}
-      <div className="footer-section">
-        <p>Contacto: <a href="mailto:info@ovi.com" className="footer-link">info@ovi.com</a> | Tel: +123 456 789</p>
+        <div className="footer-section">
+          <p>
+            Contacto:{" "}
+            <p className="footer-correo">
+              info@ovi.com
+            </p>{" "}
+            Tel: +123 456 789
+          </p>
+        </div>
+
+        <div className="footer-section">
+          <nav>
+            <Link onClick={() => openInNewTab('/about')} className="footer-link">Sobre Nosotros</Link>
+            <Link onClick={() => openInNewTab('/terminos-y-condiciones')} className="footer-link">Términos y Condiciones</Link>
+            <Link onClick={() => openInNewTab('/politicas-de-privacidad')} className="footer-link">Política de Privacidad</Link>
+          </nav>
+        </div>
+
+
+        <div className="footer-section">
+          <p>© 2024 Ovi S.A.S. Todos los derechos reservados.</p>
+        </div>
       </div>
     </footer>
   );
