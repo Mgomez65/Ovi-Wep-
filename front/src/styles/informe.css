@@ -16,7 +16,7 @@
 .containerTituloFechas input {
     width: 98%;
     margin: 10px;
-    background-color: white;
+    background-color: #dfdfdf;
     color: black;
     padding: 5px;
     border: none;
@@ -30,7 +30,7 @@
 
 .Fechas input {
     width: 95.5%;
-    background-color: white;
+    background-color: #dfdfdf;
     color: black;
     padding: 5px;
     border: none;
@@ -91,7 +91,7 @@
 input[type="file"] {
     margin: 0;
     margin-bottom: 10px;
-    background-color: white;
+    background-color: #dfdfdf;
     color: black;
     padding: 10px;
     border-radius: 3px;
