@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controllers = require('../controllers/controllersCalendario')
+const controllers = require('./controllers/calendario.controller')
 
 router.get('/getCalendario',controllers.getCalendario)
 router.post('/getCalendarioID',controllers.getCalendarioId)

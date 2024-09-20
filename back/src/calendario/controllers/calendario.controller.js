@@ -1,5 +1,5 @@
 const conexion = require("../../../dataBase/DB")
-const servicioClima = require("../services/clima.services")
+const servicioClima = require("../services/clima.service")
 
 exports.getCalendarioId = async (req, res) => {
     try {

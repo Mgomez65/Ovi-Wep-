@@ -58,8 +58,8 @@ dotenv.config({path: './.env'})
 
 
 
-app.use( '/api',require("./usuarios/rutas/rutas"))
-app.use('/calendario',require('./clima/rutas/rutasCalendario'))
+app.use( '/api',require("./usuarios/rutas"))
+app.use('/calendario',require('./calendario/rutasCalendario'))
 
 const conexion = require('../dataBase/DB')
 

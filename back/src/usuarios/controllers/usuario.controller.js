@@ -1,5 +1,5 @@
 const bcryptjs = require('bcryptjs')
-const servisioUsuario = require("../servicios/serviciosUsuarios")
+const servisioUsuario = require("../service/usuario.service")
 
 
 exports.register = async (req, res) => {
