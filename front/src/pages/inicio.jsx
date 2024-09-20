@@ -77,7 +77,7 @@ const Inicio = () => {
       <div className="containerBeneficios" id="Beneficios">
         <div className="containerEsquema">
           <p className="textYellow">Beneficios que ofrece</p>
-          <p className="TextWhith">la plataforma Ovi</p></div>
+          <p className="textWhith">la plataforma Ovi</p></div>
         <img src={Beneficios} alt="Beneficios" className="ImagenBeneficios"/>
       </div>
       <div className="containerFormularioConsulta">

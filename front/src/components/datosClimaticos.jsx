@@ -32,7 +32,7 @@ const showNotification = (title, body) => {
 const Weather = () => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
-  const apiKey = "2ebcb82225b04302b88041a7691f2c6e";
+  const apiKey = "c5dd700cd5ba4428a3967e62c1bbca6a";
   const url = `https://api.weatherbit.io/v2.0/current?city=Mendoza&key=${apiKey}&lang=es`;
 
   useEffect(() => {

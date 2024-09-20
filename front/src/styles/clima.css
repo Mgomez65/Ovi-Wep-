@@ -39,7 +39,7 @@ body {
   
 .icon {
     font-size: 48px;
-    color: #fff;
+    color: #ffbb00 !important;
 }
   
 .weather-details {
