@@ -24,7 +24,7 @@
 
 .login{
     cursor: pointer;
-    color: yellow;
+    color: darkcyan;
 }
 
 .containerImagenInicio {
@@ -55,12 +55,14 @@
     justify-content: center;
     gap: 20px;
     padding: 50px;
+    padding-left: 60px;
+    padding-right: 60px;
 }
 
 .infoVideo{
     padding: 20px;
     border-right: 2px solid;
-    
+    color: black;
 }
 
 .infoVideo h2{
@@ -99,19 +101,22 @@
 }
 
 .textYellow{
-    color: yellow;
-
+    color: white;
+    background-color: darkcyan;
+    padding: 3px;
+    border-radius: 2px;
 }
 
 .textWhith{
-    color: white;
+    color: black;
 }
 
 .containerFormularioConsulta{
-    width: 100%;
     background-color: #374151;
     color: white;
     text-align: center;
+    padding-left: 60px;
+    padding-right: 60px;
 }
 
 .containerFormularioConsulta label{
@@ -119,7 +124,7 @@
     font-size: 15px;
     font-weight: bold;
     text-align: left;
-    padding-left: 70px;
+    padding-left: 40px;
 }
 
 .containerFormularioConsulta input{

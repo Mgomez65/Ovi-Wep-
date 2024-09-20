@@ -1,6 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import Header from "../components/header";
+import Footer from "../components/footer"
 import "../styles/informe.css";
 
 const informe = () => {
@@ -131,6 +132,7 @@ const informe = () => {
         </div>
         {uploadMessage && <p>{uploadMessage}</p>}
       </div>
+      <Footer/>
     </>
   );
 };
