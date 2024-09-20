@@ -12,8 +12,6 @@ body {
     border-radius: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     margin: 0;
-    width: 100vw;
-    height: 100vh;
     overflow: auto;
     color: #fff !important;
 }
@@ -24,16 +22,17 @@ span {
 
 /* Estilo para el calendario */
 .react-calendar {
-    width: 100%;
+    width: 90%;
     height: auto;
     background-color: #374151;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     color: #fff;
     padding: 15px;
-    box-sizing: border-box;
     overflow: hidden;
     margin-top: 0px;
+    margin-left: 4.5%;
+    margin-right: 4.5%;
+    margin-bottom: 20px;
 }
 
 .react-calendar, .react-calendar *, .react-calendar *:before, .react-calendar *:after {
@@ -137,6 +136,7 @@ span {
     margin: 0;
     text-align: center;
     padding: 10px;
+    padding-left: 10%;
 }
 
 /* Estilo para el botón de agregar evento */

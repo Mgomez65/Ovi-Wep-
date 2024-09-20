@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import Header from "../components/header";
+import Footer from "../components/footer"
 import "react-calendar/dist/Calendar.css";
 import "../styles/calendario.css";
 
@@ -357,6 +358,7 @@ const Calendario = ({ view, hideHeader }) => {
           </div>
         </div>
       )}
+      <Footer/>
     </div>
   );
 };
