@@ -1,9 +1,14 @@
-const conexion = require("../../../dataBase/DB")
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 
 exports.getuserId = async ( columna,dato) => {
     try {
-        const [respuesta] =  await conexion.query(`select * from usuario where ${columna} = ?`,[dato])
-        return respuesta.length > 0 ? respuesta : [];
+        return prisma.usuario.findFirst({
+            where: {
+                [columna]: dato,
+            },
+        })
     } catch (error) {
         console.log('Error en la consulta:', error);
         throw error;
@@ -12,12 +17,7 @@ exports.getuserId = async ( columna,dato) => {
 
 exports.getAllUsers = async ( ) => {
     try {
-        const [respuesta] =  await conexion.query("select * from usuario")
-        if (respuesta.length > 0) {
-            return respuesta
-        } else {
-            return null
-        } 
+       return prisma.usuario.findMany()
     } catch (error) {
         console.log('Error en la consulta:', error);
         throw error;

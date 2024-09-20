@@ -65,7 +65,7 @@ app.use('/',require('./Auth/Auth.router'))
 
 
 
-const conexion = require('../dataBase/DB')
+
 
 app.listen(process.env.HOST_PUERTO,(req,res )=>{
     console.log(`Server is running on port ${process.env.HOST_PUERTO}`)

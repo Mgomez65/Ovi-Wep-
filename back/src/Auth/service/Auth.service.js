@@ -1,36 +1,42 @@
-const conexion = require("../../../dataBase/DB")
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 
 exports.getSelectUSer = async (columna, valor) => {
     try {
-        const [resultado] = await conexion.query(`SELECT * FROM usuario WHERE ${columna} = ?`, [valor], async (error) => {
-            if (error) throw error;});
+        const resultado = await prisma.usuario.findMany({
+            where: { [columna]: valor }
+        });
         return resultado.length > 0; 
-    } catch  (error) {
-        console.log(error) 
+    } catch (error) {
+        console.log(error);
+        return null; 
     }
 };
 
 
-exports.createUser = async (data,passHash)=>{
+exports.createUser = async (datos,passHash)=>{
     try {
-        
-        await conexion.query("INSERT into usuario set ?", {Num_empleado:data.Num_empleado, Username: data.Username, Apellido:data.Apellido,CUIL: data.CUIL, Direccion:data.Direccion, Email: data.Email,Password: passHash })
-        const [resultado] = await conexion.query(`SELECT * FROM usuario WHERE Num_empleado = ?`, [data.Num_empleado],async (error) => {
-            if (error) throw error;});
-        return resultado.length > 0 ; 
+        console.log(datos)       
+        const nuevoUsuario = await prisma.usuario.create({
+            data: {
+                Nombre: datos.Nombre,
+                Apellido: datos.Apellido,
+                CUIL: datos.CUIL,
+                Dirrecion: datos.Direccion,
+                Email: datos.Email,
+                Password: passHash,
+                Num_empleado:datos.Num_empleado
+            }
+        });
+        return nuevoUsuario
     }catch (error) {
         console.error("Error al consultar el usuario:", error);
         throw error;
     }}
 
 exports.getuserId = async ( columna,dato) => {
-    try {
-        console.log("entre")
-        const [respuesta] =  await conexion.query(`select * from usuario where ${columna} = ?`,[dato])
-        return respuesta.length > 0 ? respuesta : [];
-    } catch (error) {
-        console.log('Error en la consulta:', error);
-        throw error;
-    }
+    return prisma.usuario.findFirst(
+        { where: { [columna]: dato } } 
+    )
 };

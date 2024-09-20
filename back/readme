@@ -1,18 +1,8 @@
--- tabla de la base de datos 
--- CREATE TABLE usuarios (
---     Num_empleado INT PRIMARY KEY,
---     Username VARCHAR(50),
---     Apellido VARCHAR(50),
---     CUIL VARCHAR(20),
---     Direccion VARCHAR(100),
---     Email VARCHAR(100),
---     Password VARCHAR(50)
--- );
+pasos
+    1) npm i prisma -d
+    2) ir al archivo -env y camiar la clave 
+    arichivo .env HOST_PUERTO = 3000
+    DATABASE_URL="mysql://root:44625617ma.@localhost:3306/ovi_users"
+    3) npx prisma migrate deploy
+    
 
--- CREATE TABLE calendario (
---     id INT AUTO_INCREMENT PRIMARY KEY,
---     titulo VARCHAR(255) NOT NULL,
---     inicio DATETIME NOT NULL,
---     fin DATETIME NOT NULL,
---     color VARCHAR(7) -- formato de color hexadecimal
--- );

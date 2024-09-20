@@ -40,12 +40,12 @@ const Register = () => {
       );
       const userData = response.data;
 
-      setValue("Username", userData.Username);
+      setValue("Username", userData.Nombre);
       setValue("Email", userData.Email);
       setValue("CUIL", userData.CUIL);
       setValue("Apellido", userData.Apellido);
       setValue("Num_empleado", userData.Num_empleado);
-      setValue("Direccion", userData.Direccion);
+      setValue("Direccion", userData.Dirrecion);
       setValue("Password", userData.Password);
 
       setSelectedUser(userData);
@@ -55,6 +55,7 @@ const Register = () => {
   };
 
   const onSubmit = async (data) => {
+ 
     console.log(data);
     try {
       const response = await fetch("http://localhost:3000/register", {
@@ -71,8 +72,6 @@ const Register = () => {
       }
     } catch (error) {
       alert("Error registrando usuario: " + error.message);
-    }finally {
-      reset();
     }
   };
 
@@ -123,7 +122,7 @@ const Register = () => {
                   className="user-button"
                 >
                   <p>
-                    {user.Username} {user.Apellido}
+                    {user.Nombre} {user.Apellido}
                   </p>
                 </button>
               </li>
@@ -143,7 +142,7 @@ const Register = () => {
                       required: "El nombre de usuario es requerido",
                     })}
                   />
-                  {errors.Username && <span>{errors.Username.message}</span>}
+                  {errors.Nombre && <span>{errors.Nombre.message}</span>}
                 </div>
                 <div className="form-field">
                   <input
@@ -215,11 +214,11 @@ const Register = () => {
                   <input
                     type="text"
                     placeholder="Nombre de usuario"
-                    {...register("Username", {
+                    {...register("Nombre", {
                       required: "El nombre de usuario es requerido",
                     })}
                   />
-                  {errors.Username && <span>{errors.Username.message}</span>}
+                  {errors.Nombre && <span>{errors.Nombre.message}</span>}
                 </div>
                 <div className="form-field">
                   <input
@@ -235,7 +234,10 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="CUIL"
-                {...register("CUIL", { required: "El CUIL es requerido" })}
+                {...register("CUIL", { 
+                  required: "El CUIL es requerido",
+                 
+                })}
               />
               {errors.CUIL && <span>{errors.CUIL.message}</span>}
 
@@ -253,10 +255,11 @@ const Register = () => {
               {errors.Email && <span>{errors.Email.message}</span>}
 
               <input
-                type="text"
+                type="number"
                 placeholder="Número de empleado"
                 {...register("Num_empleado", {
                   required: "El número de empleado es requerido",
+                  valueAsNumber: true 
                 })}
               />
               {errors.Num_empleado && (
