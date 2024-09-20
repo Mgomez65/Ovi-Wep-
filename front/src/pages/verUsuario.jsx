@@ -55,22 +55,23 @@ const Register = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
-      console.log(data);
-      const response = await axios.post(
-        "http://localhost:3000/api/register",
-        data
-      );
-
-      if (response.status === 200) {
-        navigate("/home");
-      } else {
-        console.error("Error al iniciar sesión:", response.data.error);
+      const response = await fetch("http://localhost:3000/register", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const respuesta = await response.json();
+      alert(respuesta.message);
+      if (response.ok) {
+        alert(respuesta.message);
       }
     } catch (error) {
-      console.error("Error al registrar:", error);
-      setErrorMessage("Error al registrar. Por favor, inténtalo de nuevo.");
-    } finally {
+      alert("Error registrando usuario: " + error.message);
+    }finally {
       reset();
     }
   };
@@ -116,9 +117,9 @@ const Register = () => {
           </div>
           <ul>
             {users.map((user) => (
-              <li key={user.id}>
+              <li key={user.Num_empleado}>
                 <button
-                  onClick={() => handleUserClick(user.id)}
+                  onClick={() => handleUserClick(user.Num_empleado)}
                   className="user-button"
                 >
                   <p>

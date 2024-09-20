@@ -22,7 +22,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("http://localhost:3000/api/login", {
+      const response = await fetch("http://localhost:3000/login", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
