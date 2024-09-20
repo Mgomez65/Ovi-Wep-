@@ -5,13 +5,64 @@ body {
 }
 
 .footer {
-    padding: 10px;
-    background-color: #374151;
-    padding-right: 25px;
+  padding: 5px;
+  background-color: #374151;
+  padding-right: 25px;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .seccionFooter {
-    text-align: right;
-    margin: 5px;
-    font-size: 18px;
+  padding-right: 2%;
+  font-size: 75px;
+  text-align: right;
+  order: 2;
 }
+
+.containerSeccion2{
+  order: 1;
+  padding-left: 2%;
+}
+
+.footer-section {
+  margin-bottom: 10px;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  justify-content: left;
+  padding-left: 0;
+}
+
+.footer-link {
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none !important;
+}
+
+.footer-link:hover {
+  color: cadetblue;
+}
+
+.footer-correo {
+  margin: 0 15px;
+  color: #007BFF;
+  text-decoration: none;
+  display: inline;
+  border-right: 1px solid white;
+  padding-right: 20px;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer p {
+  font-size: 14px;
+  color: #ffffff;
+}
+
