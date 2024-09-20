@@ -1,7 +1,7 @@
 .containerTituloFechas {
     background-color: #374151;
     padding: 10px;
-    margin: 10px;
+    margin: 20px;
     border-radius: 3px;
     margin-left: 4.5%;
     margin-right: 4.5%;
@@ -38,7 +38,7 @@
 }
 
 .containerDescripcion {
-    margin: 10px;
+    margin: 20px;
     padding: 10px;
     background-color: #374151;
     border-radius: 3px;
@@ -77,7 +77,7 @@
 .containerImagenes {
     background-color: #374151;
     padding: 10px;
-    margin: 10px;
+    margin: 20px;
     border-radius: 3px;
     position: relative;
     margin-left: 4.5%;

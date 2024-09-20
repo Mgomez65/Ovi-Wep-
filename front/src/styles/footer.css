@@ -8,10 +8,29 @@ body {
     padding: 10px;
     background-color: #374151;
     padding-right: 25px;
+    text-align: center;
 }
 
 .seccionFooter {
-    text-align: right;
     margin: 5px;
     font-size: 18px;
+}
+
+.footer-section {
+  margin-bottom: 10px;
+}
+
+.footer-link {
+  margin: 0 15px;
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer p {
+  font-size: 14px;
+  color: #ffffff;
 }
