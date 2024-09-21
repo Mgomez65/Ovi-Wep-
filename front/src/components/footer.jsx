@@ -7,20 +7,19 @@ function Footer() {
   };
 
   return (
-    <footer className="footer">
-      <section className="seccionFooter">Ovi</section>
-
-      <div className="containerSeccion2">
-
-        <div className="footer-section">
+    <footer className="footer">{/* 
+      <section className="seccionFooter">Ovi</section> */}
+      <div className="seccionFooter">
           <p>
-            Contacto:{" "}
+            <p className="tituloContacto">Contacto:</p>
             <p className="footer-correo">
               info@ovi.com
-            </p>{" "}
+            </p>
             Tel: +123 456 789
           </p>
         </div>
+
+      <div className="containerSeccion2">
 
         <div className="footer-section">
           <nav>

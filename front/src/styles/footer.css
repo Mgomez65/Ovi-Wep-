@@ -5,7 +5,7 @@ body {
 }
 
 .footer {
-  padding: 5px;
+  padding: 10px;
   background-color: #374151;
   padding-right: 25px;
   text-align: left;
@@ -16,7 +16,7 @@ body {
 
 .seccionFooter {
   padding-right: 2%;
-  font-size: 75px;
+  font-size: 60px;
   text-align: right;
   order: 2;
 }
@@ -26,13 +26,19 @@ body {
   padding-left: 2%;
 }
 
+.tituloContacto{
+  text-align: right;
+  padding-left: 15px;
+}
+
 .footer-section {
   margin-bottom: 10px;
 }
 
 nav {
+  padding: 10px;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: left;
   padding-left: 0;
 }
