@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const controllers = require('./controllers/calendario.controller')
+const middlewares = require("../middlewares/autenticado.middlewares")
 
-router.get('/getCalendario',controllers.getCalendario)
-router.post('/getCalendarioID',controllers.getCalendarioId)
+router.get('/getCalendario',[middlewares.validar],controllers.getCalendario)
+router.post('/getCalendarioID',[middlewares.validar],controllers.getCalendarioId)
 
-router.post('/createCalendario',controllers.CreateCalendario)
-router.delete('/deleteCalendario/:id',controllers.DeleteCalendario)
+router.post('/createCalendario',[middlewares.validar],controllers.CreateCalendario)
+router.delete('/deleteCalendario/:id',[middlewares.validar],controllers.DeleteCalendario)
 
 
-router.put('/actualizarCalendario/:id',controllers.UpdataCalendarioPut)
+router.put('/actualizarCalendario/:id',[middlewares.validar],controllers.UpdataCalendarioPut)
 
 
 

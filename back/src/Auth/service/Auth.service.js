@@ -26,7 +26,8 @@ exports.createUser = async (datos,passHash)=>{
                 Dirrecion: datos.Direccion,
                 Email: datos.Email,
                 Password: passHash,
-                Num_empleado:datos.Num_empleado
+                Num_empleado:datos.Num_empleado,
+                rol:datos.rol
             }
         });
         return nuevoUsuario

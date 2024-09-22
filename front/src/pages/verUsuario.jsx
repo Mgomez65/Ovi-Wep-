@@ -22,7 +22,9 @@ const Register = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/users");
+        const response = await axios.get("http://localhost:3000/api/users",{
+          withCredentials: true
+        });
         setUsers(response.data);
         console.log(response.data);
       } catch (error) {
@@ -36,7 +38,9 @@ const Register = () => {
   const handleUserClick = async (userId) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/users/${userId}`
+        `http://localhost:3000/api/users/${userId}`,{
+          withCredentials: true,
+        }
       );
       const userData = response.data;
 
@@ -60,6 +64,7 @@ const Register = () => {
     try {
       const response = await fetch("http://localhost:3000/register", {
         method: "post",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

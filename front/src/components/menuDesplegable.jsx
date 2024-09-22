@@ -23,6 +23,23 @@ function MenuDesplegable() {
         }
     };
 
+    const cerraSecion = async () => {
+        const response = await fetch('http://localhost:3000/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+        });
+        if (response.ok) {
+            navigate('/');
+    
+        } else {
+            alert('Error al cerrar sesión');
+        }
+    }
+
+
     useEffect(() => {
         document.addEventListener('mousedown', cerrarMenuSiClicFuera);
         document.addEventListener('keydown', cerrarMenuConEscape);

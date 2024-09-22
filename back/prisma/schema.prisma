@@ -28,6 +28,7 @@ model Usuario {
   CUIL           String  @unique 
   Dirrecion String 
   Password  String
+  rol  String
 }
 model Calendario {
   id Int @id @default(autoincrement())

@@ -18,6 +18,7 @@ CREATE TABLE `Usuario` (
     `CUIL` VARCHAR(191) NOT NULL,
     `Dirrecion` VARCHAR(191) NOT NULL,
     `Password` VARCHAR(191) NOT NULL,
+    `rol` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Usuario_Num_empleado_key`(`Num_empleado`),
     UNIQUE INDEX `Usuario_Email_key`(`Email`),
