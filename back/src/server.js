@@ -1,12 +1,15 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const cors = require('cors');
+const cookieParse = require('cookie-parser')
 const app = express()
 
 const nodemailer = require('nodemailer');
 
 app.use(express.urlencoded({extends:false}))
 app.use(express.json());
+
+app.use(cookieParse())
 
 app.use(cors({
     origin: 'http://localhost:5173', 
@@ -61,8 +64,8 @@ dotenv.config({path: './.env'})
 app.use( '/api',require("./usuarios/usuario.routes"))
 app.use('/calendario',require('./calendario/calendario.routes'))
 app.use('/calendario',require('./calendario/calendario.routes'))
-app.use('/',require('./Auth/Auth.router'))
-
+app.use('/', require('./Auth/Auth.router'))
+app.use('/informe',require('./informe/informe.routes'))
 
 
 

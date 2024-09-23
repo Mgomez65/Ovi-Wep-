@@ -61,6 +61,7 @@ const Calendario = ({ view, hideHeader }) => {
     try {
       const response = await fetch("http://localhost:3000/calendario/getCalendario", {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -111,6 +112,7 @@ const Calendario = ({ view, hideHeader }) => {
     try {
       const response = await fetch("http://localhost:3000/calendario/createCalendario", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -137,6 +139,7 @@ const Calendario = ({ view, hideHeader }) => {
     try {
       const response = await fetch(`http://localhost:3000/calendario/actualizarCalendario/${eventToEdit.id}`, {
         method: "put",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -163,6 +166,7 @@ const Calendario = ({ view, hideHeader }) => {
     try {
       const response = await fetch(`http://localhost:3000/calendario/deleteCalendario/${eventId}`, {
         method: "DELETE",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
