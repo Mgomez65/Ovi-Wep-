@@ -9,7 +9,7 @@ body {
     color: white;
     margin: 0;
     border-radius: 5px;
-    padding: 7px;
+    padding: 6px;
 }
   
 .weather-info {
@@ -20,7 +20,6 @@ body {
 .weather-row {
     display: flex;
     align-items: center;
-    margin-bottom: 2px;
 }
   
 .temperature-container {

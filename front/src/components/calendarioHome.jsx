@@ -8,7 +8,20 @@ const Calendario = ({ hideHeader }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('http://localhost:3000/calendario/getCalendario');
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          throw new Error("Token JWT no encontrado");
+        }
+
+        const response = await fetch('http://localhost:3000/calendario/getCalendario', {
+          method: 'GET',
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: 'include',
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

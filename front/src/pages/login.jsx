@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
@@ -20,7 +19,7 @@ const Login = () => {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  /* const onSubmit = async (data) => {
     try {
       const response = await fetch("http://localhost:3000/login", {
         method: "post",
@@ -34,6 +33,38 @@ const Login = () => {
 
       console.log(respuesta, "entre");
       if (response.status == 200) {
+        navigate("/home");
+      } else {
+        alert(respuesta.message);
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+    }
+  }; */
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include", // Solo si usas cookies
+      });
+  
+      const respuesta = await response.json();
+  
+      console.log(respuesta, "entre");
+  
+      if (response.status === 200) {
+        // Si estás usando un token JWT en el backend:
+        const token = respuesta.token;  // Suponiendo que el token está en `respuesta.token`
+  
+        if (token) {
+          localStorage.setItem('token', token);
+        }
+
         navigate("/home");
       } else {
         alert(respuesta.message);

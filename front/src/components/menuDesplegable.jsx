@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import iconoMenu from '../assets/icon-menu.png'
 import '../styles/menuDesplegable.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function MenuDesplegable() {
     const [estaAbierto, setEstaAbierto] = useState(false);
     const menuRef = useRef(null);
+    const navigate = useNavigate();
 
     const alternarMenu = () => {
         setEstaAbierto(!estaAbierto);
@@ -57,7 +58,7 @@ function MenuDesplegable() {
             {estaAbierto && (
                 <ul className="lista-menu">
                     <li><Link to="/register">Agregar usuario</Link></li>
-                    <li><Link to="/">Cerrar Seción</Link></li>
+                    <li><Link onClick={cerraSecion}>Cerrar Seción</Link></li>
                 </ul>
             )}
         </div>
