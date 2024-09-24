@@ -10,6 +10,11 @@ function Header() {
   const [isSearchMenuVisible, setIsSearchMenuVisible] = useState(false);
   const searchMenuRef = useRef(null);
 
+  const [documentName, setDocumentName] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [description, setDescription] = useState("");
+
   const toggleSearchMenu = (event) => {
     event.preventDefault();
     setIsSearchMenuVisible(prevState => !prevState);

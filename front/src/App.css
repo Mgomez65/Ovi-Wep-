@@ -1,4 +1,9 @@
-
+@media (max-width: 768px) {
+  .element {
+      width: 100%; /* Ajuste para pantallas más pequeñas */
+      height: auto; /* Altura automática */
+  }
+}
 
 /* #root {
   max-width: 1280px;

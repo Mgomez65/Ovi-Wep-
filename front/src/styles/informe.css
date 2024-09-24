@@ -59,6 +59,7 @@
     box-sizing: border-box;
     resize: none;
     display: block;
+    background-color: #dfdfdf;
 }
 
 .inputDescripcion::placeholder {

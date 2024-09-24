@@ -18,30 +18,7 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm();
-
-  /* const onSubmit = async (data) => {
-    try {
-      const response = await fetch("http://localhost:3000/login", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
-      const respuesta = await response.json();
-
-      console.log(respuesta, "entre");
-      if (response.status == 200) {
-        navigate("/home");
-      } else {
-        alert(respuesta.message);
-      }
-    } catch (error) {
-      console.error("Error al iniciar sesión:", error);
-    }
-  }; */
-
+  
   const onSubmit = async (data) => {
     try {
       const response = await fetch("http://localhost:3000/login", {
@@ -50,7 +27,7 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        credentials: "include", // Solo si usas cookies
+        credentials: "include",
       });
   
       const respuesta = await response.json();
@@ -58,8 +35,7 @@ const Login = () => {
       console.log(respuesta, "entre");
   
       if (response.status === 200) {
-        // Si estás usando un token JWT en el backend:
-        const token = respuesta.token;  // Suponiendo que el token está en `respuesta.token`
+        const token = respuesta.token;
   
         if (token) {
           localStorage.setItem('token', token);
