@@ -22,18 +22,14 @@ const Informe = () => {
 
   const handleFileUpload = async (event) => {
     event.preventDefault();
-
+  
+    // Imprime los valores de los campos del formulario
     console.log("Título:", titulo);
     console.log("Fecha Inicio:", fechaInicio);
     console.log("Fecha Final:", fechaFinal);
     console.log("Contenido:", contenido);
   
-    if (selectedFiles.length === 0) {
-      setUploadMessage("Por favor, selecciona al menos un archivo para subir.");
-      return;
-    }
-  
-    // Asegúrate de que los valores del formulario sean válidos
+    // Validación de los campos del formulario
     if (!titulo || !fechaInicio || !fechaFinal || !contenido) {
       setUploadMessage("Por favor, completa todos los campos del formulario.");
       return;
@@ -42,43 +38,41 @@ const Informe = () => {
     setUploading(true);
     setUploadMessage("");
   
-    const formData = new FormData();
-
-    selectedFiles.forEach((file) => {
-        formData.append("files", file);
-    });
+    // Crear un objeto JSON para enviar al backend
+    const data = {
+      titulo,
+      fecha_inicio: fechaInicio, // Cambiado a "fecha_inicio"
+      fecha_final: fechaFinal, // Cambiado a "fecha_final"
+      contenido, // Cambiado a "contenido"
+    };
   
-    // Agregar datos del formulario a FormData
-    formData.append("titulo", titulo); // Cambiado a "titulo"
-    formData.append("fecha_inicio", fechaInicio); // Cambiado a "fecha_inicio"
-    formData.append("fecha_final", fechaFinal); // Cambiado a "fecha_final"
-    formData.append("contenido", contenido); // Cambiado a "contenido"
-    
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value); // Esto mostrará cada par clave-valor
-    }
-  
-
     try {
       const response = await fetch("http://localhost:3000/informe/create", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json", // Establece el tipo de contenido a JSON
+        },
+        body: JSON.stringify(data), // Convierte el objeto a JSON
+        credentials: "include",
       });
   
       if (response.ok) {
         const result = await response.json();
-        setUploadMessage("Archivos y datos enviados exitosamente");
-        // Limpiar campos después de la presentación exitosa
+        setUploadMessage("Datos enviados exitosamente");
+  
+        // Limpiar campos después del éxito
         setTitulo("");
         setFechaInicio("");
         setFechaFinal("");
         setContenido("");
-        setSelectedFiles([]);
       } else {
-        setUploadMessage("Error al subir los archivos y datos");
+        const errorText = await response.text();
+        console.error("Error en la respuesta del servidor:", errorText);
+        setUploadMessage("Error al enviar los datos");
       }
     } catch (error) {
-      setUploadMessage("Error al subir los archivos y datos");
+      console.error("Error al enviar los datos:", error);
+      setUploadMessage("Error al enviar los datos");
     } finally {
       setUploading(false);
     }
@@ -93,66 +87,58 @@ const Informe = () => {
   return (
     <>
       <Header />
-      <div className="containerTituloFechas">
-        <h2>Título de la documentación</h2>
-        <input
-          type="text"
-          placeholder="Nombre del documento"
-          value={titulo} // Cambiado a "titulo"
-          onChange={(e) => setTitulo(e.target.value)} // Cambiado a "setTitulo"
-        />
-        <div className="Fechas">
-          <div>
-            <h2>Fecha de inicio</h2>
-            <input
-              type="date"
-              name="fechaInicio"
-              id="fechaInicio"
-              value={fechaInicio} // Cambiado a "fechaInicio"
-              onChange={(e) => setFechaInicio(e.target.value)} // Cambiado a "setFechaInicio"
-            />
-          </div>
-          <div>
-            <h2>Fecha de finalizado</h2>
-            <input
-              type="date"
-              name="fechaFin"
-              id="fechaFin"
-              value={fechaFinal} // Cambiado a "fechaFinal"
-              onChange={(e) => setFechaFinal(e.target.value)} // Cambiado a "setFechaFinal"
-            />
+      <form onSubmit={handleFileUpload} className="form-container">
+        <div className="containerTituloFechas">
+          <h2>Título de la documentación</h2>
+          <input
+            type="text"
+            placeholder="Nombre del documento"
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+          />
+          <div className="Fechas">
+            <div>
+              <h2>Fecha de inicio</h2>
+              <input
+                type="date"
+                name="fechaInicio"
+                id="fechaInicio"
+                value={fechaInicio}
+                onChange={(e) => setFechaInicio(e.target.value)}
+              />
+            </div>
+            <div>
+              <h2>Fecha de finalizado</h2>
+              <input
+                type="date"
+                name="fechaFin"
+                id="fechaFin"
+                value={fechaFinal}
+                onChange={(e) => setFechaFinal(e.target.value)}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="containerDescripcion">
-        <h2>Descripción</h2>
-        <textarea
-          type="text"
-          name="contenido" // Cambiado a "contenido"
-          id="contenido" // Cambiado a "contenido"
-          placeholder="Descripción"
-          className="inputDescripcion"
-          value={contenido} // Cambiado a "contenido"
-          onChange={(e) => setContenido(e.target.value)} // Cambiado a "setContenido"
-        />
-      </div>
-      <div className="containerImagenes">
-        <h2>Imágenes relacionadas</h2>
-        <div className="upload-container">
-          <form onSubmit={handleFileUpload}>
+
+        <div className="containerDescripcion">
+          <h2>Descripción</h2>
+          <textarea
+            name="contenido"
+            id="contenido"
+            placeholder="Descripción"
+            className="inputDescripcion"
+            value={contenido}
+            onChange={(e) => setContenido(e.target.value)}
+          />
+        </div>
+
+        <div className="containerImagenes">
+          <h2>Imágenes relacionadas</h2>
+          <div className="upload-container">
             <div className="botonesForm">
               <label htmlFor="fileInput" className="custom-file-upload">
                 Seleccionar Imágenes
               </label>
-              <div className="divBotonSubir">
-                <button
-                  type="submit"
-                  disabled={uploading}
-                  className="botonSubir"
-                >
-                  {uploading ? "Subiendo..." : "Subir Imágenes y Datos"}
-                </button>
-              </div>
               <input
                 type="file"
                 id="fileInput"
@@ -162,6 +148,15 @@ const Informe = () => {
                 onChange={handleFileChange}
                 style={{ display: 'none' }} // Esconder el input de archivo
               />
+              <div className="divBotonSubir">
+                <button
+                  type="submit"
+                  disabled={uploading}
+                  className="botonSubir"
+                >
+                  {uploading ? "Subiendo..." : "Subir Imágenes y Datos"}
+                </button>
+              </div>
             </div>
             <div>
               {selectedFiles.map((file, index) => (
@@ -181,10 +176,10 @@ const Informe = () => {
                 </div>
               ))}
             </div>
-          </form>
+          </div>
+          {uploadMessage && <p>{uploadMessage}</p>}
         </div>
-        {uploadMessage && <p>{uploadMessage}</p>}
-      </div>
+      </form>
       <Footer />
     </>
   );

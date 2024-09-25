@@ -30,6 +30,7 @@ exports.getInformeId = async (req, res) => {
 exports.createIforme = async (req, res) => {
     try {
         const data = req.body
+        console.log(data)
         const informe = await serciosInforme.createIforme(data)
         if (!informe) {
             return res.status(500).send('Error interno del servidor');
