@@ -30,12 +30,11 @@ exports.getInformeId = async (req, res) => {
 exports.createIforme = async (req, res) => {
     try {
         const data = req.body
-        console.log(data)
         const informe = await serciosInforme.createIforme(data)
         if (!informe) {
             return res.status(500).send('Error interno del servidor');
         }
-        res.status(201).json({message:"informe creado con exitosamente "})
+        res.status(200).json({mensage:"informe creado con exitosamente "})
     } catch (error) {
         console.log(error)
     }
@@ -68,4 +67,12 @@ exports.updateInforme = async (req, res) => {
     }
 }
 
-exports.searchInforme = async (req, res) => {}
+exports.searchInforme = async (req, res) => {
+    const data = req.body.titulo
+    console.log(typeof(data))
+    const informes = await serciosInforme.searchInforme(data)
+    if (!informes) {
+        return res.status(404).send('No hay informes disponibles');
+    }
+    res.status(200).json(informes);
+}

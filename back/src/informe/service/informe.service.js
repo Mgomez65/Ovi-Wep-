@@ -21,8 +21,6 @@ exports.getInformeId = async (idInforme) => {
     }
 }
 exports.createIforme = async (valores) => {
-    console.log(valores)
-
     try {
         // Función para convertir 'DD-MM-YYYY' a 'YYYY-MM-DD'
         function convertirFecha(fecha) {
@@ -94,4 +92,21 @@ exports.updateInforme = async (idInforme, valor) => {
         console.error("Error al actualizar el informe:", error);
         throw error;
     }
+}
+
+exports.searchInforme = async(valor)=>{
+    try {
+        return await prisma.informe.findMany({
+            where: {
+                OR: [
+                    { titulo: { contains: valor, mode: 'insensitive' } },
+                    { fecha_inicio: { contains: valor, mode: 'insensitive' } },
+                ],
+            },
+        });
+    } catch (error) {
+        console.error("Error al buscar el informe:", error);
+        throw error;
+    }
+
 }

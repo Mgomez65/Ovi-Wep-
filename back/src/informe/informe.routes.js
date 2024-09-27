@@ -15,7 +15,7 @@ router.delete("/delete/:id",controllerinforme.deleteInforme)
 router.put("/update/:id",controllerinforme.updateInforme)
 
 
-router.get("/search", controllerinforme.searchInforme)
+router.post("/search", controllerinforme.searchInforme)
 
 
 

@@ -21,7 +21,7 @@ const Termometro = () => {
     useEffect(() => {
         const fetchData = () => {
             setTimeout(() => {
-                const simulatedHumidity = 45;
+                const simulatedHumidity = 80;
                 setHumidity(simulatedHumidity);
             }, 1000);
         };

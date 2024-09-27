@@ -23,11 +23,6 @@ const Informe = () => {
   const handleFileUpload = async (event) => {
     event.preventDefault();
   
-    // Imprime los valores de los campos del formulario
-    console.log("Título:", titulo);
-    console.log("Fecha Inicio:", fechaInicio);
-    console.log("Fecha Final:", fechaFinal);
-    console.log("Contenido:", contenido);
   
     // Validación de los campos del formulario
     if (!titulo || !fechaInicio || !fechaFinal || !contenido) {
@@ -55,9 +50,10 @@ const Informe = () => {
         body: JSON.stringify(data), // Convierte el objeto a JSON
         credentials: "include",
       });
-  
+      const result = await response.json();
+     console.log(result)
       if (response.ok) {
-        const result = await response.json();
+        alert(result.mensage)
         setUploadMessage("Datos enviados exitosamente");
   
         // Limpiar campos después del éxito

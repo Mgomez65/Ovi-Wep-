@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controllersAuth = require("./controller/Auth.controller")
 
-router.post("/register", controllersAuth.register)
+router.post("/register",  controllersAuth.register)
 router.post("/login",controllersAuth.login)
 router.post('/logout', (req, res) => {
     res.cookie('Acceso_token', '', { maxAge: 1 });
