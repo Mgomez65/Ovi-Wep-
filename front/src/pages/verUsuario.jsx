@@ -50,7 +50,7 @@ const Register = () => {
       setValue("Apellido", userData.Apellido);
       setValue("Num_empleado", userData.Num_empleado);
       setValue("rol", userData.rol);
-      setValue("Direccion", userData.Direccion);
+      setValue("Dirrecion", userData.Dirrecion);
       setValue("Password", userData.Password);
 
       setSelectedUser(userData);
@@ -142,7 +142,7 @@ const Register = () => {
                 <div className="form-field">
                   <input
                     type="text"
-                    placeholder="Nombre de usuario"
+                    placeholder="Nombre"
                     {...register("Username", {
                       required: "El nombre de usuario es requerido",
                     })}
@@ -203,7 +203,7 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="Dirección"
-                {...register("Direccion", {
+                {...register("Dirrecion", {
                   required: "La dirección es requerida",
                 })}
               />
@@ -227,9 +227,9 @@ const Register = () => {
                 <div className="form-field">
                   <input
                     type="text"
-                    placeholder="Nombre de usuario"
+                    placeholder="Nombre"
                     {...register("Nombre", {
-                      required: "El nombre de usuario es requerido",
+                      required: "El nombre es requerido",
                     })}
                   />
                   {errors.Nombre && <span>{errors.Nombre.message}</span>}
@@ -291,7 +291,7 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="Dirección"
-                {...register("Direccion", {
+                {...register("Dirrecion", {
                   required: "La dirección es requerida",
                 })}
               />
