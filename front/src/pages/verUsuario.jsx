@@ -191,6 +191,15 @@ const Register = () => {
                 <span>{errors.Num_empleado.message}</span>
               )}
 
+              <div className="form-field">
+                <select {...register("rol", { required: "El rol es requerido" })}>
+                  <option value="">Selecciona un rol</option>
+                  <option value="admin">Admin</option>
+                  <option value="usuario">Usuario</option>
+                </select>
+                {errors.rol && <span>{errors.rol.message}</span>}
+              </div>
+
               <input
                 type="text"
                 placeholder="Dirección"
@@ -208,16 +217,6 @@ const Register = () => {
                 })}
               />
               {errors.Password && <span>{errors.Password.message}</span>}
-
-              <div className="form-field">
-                <label>Rol</label>
-                <select {...register("rol", { required: "El rol es requerido" })}>
-                  <option value="">Selecciona un rol</option>
-                  <option value="admin">Admin</option>
-                  <option value="usuario">Usuario</option>
-                </select>
-                {errors.rol && <span>{errors.rol.message}</span>}
-              </div>
 
               <button type="submit">Actualizar Usuario</button>
             </form>
@@ -280,6 +279,15 @@ const Register = () => {
                 <span>{errors.Num_empleado.message}</span>
               )}
 
+              <div className="form-field">
+                <select {...register("rol", { required: "El rol es requerido" })}>
+                  <option value="">Selecciona un rol</option>
+                  <option value="admin">Admin</option>
+                  <option value="usuario">Usuario</option>
+                </select>
+                {errors.rol && <span>{errors.rol.message}</span>}
+              </div>
+
               <input
                 type="text"
                 placeholder="Dirección"
@@ -297,17 +305,6 @@ const Register = () => {
                 })}
               />
               {errors.Password && <span>{errors.Password.message}</span>}
-
-              {/* Nuevo campo para seleccionar el rol */}
-              <div className="form-field">
-                <label>Rol</label>
-                <select {...register("rol", { required: "El rol es requerido" })}>
-                  <option value="">Selecciona un rol</option>
-                  <option value="admin">Admin</option>
-                  <option value="usuario">Usuario</option>
-                </select>
-                {errors.rol && <span>{errors.rol.message}</span>}
-              </div>
 
               <button type="submit">Registrar Usuario</button>
             </form>
