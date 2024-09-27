@@ -17,13 +17,13 @@ const Register = () => {
     reset,
     setValue,
   } = useForm();
-  const [selectedUser, setSelectedUser] = React.useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/users",{
-          withCredentials: true
+        const response = await axios.get("http://localhost:3000/api/users", {
+          withCredentials: true,
         });
         setUsers(response.data);
         console.log(response.data);
@@ -38,7 +38,7 @@ const Register = () => {
   const handleUserClick = async (userId) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/users/${userId}`,{
+        `http://localhost:3000/api/users/${userId}`, {
           withCredentials: true,
         }
       );
@@ -49,7 +49,8 @@ const Register = () => {
       setValue("CUIL", userData.CUIL);
       setValue("Apellido", userData.Apellido);
       setValue("Num_empleado", userData.Num_empleado);
-      setValue("Direccion", userData.Dirrecion);
+      setValue("rol", userData.rol);
+      setValue("Direccion", userData.Direccion);
       setValue("Password", userData.Password);
 
       setSelectedUser(userData);
@@ -59,7 +60,6 @@ const Register = () => {
   };
 
   const onSubmit = async (data) => {
- 
     console.log(data);
     try {
       const response = await fetch("http://localhost:3000/register", {
@@ -209,6 +209,16 @@ const Register = () => {
               />
               {errors.Password && <span>{errors.Password.message}</span>}
 
+              <div className="form-field">
+                <label>Rol</label>
+                <select {...register("rol", { required: "El rol es requerido" })}>
+                  <option value="">Selecciona un rol</option>
+                  <option value="admin">Admin</option>
+                  <option value="usuario">Usuario</option>
+                </select>
+                {errors.rol && <span>{errors.rol.message}</span>}
+              </div>
+
               <button type="submit">Actualizar Usuario</button>
             </form>
           ) : (
@@ -241,7 +251,6 @@ const Register = () => {
                 placeholder="CUIL"
                 {...register("CUIL", { 
                   required: "El CUIL es requerido",
-                 
                 })}
               />
               {errors.CUIL && <span>{errors.CUIL.message}</span>}
@@ -289,9 +298,18 @@ const Register = () => {
               />
               {errors.Password && <span>{errors.Password.message}</span>}
 
-              {errorMessage && <p>{errorMessage}</p>}
+              {/* Nuevo campo para seleccionar el rol */}
+              <div className="form-field">
+                <label>Rol</label>
+                <select {...register("rol", { required: "El rol es requerido" })}>
+                  <option value="">Selecciona un rol</option>
+                  <option value="admin">Admin</option>
+                  <option value="usuario">Usuario</option>
+                </select>
+                {errors.rol && <span>{errors.rol.message}</span>}
+              </div>
 
-              <button type="submit">Registrarse</button>
+              <button type="submit">Registrar Usuario</button>
             </form>
           )}
         </div>
