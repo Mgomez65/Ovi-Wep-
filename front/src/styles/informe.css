@@ -177,3 +177,7 @@ input[type="file"] {
     grid-template-columns: repeat(2, 1fr);
     margin: 0;
 }
+
+.uploaded-files-container{
+    color: black;
+}
