@@ -96,7 +96,6 @@ function Header() {
                 
                 {/* Muestra los archivos subidos justo debajo del buscador */}
                 <div className="uploaded-files-container">
-                  <h2>Archivos Guardados</h2>
                   {uploadedFiles.length > 0 ? (
                     uploadedFiles.map((file) => (
                       <div key={file.id} className="uploaded-file-item">
