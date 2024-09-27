@@ -119,7 +119,7 @@ body {
 }
 
 .form-field select {
-    width: 100%;
+    width: 103.5%;
     padding: 8px;
     margin-bottom: 1rem;
     border: none;
@@ -128,12 +128,8 @@ body {
     background-color: #dfdfdf;
     color: #000000;
     font-size: 15px;
-    appearance: none; /* Elimina el estilo por defecto del select */
-    -webkit-appearance: none; /* Para Safari */
-    -moz-appearance: none; /* Para Firefox */
     cursor: pointer;
     position: relative;
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDE0IDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgMUwxNCA4TTE0IDFMMCA4IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==');
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 12px;
