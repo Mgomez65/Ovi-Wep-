@@ -52,11 +52,36 @@ body {
     position: absolute;
     top: 10%;
     right: 0;
-    background-color: #1a1d42;
-    border: 0px solid #ccc;
+    background-color: #161726;
+    border: 0px solid black;
     padding: 10px;
     z-index: 1000;
 }
+
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+  
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+  
+.search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: transparent !important;
+    cursor: pointer;
+}
+  
+.search-button img {
+    height: 25px;
+}
+  
 
 .searchMenu input {
     width: 95%;
@@ -66,9 +91,30 @@ body {
 }
 
 .searchMenu button {
-    padding: 5px 10px;
     border: none;
-    background-color: #007bff;
+    background-color: #374151;
     color: white;
     cursor: pointer;
+}
+.uploaded-file-item {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #374151;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.botonEditar, .botonEliminar {
+    background-color: transparent !important;
+    border: none;
+    padding: 5px !important;
+}
+
+.Eliminar{
+    height: 25px;
+}
+
+.Editar{
+    height: 25px;
 }

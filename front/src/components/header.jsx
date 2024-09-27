@@ -1,6 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import iconoVolver from "../assets/icon-volver.png";
+import iconoElimar from "../assets/icon-eliminar.png";
+import iconoEditar from "../assets/icon-editar.png";
+import iconoBuscar from "../assets/icon-buscar.png";
 import Menu from "./menuDesplegable";
 import "../styles/header.css";
 
@@ -34,7 +37,6 @@ function Header() {
     };
   }, []);
 
-  // Obtener archivos de la base de datos al cargar el componente
   useEffect(() => {
     const fetchFiles = async () => {
       try {
@@ -43,7 +45,7 @@ function Header() {
           credentials: "include",
         });
         const result = await response.json();
-        console.log(result); // Verifica la respuesta
+        console.log(result);
         if (response.ok) {
           setUploadedFiles(result);
         } else {
@@ -63,7 +65,7 @@ function Header() {
         credentials: "include",
       });
       if (response.ok) {
-        setUploadedFiles(uploadedFiles.filter(file => file.id !== fileId)); // Actualiza el estado local
+        setUploadedFiles(uploadedFiles.filter(file => file.id !== fileId));
         setUploadMessage("Archivo eliminado exitosamente");
       } else {
         setUploadMessage("Error al eliminar el archivo");
@@ -91,17 +93,22 @@ function Header() {
             </a>
             {isSearchMenuVisible && (
               <div className="searchMenu" ref={searchMenuRef}>
-                <input type="text" placeholder="Buscar..." />
-                <button>Buscar</button>
-                
-                {/* Muestra los archivos subidos justo debajo del buscador */}
+                <div className="search-container">
+                  <input type="text" placeholder="Buscar..." className="search-input" />
+                  <button className="search-button">
+                    <img src={iconoBuscar} alt="Buscar" className="Buscar" />
+                  </button>
+                </div>
+
                 <div className="uploaded-files-container">
                   {uploadedFiles.length > 0 ? (
                     uploadedFiles.map((file) => (
                       <div key={file.id} className="uploaded-file-item">
-                        <span>{file.titulo}</span> {/* Muestra el título del archivo */}
-                        <button onClick={() => handleUpdateFile(file.id)}>Actualizar</button>
-                        <button onClick={() => handleRemoveFile(file.id)}>Eliminar</button>
+                        <span>{file.titulo}</span>
+                        <div className="botonesEliminarActualizar">
+                          <button onClick={() => handleUpdateFile(file.id)} className="botonEditar"><img src={iconoEditar} alt="Actualizar" className="Editar" /></button>
+                          <button onClick={() => handleRemoveFile(file.id)} className="botonEliminar"><img src={iconoElimar} alt="Eliminar" className="Eliminar" /></button>
+                        </div>
                       </div>
                     ))
                   ) : (
