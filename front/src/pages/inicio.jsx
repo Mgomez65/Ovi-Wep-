@@ -40,20 +40,6 @@ const Inicio = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      console.log(data);
-      const response = await axios.post(
-        "http://localhost:3000/send-email",
-        data
-      );
-      alert("Correo enviado");
-    } catch (error) {
-      console.error("Error al enviar el correo:", error);
-      alert("Hubo un error al enviar el correo");
-    }
-  };
-
   return (
     <>
       <div className="containerNavbar">
