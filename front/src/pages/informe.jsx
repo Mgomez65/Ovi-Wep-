@@ -21,20 +21,35 @@ const Informe = () => {
   console.log(fileId)
   console.log("Estado de ubicación:", location.state); 
 
-  // Efecto para llenar el formulario con datos del informe al cargar el componente
   useEffect(() => {
-    if (fileId) {
-      setTitulo(fileId.titulo || ""); // Asegúrate de que no sea undefined
-      setFechaInicio(fileId.fecha_inicio || ""); 
-      setFechaFinal(fileId.fecha_final || ""); 
-      setContenido(fileId.contenido || ""); 
-      setSelectedInforme(fileId); 
-
-      if (fileId.archivos) {
-        setExistingFiles(fileId.archivos);
+    const fetchInforme = async () => {
+      if (fileId) {
+        try {
+          const response = await fetch(`http://localhost:3000/informe/user/${fileId}`);
+          if (!response.ok) {
+            const errorResponse = await response.json();
+            console.error("Error al obtener el informe:", errorResponse);
+            throw new Error('Error al obtener el informe');
+          }
+          const data = await response.json();
+          console.log("Datos obtenidos:", data); // Muestra los datos recibidos
+          
+          // Asegúrate de que las fechas estén en el formato YYYY-MM-DD
+          setTitulo(data.titulo || "");
+          setFechaInicio(data.fecha_inicio ? new Date(data.fecha_inicio).toISOString().split('T')[0] : ""); 
+          setFechaFinal(data.fecha_final ? new Date(data.fecha_final).toISOString().split('T')[0] : ""); 
+          setContenido(data.contenido || ""); 
+          setSelectedInforme(data);
+        } catch (error) {
+          console.error("Error al obtener el informe:", error);
+          setUploadMessage("Error al cargar los datos del informe.");
+        }
       }
-    }
+    };
+  
+    fetchInforme();
   }, [fileId]);
+  
 
   const handleFileUpdate = async (event) => {
     event.preventDefault();
@@ -52,7 +67,7 @@ const Informe = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/informe/update/${selectedInforme.id}`, {
+      const response = await fetch(`http://localhost:3000/informe/update/${fileId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -60,9 +75,14 @@ const Informe = () => {
         body: JSON.stringify(data),
         credentials: "include",
       });
+      const result = await response.json();
       if (response.ok) {
+        alert(result.mensage);
         setUploadMessage("Archivo actualizado exitosamente");
+        window.location.reload();
       } else {
+        const errorText = await response.text();
+        console.error("Error en la respuesta del servidor:", errorText);
         setUploadMessage("Error al actualizar el archivo");
       }
     } catch (error) {
@@ -202,7 +222,7 @@ const Informe = () => {
                     disabled={uploading}
                     className="botonSubir"
                   >
-                    {uploading ? "Subiendo..." : selectedInforme ? "Actualizar Informe" : "Subir Imágenes y Datos"}
+                    {uploading ? "Subiendo..." : selectedInforme ? "Actualizar Informe" : "Guardar Datos"}
                   </button>
                 </div>
               </div>

@@ -43,6 +43,12 @@ function Header() {
     navigate(`/informe`, { state: { fileId } });
   };
 
+  const handleCreateReport = () => {
+    console.log("Navegando a crear un nuevo informe con fileId: null");
+    window.location.reload();
+    navigate(`/informe`, { state: { fileId: null } });
+  };
+
   const fetchFiles = async () => {
     try {
       const response = await fetch("http://localhost:3000/informe/users", {
@@ -73,13 +79,11 @@ function Header() {
       });
       if (response.ok) {
         setUploadedFiles(uploadedFiles.filter(file => file.id !== fileId));
-        setUploadMessage("Archivo eliminado exitosamente");
       } else {
-        setUploadMessage("Error al eliminar el archivo");
+        console.error("Error al eliminar el archivo");
       }
     } catch (error) {
       console.error("Error al eliminar el archivo:", error);
-      setUploadMessage("Error al eliminar el archivo");
     }
   };
 
@@ -107,14 +111,24 @@ function Header() {
                   </button>
                 </div>
 
+                <div className="CrearInforme">
+                  <button onClick={handleCreateReport} className="botonCrearInforme">
+                    Crear Informe
+                  </button>
+                </div>
+
                 <div className="uploaded-files-container">
                   {uploadedFiles.length > 0 ? (
                     uploadedFiles.map((file) => (
                       <div key={file.id} className="uploaded-file-item">
                         <span>{file.titulo}</span>
                         <div className="botonesEliminarActualizar">
-                          <button onClick={() => handleUpdateFile(file.id)} className="botonEditar"><img src={iconoEditar} alt="Actualizar" className="Editar" /></button>
-                          <button onClick={() => handleRemoveFile(file.id)} className="botonEliminar"><img src={iconoElimar} alt="Eliminar" className="Eliminar" /></button>
+                          <button onClick={() => handleUpdateFile(file.id)} className="botonEditar">
+                            <img src={iconoEditar} alt="Actualizar" className="Editar" />
+                          </button>
+                          <button onClick={() => handleRemoveFile(file.id)} className="botonEliminar">
+                            <img src={iconoElimar} alt="Eliminar" className="Eliminar" />
+                          </button>
                         </div>
                       </div>
                     ))
