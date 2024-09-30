@@ -222,7 +222,7 @@ const Informe = () => {
                     disabled={uploading}
                     className="botonSubir"
                   >
-                    {uploading ? "Subiendo..." : selectedInforme ? "Actualizar Informe" : "Guardar Datos"}
+                    {uploading ? "Subiendo..." : selectedInforme ? "Guardar Informe" : "Crear Informe"}
                   </button>
                 </div>
               </div>
