@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import iconoVolver from "../assets/icon-volver.png";
 import iconoElimar from "../assets/icon-eliminar.png";
@@ -9,6 +9,7 @@ import "../styles/header.css";
 
 function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isInformePage = location.pathname === "/informe";
   const [isSearchMenuVisible, setIsSearchMenuVisible] = useState(false);
   const searchMenuRef = useRef(null);
@@ -37,25 +38,31 @@ function Header() {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/informe/users", {
-          method: "GET",
-          credentials: "include",
-        });
-        const result = await response.json();
-        console.log(result);
-        if (response.ok) {
-          setUploadedFiles(result);
-        } else {
-          console.error("Error al cargar los archivos");
-        }
-      } catch (error) {
-        console.error("Error al cargar los archivos:", error);
+  const handleUpdateFile = (fileId) => {
+    console.log("Navegando a informe con fileId:", fileId);
+    navigate(`/informe`, { state: { fileId } });
+  };
+
+  const fetchFiles = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/informe/users", {
+        method: "GET",
+        credentials: "include",
+      });
+      const result = await response.json();
+      console.log(result);
+      if (response.ok) {
+        setUploadedFiles(result);
+      } else {
+        console.error("Error al cargar los archivos");
       }
-    };
-    fetchFiles();
+    } catch (error) {
+      console.error("Error al cargar los archivos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFiles(); // Cargar archivos al montar el componente
   }, []);
 
   const handleRemoveFile = async (fileId) => {
