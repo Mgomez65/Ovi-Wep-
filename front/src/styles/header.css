@@ -127,3 +127,7 @@ body {
     width: 100%;
     padding: 5px;
 }
+
+.botonCrearInforme:hover{
+    background-color: #272e3a;
+}
