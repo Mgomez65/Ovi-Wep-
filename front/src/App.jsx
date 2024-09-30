@@ -9,6 +9,7 @@ import Inicio from './pages/inicio';
 import AboutOVI from './pages/about';
 import TermsConditions from './pages/terminosCondiciones';
 import PrivacyPolicy from './pages/politicas';
+import { ContactUs } from './components/contacto';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path='/about' element={<AboutOVI/>} />
           <Route path='/terminos-y-condiciones' element={<TermsConditions/>} />
           <Route path='/politicas-de-privacidad' element={<PrivacyPolicy/>} />
+          
         </Routes>
       </Router>
     </>
