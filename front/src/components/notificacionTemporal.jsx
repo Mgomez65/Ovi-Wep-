@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
-import "../styles/notificacionTemporal.css"; // Estilos del cartel
+import "../styles/notificacionTemporal.css";
 
-function ConfirmacionTemporal({ mensaje, onClose }) {
+function ConfirmacionTemporal({ mensaje, onClose, shouldReload }) {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClose = () => {
     setIsVisible(false);
-    onClose(); // Llama a la función cuando se cierra el cartel
-    window.location.reload(); 
+    onClose();
+    if (shouldReload) {
+      window.location.reload();
+    }
   };
 
   if (!isVisible) {
-    return null; // Si no está visible, no se muestra el cartel
+    return null;
   }
 
   return (
     <div className="cartel-confirmacion">
       <div className="cartel-contenido">
         <p>{mensaje}</p>
-        <button onClick={handleClose}>Cerrar</button> {/* Botón para cerrar el cartel */}
+        <button onClick={handleClose}>Cerrar</button>
       </div>
     </div>
   );
