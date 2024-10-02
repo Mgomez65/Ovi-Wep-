@@ -104,7 +104,7 @@ const Weather = () => {
           </div>
           {showConfirmation && (
             <ConfirmacionTemporal
-              mensaje="Se espera lluvia. ¿Quieres refrescar la página?"
+              mensaje="Se espera lluvia"
               onClose={handleCloseConfirmation}
               shouldReload={shouldReload} // Pasar la prop para controlar el refresco
             />
