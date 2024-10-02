@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import React from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import ConfirmacionTemporal from "../components/notificacionTemporal";
 import "../styles/informe.css";
 
 const Informe = () => {
@@ -15,11 +16,11 @@ const Informe = () => {
   const [uploading, setUploading] = useState(false);
   const [selectedInforme, setSelectedInforme] = useState(null);
   const [existingFiles, setExistingFiles] = useState([]);
+  const [showConfirmacion, setShowConfirmacion] = useState(false); 
+  const [mensajeConfirmacion, setMensajeConfirmacion] = useState(""); 
 
   const location = useLocation();
-  const fileId = location.state?.fileId; // Asumiendo que 'informe' se pasa desde el estado
-  console.log(fileId)
-  console.log("Estado de ubicación:", location.state); 
+  const fileId = location.state?.fileId;
 
   useEffect(() => {
     const fetchInforme = async () => {
@@ -32,9 +33,7 @@ const Informe = () => {
             throw new Error('Error al obtener el informe');
           }
           const data = await response.json();
-          console.log("Datos obtenidos:", data); // Muestra los datos recibidos
-          
-          // Asegúrate de que las fechas estén en el formato YYYY-MM-DD
+          console.log("Datos obtenidos:", data);
           setTitulo(data.titulo || "");
           setFechaInicio(data.fecha_inicio ? new Date(data.fecha_inicio).toISOString().split('T')[0] : ""); 
           setFechaFinal(data.fecha_final ? new Date(data.fecha_final).toISOString().split('T')[0] : ""); 
@@ -42,7 +41,8 @@ const Informe = () => {
           setSelectedInforme(data);
         } catch (error) {
           console.error("Error al obtener el informe:", error);
-          setUploadMessage("Error al cargar los datos del informe.");
+          setShowConfirmacion(true); 
+          setMensajeConfirmacion("Error al cargar los datos del informe"); 
         }
       }
     };
@@ -77,17 +77,18 @@ const Informe = () => {
       });
       const result = await response.json();
       if (response.ok) {
-        alert(result.mensage);
-        setUploadMessage("Archivo actualizado exitosamente");
-        window.location.reload();
+        setMensajeConfirmacion("Archivo actualizado exitosamente"); 
+        setShowConfirmacion(true); 
       } else {
         const errorText = await response.text();
         console.error("Error en la respuesta del servidor:", errorText);
-        setUploadMessage("Error al actualizar el archivo");
+        setMensajeConfirmacion("Error al actualizar el archivo"); 
+        setShowConfirmacion(true); 
       }
     } catch (error) {
       console.error("Error al actualizar el archivo:", error);
-      setUploadMessage("Error al actualizar el archivo");
+      setMensajeConfirmacion("Error al actualizar el archivo"); 
+      setShowConfirmacion(true); 
     }
   };
 
@@ -120,17 +121,18 @@ const Informe = () => {
       });
       const result = await response.json();
       if (response.ok) {
-        alert(result.mensage);
-        setUploadMessage("Datos enviados exitosamente");
-        window.location.reload();
+        setMensajeConfirmacion("Informe creado exitosamente"); 
+        setShowConfirmacion(true);
       } else {
         const errorText = await response.text();
         console.error("Error en la respuesta del servidor:", errorText);
-        setUploadMessage("Error al enviar los datos");
+        setMensajeConfirmacion("Error al enviar los datos"); 
+        setShowConfirmacion(true);
       }
     } catch (error) {
       console.error("Error al enviar los datos:", error);
-      setUploadMessage("Error al enviar los datos");
+      setMensajeConfirmacion("Error al enviar los datos"); 
+      setShowConfirmacion(true);
     } finally {
       setUploading(false);
     }
@@ -230,6 +232,12 @@ const Informe = () => {
             {uploadMessage && <p>{uploadMessage}</p>}
           </div>
         </form>
+        {showConfirmacion && (
+          <ConfirmacionTemporal 
+            mensaje={mensajeConfirmacion} 
+            onClose={() => setShowConfirmacion(false)}
+          />
+        )}
       </div>
       <Footer />
     </>
