@@ -23,9 +23,17 @@ exports.getUsuario = async (req, res) => {
 
 exports.UpdataUsersPut = async (req, res) => {
     try {
+        console.log("ENTRE")
+        const userID = parseInt(req.params.id)
+        const data = req.body
+        const respuesta = await servisioUsuario.updateUser(userID, data)
+        if (!respuesta) {
+            return res.status(404).send('Usuario no encontrado');
+        }
+        res.status(200).json(respuesta);
         
     } catch (error) {
-        
+        console.log(error)
     }
 }
 

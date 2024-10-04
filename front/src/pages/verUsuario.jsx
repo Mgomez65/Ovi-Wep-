@@ -374,7 +374,7 @@ const Register = () => {
           withCredentials: true,
         });
         setUsers(response.data);
-        console.log(response.data);
+
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -409,7 +409,6 @@ const Register = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const response = await fetch("http://localhost:3000/register", {
         method: "post",
@@ -441,7 +440,7 @@ const Register = () => {
       setModalVisible(true);
       return;
     }
-  
+    console.log(selectedUser)
     try {
       const response = await axios.put(
         `http://localhost:3000/api/actualizarUsers/${selectedUser.Num_empleado}`,

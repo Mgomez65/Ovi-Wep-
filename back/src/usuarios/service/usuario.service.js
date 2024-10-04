@@ -25,3 +25,17 @@ exports.getAllUsers = async ( ) => {
 
 };
 
+exports.updateUser = async (id, data) => {
+    try {
+        return prisma.usuario.update({
+            where: {
+                Num_empleado: id,
+            },
+            data: data,
+        })
+    } catch (error) {
+        console.log('Error en la actualización:', error);
+        throw error;
+    }
+};
+

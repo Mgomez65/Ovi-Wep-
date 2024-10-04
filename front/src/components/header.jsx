@@ -40,12 +40,10 @@ function Header() {
   }, []);
 
   const handleUpdateFile = (fileId) => {
-    console.log("Navegando a informe con fileId:", fileId);
     navigate(`/informe`, { state: { fileId } });
   };
 
   const handleCreateReport = () => {
-    console.log("Navegando a crear un nuevo informe con fileId: null");
     window.location.reload();
     navigate(`/informe`, { state: { fileId: null } });
   };
@@ -57,7 +55,6 @@ function Header() {
         credentials: "include",
       });
       const result = await response.json();
-      console.log(result);
       if (response.ok) {
         setUploadedFiles(result);
       } else {
