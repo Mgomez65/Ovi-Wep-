@@ -76,8 +76,9 @@ const Informe = () => {
         credentials: "include",
       });
       const result = await response.json();
+      console.log(result)
       if (response.ok) {
-        alert(result.mensage);
+        alert(result.message);
         setUploadMessage("Archivo actualizado exitosamente");
         window.location.reload();
       } else {
