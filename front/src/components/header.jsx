@@ -2,10 +2,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import axios from 'axios';
 import iconoVolver from "../assets/icon-volver.png";
-import iconoElimar from "../assets/icon-eliminar.png";
+import iconoEliminar from "../assets/icon-eliminar.png"; // Corregido el nombre
 import iconoEditar from "../assets/icon-editar.png";
 import iconoBuscar from "../assets/icon-buscar.png";
-import descargarIcon from '../assets/icon-download.png'
+import descargarIcon from '../assets/icon-download.png';
 import Menu from "./menuDesplegable";
 import "../styles/header.css";
 
@@ -16,8 +16,10 @@ function Header() {
   const [isSearchMenuVisible, setIsSearchMenuVisible] = useState(false);
   const searchMenuRef = useRef(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredFiles, setFilteredFiles] = useState([]);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
-  const [fileToDelete, setFileToDelete] = useState(null); // Para rastrear qué archivo se quiere eliminar
+  const [fileToDelete, setFileToDelete] = useState(null);
 
   const toggleSearchMenu = (event) => {
     event.preventDefault();
@@ -46,8 +48,8 @@ function Header() {
   };
 
   const handleCreateReport = () => {
-    window.location.reload();
     navigate(`/informe`, { state: { fileId: null } });
+    window.location.reload();
   };
 
   const fetchFiles = async () => {
@@ -59,6 +61,7 @@ function Header() {
       const result = await response.json();
       if (response.ok) {
         setUploadedFiles(result);
+        setFilteredFiles(result);
       } else {
         console.error("Error al cargar los archivos");
       }
@@ -68,12 +71,23 @@ function Header() {
   };
 
   useEffect(() => {
-    fetchFiles(); // Cargar archivos al montar el componente
+    fetchFiles(); 
   }, []);
 
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredFiles(uploadedFiles); 
+    } else {
+      const filtered = uploadedFiles.filter(file => 
+        file.titulo.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredFiles(filtered); 
+    }
+  }, [searchTerm, uploadedFiles]);
+
   const showDeleteConfirmation = (fileId) => {
-    setFileToDelete(fileId); // Guardar el id del archivo a eliminar
-    setIsConfirmModalVisible(true); // Mostrar el modal de confirmación
+    setFileToDelete(fileId); 
+    setIsConfirmModalVisible(true); 
   };
 
   const handleConfirmDelete = async () => {
@@ -84,7 +98,8 @@ function Header() {
       });
       if (response.ok) {
         setUploadedFiles(uploadedFiles.filter(file => file.id !== fileToDelete));
-        setIsConfirmModalVisible(false); // Cerrar el modal después de eliminar
+        setFilteredFiles(filteredFiles.filter(file => file.id !== fileToDelete)); 
+        setIsConfirmModalVisible(false); 
       } else {
         console.error("Error al eliminar el archivo");
       }
@@ -94,7 +109,7 @@ function Header() {
   };
 
   const handleCancelDelete = () => {
-    setIsConfirmModalVisible(false); // Cerrar el modal sin eliminar
+    setIsConfirmModalVisible(false); 
   };
 
   const handleDownload = async (fileId) => {
@@ -106,7 +121,7 @@ function Header() {
       const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `informe_${fileId}.pdf`)
+      link.setAttribute('download', `informe_${fileId}.pdf`);
       document.body.appendChild(link);
       link.click();
 
@@ -114,6 +129,11 @@ function Header() {
     } catch (error) {
       console.error('Error al descargar el informe:', error);
     }
+  };
+
+  const handleSearch = () => {
+    // Puedes implementar la lógica de búsqueda aquí si es necesario
+    // En este caso, el filtrado se realiza automáticamente en el useEffect
   };
 
   return (
@@ -134,8 +154,14 @@ function Header() {
             {isSearchMenuVisible && (
               <div className="searchMenu" ref={searchMenuRef}>
                 <div className="search-container">
-                  <input type="text" placeholder="Buscar..." className="search-input" />
-                  <button className="search-button">
+                  <input
+                    type="text"
+                    placeholder="Buscar..."
+                    className="search-input"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                  />
+                  <button className="search-button" onClick={handleSearch}>
                     <img src={iconoBuscar} alt="Buscar" className="Buscar" />
                   </button>
                 </div>
@@ -147,8 +173,8 @@ function Header() {
                 </div>
 
                 <div className="uploaded-files-container">
-                  {uploadedFiles.length > 0 ? (
-                    uploadedFiles.map((file) => (
+                  {filteredFiles.length > 0 ? (
+                    filteredFiles.map((file) => (
                       <div key={file.id} className="uploaded-file-item">
                         <span>{file.titulo}</span>
                         <div className="botonesEliminarActualizar">
@@ -156,16 +182,16 @@ function Header() {
                             <img src={iconoEditar} alt="Actualizar" className="Editar" />
                           </button>
                           <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
-                            <img src={iconoElimar} alt="Eliminar" className="Eliminar" />
+                            <img src={iconoEliminar} alt="Eliminar" className="Eliminar" />
                           </button>
                           <button onClick={() => handleDownload(file.id)} className="botonEliminar">
-                            <img src={descargarIcon} alt="descargar" className="Descargar" />
+                            <img src={descargarIcon} alt="Descargar" className="Descargar" />
                           </button>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <p>No hay archivos guardados.</p>
+                    <p>No se encontraron informes.</p>
                   )}
                 </div>
               </div>
@@ -179,7 +205,6 @@ function Header() {
         <Menu className="Menu" />
       </div>
 
-      {/* Modal de confirmación */}
       {isConfirmModalVisible && (
         <div className="modal-overlay">
           <div className="modal">
