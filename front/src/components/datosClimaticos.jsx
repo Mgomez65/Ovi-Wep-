@@ -50,7 +50,6 @@ const Weather = () => {
         setError(null);
 
         const precipProbability = weatherData.data[0].precip;
-        console.log("Probabilidad de precipitación:", precipProbability);
 
         if (precipProbability > 80) {
           showNotification(

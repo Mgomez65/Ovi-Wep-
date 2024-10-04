@@ -29,7 +29,6 @@ const Informe = () => {
           const response = await fetch(`http://localhost:3000/informe/user/${fileId}`);
           if (!response.ok) {
             const errorResponse = await response.json();
-            console.error("Error al obtener el informe:", errorResponse);
             throw new Error('Error al obtener el informe');
           }
           const data = await response.json();
@@ -77,8 +76,9 @@ const Informe = () => {
       });
       const result = await response.json();
       if (response.ok) {
-        setMensajeConfirmacion("Archivo actualizado exitosamente"); 
-        setShowConfirmacion(true); 
+        alert(result.mensage);
+        setUploadMessage("Archivo actualizado exitosamente");
+        window.location.reload();
       } else {
         const errorText = await response.text();
         console.error("Error en la respuesta del servidor:", errorText);

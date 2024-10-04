@@ -33,10 +33,9 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const data = req.body;
-        console.log(data)
         const respuesta = await servisioUsuario.getuserId("Email", data.Email);
         if (!respuesta) {
-            return res.status(404).send('No se ha encontrado un usuario con este email');
+            return res.status(404).json({mesnsage:'No se ha encontrado un usuario con este email'});
         }   
         const passwordMatch = await bcryptjs.compare(data.password, respuesta.Password);
         if (!passwordMatch) {
