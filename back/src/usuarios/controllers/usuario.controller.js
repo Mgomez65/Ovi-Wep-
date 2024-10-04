@@ -24,7 +24,10 @@ exports.getUsuario = async (req, res) => {
 exports.UpdataUsersPut = async (req, res) => {
     try {
         console.log("ENTRE")
-        const userID = parseInt(req.params.id)
+        const userID = req.params.id ? parseInt(req.params.id, 10) : null;
+        if (userID === null || isNaN(userID)) {
+            return res.status(400).send('ID de usuario no válido');
+        }
         const data = req.body
         const respuesta = await servisioUsuario.updateUser(userID, data)
         if (!respuesta) {

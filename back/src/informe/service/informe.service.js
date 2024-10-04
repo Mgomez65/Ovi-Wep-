@@ -203,9 +203,4 @@ exports.searchInforme = async (termino) => {
         console.error(error); // Manejar el error de forma adecuada
         throw new Error("Error al buscar informes"); // Lanzar un error amigable
     }
-<<<<<<< HEAD
-
 }
-=======
-};
->>>>>>> 4ea299a0f171d3207540d0ea2c8930e4184e777c

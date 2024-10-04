@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import axios from 'axios';
 import iconoVolver from "../assets/icon-volver.png";
 import iconoElimar from "../assets/icon-eliminar.png";
 import iconoEditar from "../assets/icon-editar.png";
@@ -96,16 +97,16 @@ function Header() {
     setIsConfirmModalVisible(false); // Cerrar el modal sin eliminar
   };
 
-  const handleDownload = async () => {
+  const handleDownload = async (fileId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/informe/descargar/${idInforme}`, {
+      const response = await axios.get(`http://localhost:3000/informe/descargar/${fileId}`, {
         responseType: 'blob',
       });
 
       const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `informe_${idInforme}.pdf`)
+      link.setAttribute('download', `informe_${fileId}.pdf`)
       document.body.appendChild(link);
       link.click();
 
@@ -157,7 +158,7 @@ function Header() {
                           <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
                             <img src={iconoElimar} alt="Eliminar" className="Eliminar" />
                           </button>
-                          <button onClick={handleDownload} className="botonEliminar">
+                          <button onClick={() => handleDownload(file.id)} className="botonEliminar">
                             <img src={descargarIcon} alt="descargar" className="Descargar" />
                           </button>
                         </div>

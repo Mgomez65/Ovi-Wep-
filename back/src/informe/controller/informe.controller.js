@@ -82,14 +82,13 @@ exports.searchInforme = async (req, res) => {
 // Generador de PDF
 exports.downloadPDF = async (req, res) => {
     try {
-        const { idInforme } = req.params; // Obtener el ID del informe desde los parámetros de la ruta
-        const idInformeInt = parseInt(idInforme, 10); // Convertir el ID a entero
-        console.log("controller id pdf: ", idInformeInt);
+        const { idInforme } = req.params;
+        const idInformeInt = parseInt(idInforme, 10); 
 
         // Obtener el informe de la base de datos
-        const informe = await prisma.informe.findFirst({ // Cambiar para usar la consulta de Prisma
+        const informe = await prisma.informe.findFirst({
             where: {
-                id: idInformeInt // Asegurarse de que aquí se pase el entero
+                id: idInformeInt
             }
         });
 
@@ -97,36 +96,31 @@ exports.downloadPDF = async (req, res) => {
             return res.status(404).json({ message: `Informe con id ${idInformeInt} no encontrado.` });
         }
 
-        // Crear un nuevo documento PDF
         const doc = new PDFDocument();
         let buffers = [];
 
-        // Guardar el PDF en memoria
         doc.on('data', buffers.push.bind(buffers));
         doc.on('end', () => {
             const pdfData = Buffer.concat(buffers);
-            // Configurar la respuesta para que sea un archivo PDF descargable
-            res.setHeader('Content-Disposition', `attachment; filename=informe_${idInformeInt}.pdf`);
+            const sanitizedTitle = informe.titulo;
+            console.log("Título sanitizado:", sanitizedTitle);
+            res.setHeader('Content-Disposition', `attachment; filename=${sanitizedTitle}.pdf`);
             res.setHeader('Content-Type', 'application/pdf');
             res.send(pdfData);
         });
 
-        // Cabecera del informe
         doc.fontSize(20).text(informe.titulo, { align: 'center' });
         doc.moveDown();
-        
-        // Contenido del informe
+
         doc.fontSize(12).text(`Fecha de inicio: ${informe.fecha_inicio.toDateString()}`, { align: 'left' });
         doc.fontSize(12).text(`Fecha final: ${informe.fecha_final.toDateString()}`, { align: 'left' });
         doc.moveDown();
         doc.text(informe.contenido, { align: 'left' });
-        
-        // Si tienes un link a una imagen y quieres incluirla
+
         if (informe.imagen_url) {
             doc.image(informe.imagen_url, { fit: [300, 300], align: 'center' });
         }
 
-        // Finalizar el documento
         doc.end();
 
     } catch (error) {
