@@ -339,19 +339,7 @@ span {
     background-color: #1e293b;
 }
 
-/* Estilos para la lista de eventos en el calendario */
-.event-list {
-    list-style-type: none;
-    padding: 0;
-}
 
-.event-list li {
-    margin: 5px;
-    padding: 8px;
-    color: #fff;
-    width: 100%;
-    box-sizing: border-box;
-}
 
 /* Formulario editar evento */
 
@@ -435,4 +423,40 @@ span {
 
 .react-calendar__month-view__days__day--weekend {
     color: #00fff2 !important;
+}
+
+.event-container {
+    display: flex; 
+    flex-direction: column;
+}
+
+
+.event-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+    flex-grow: 1;
+}
+
+.event-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    padding: 8px;
+    padding-left: 10px !important;
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.botonesEliminarActualizar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.Eliminar, .Editar {
+    height: 25px;
 }

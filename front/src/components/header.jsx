@@ -13,8 +13,9 @@ function Header() {
   const isInformePage = location.pathname === "/informe";
   const [isSearchMenuVisible, setIsSearchMenuVisible] = useState(false);
   const searchMenuRef = useRef(null);
-
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
+  const [fileToDelete, setFileToDelete] = useState(null); // Para rastrear qué archivo se quiere eliminar
 
   const toggleSearchMenu = (event) => {
     event.preventDefault();
@@ -71,20 +72,30 @@ function Header() {
     fetchFiles(); // Cargar archivos al montar el componente
   }, []);
 
-  const handleRemoveFile = async (fileId) => {
+  const showDeleteConfirmation = (fileId) => {
+    setFileToDelete(fileId); // Guardar el id del archivo a eliminar
+    setIsConfirmModalVisible(true); // Mostrar el modal de confirmación
+  };
+
+  const handleConfirmDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/informe/delete/${fileId}`, {
+      const response = await fetch(`http://localhost:3000/informe/delete/${fileToDelete}`, {
         method: "DELETE",
         credentials: "include",
       });
       if (response.ok) {
-        setUploadedFiles(uploadedFiles.filter(file => file.id !== fileId));
+        setUploadedFiles(uploadedFiles.filter(file => file.id !== fileToDelete));
+        setIsConfirmModalVisible(false); // Cerrar el modal después de eliminar
       } else {
         console.error("Error al eliminar el archivo");
       }
     } catch (error) {
       console.error("Error al eliminar el archivo:", error);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setIsConfirmModalVisible(false); // Cerrar el modal sin eliminar
   };
 
   return (
@@ -126,7 +137,7 @@ function Header() {
                           <button onClick={() => handleUpdateFile(file.id)} className="botonEditar">
                             <img src={iconoEditar} alt="Actualizar" className="Editar" />
                           </button>
-                          <button onClick={() => handleRemoveFile(file.id)} className="botonEliminar">
+                          <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
                             <img src={iconoElimar} alt="Eliminar" className="Eliminar" />
                           </button>
                         </div>
@@ -146,6 +157,20 @@ function Header() {
         )}
         <Menu className="Menu" />
       </div>
+
+      {/* Modal de confirmación */}
+      {isConfirmModalVisible && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Confirmar Eliminación</h2>
+            <p>¿Estás seguro de que deseas eliminar este archivo?</p>
+            <div className="modal-buttons">
+              <button onClick={handleConfirmDelete}>Eliminar</button>
+              <button onClick={handleCancelDelete}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

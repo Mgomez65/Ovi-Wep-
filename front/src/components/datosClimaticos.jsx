@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaSun, FaCloudSun, FaCloud, FaCloudShowersHeavy, FaSnowflake } from 'react-icons/fa';
 import "../styles/clima.css";
+import ConfirmacionTemporal from "./notificacionTemporal";// Asegúrate de importar el componente
 
-// Función para obtener el ícono basado en la descripción del estado del cielo
 const getWeatherIcon = (description) => {
   if (description.includes('clear')) return <FaSun />;
   if (description.includes('cloud')) return <FaCloud />;
@@ -20,6 +20,7 @@ const requestNotificationPermission = async () => {
     console.log("Notificación ya está permitida");
   }
 };
+
 const showNotification = (title, body) => {
   if (Notification.permission === "granted") {
     new Notification(title, {
@@ -32,11 +33,13 @@ const showNotification = (title, body) => {
 const Weather = () => {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
-  const apiKey = "c5dd700cd5ba4428a3967e62c1bbca6a";
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [shouldReload, setShouldReload] = useState(false); // Estado para controlar el refresco
+  /* const apiKey = "c5dd700cd5ba4428a3967e62c1bbca6a"; //cuenta de Walter, 50 diaria */
+  const apiKey = "ffd6509ce75946179e316090d52a5ee0"; //cuenta de Walter, 1500 diaria hasta el 24 de octubre de 2024
   const url = `https://api.weatherbit.io/v2.0/current?city=Mendoza&key=${apiKey}&lang=es`;
 
   useEffect(() => {
-    // Solicitar permiso para notificaciones al cargar el componente
     requestNotificationPermission();
 
     const fetchWeather = async () => {
@@ -46,7 +49,6 @@ const Weather = () => {
         setWeather(weatherData);
         setError(null);
 
-        // Verificar si hay probabilidad de lluvia y enviar notificación si es necesario
         const precipProbability = weatherData.data[0].precip;
         console.log("Probabilidad de precipitación:", precipProbability);
 
@@ -55,6 +57,8 @@ const Weather = () => {
             "¡Aviso de Lluvia!",
             `Se espera lluvia con una probabilidad de ${precipProbability}%`
           );
+          setShowConfirmation(true); // Muestra la confirmación
+          setShouldReload(false); // Controla si debe refrescar
         }
       } catch (err) {
         console.error(err);
@@ -65,19 +69,12 @@ const Weather = () => {
     fetchWeather();
   }, [url]);
 
-  const getPrecipitationIcon = (precip, precipProb) => {
-    if (precip > 0) {
-      return <FaCloudShowersHeavy />;
-    } else if (precipProb > 0) {
-      return <FaCloudRain />;
-    } else {
-      return <FaSun />;
-    }
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false);
   };
 
   return (
     <div className="weather-container">
-      {error && <p className="error-message">{error}</p>}
       {weather ? (
         <div className="weather-info">
           <div className="weather-row">
@@ -100,14 +97,23 @@ const Weather = () => {
                 </li>
                 <li className="weather-item">
                   <strong>Probabilidad de Precipitaciones:</strong>{" "}
-                  {weather.data[0].precip }%
+                  {weather.data[0].precip}%
                 </li>
               </ul>
             </div>
           </div>
+          {showConfirmation && (
+            <ConfirmacionTemporal
+              mensaje="Se espera lluvia"
+              onClose={handleCloseConfirmation}
+              shouldReload={shouldReload} // Pasar la prop para controlar el refresco
+            />
+          )}
         </div>
       ) : (
-        <p>Cargando...</p>
+        <div className="loading-container">
+          <span>Cargando...</span>
+        </div>
       )}
     </div>
   );

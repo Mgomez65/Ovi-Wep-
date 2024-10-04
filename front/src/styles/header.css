@@ -96,6 +96,7 @@ body {
     color: white;
     cursor: pointer;
 }
+
 .uploaded-file-item {
     margin-top: 10px;
     padding: 10px;
@@ -126,4 +127,67 @@ body {
 .botonCrearInforme{
     width: 100%;
     padding: 5px;
+}
+
+.botonCrearInforme:hover{
+    background-color: #272e3a;
+}
+
+/* Cartel de confirmacion */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+  
+.modal {
+    background-color: #161726;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+  
+.modal h2 {
+    margin-bottom: 15px;
+}
+  
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+  
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+  
+.modal-buttons button:first-child {
+    background-color: red;
+    color: white;
+}
+
+.modal-buttons button:first-child:hover {
+    background-color: darkred;
+    color: white;
+}
+  
+.modal-buttons button:last-child {
+    background-color: #374151;
+    color: white;
+}
+
+.modal-buttons button:last-child:hover{
+    background-color: #272e3a;
+    color: white;
 }

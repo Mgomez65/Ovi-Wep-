@@ -23,10 +23,10 @@ exports.createUser = async (datos,passHash)=>{
                 Nombre: datos.Nombre,
                 Apellido: datos.Apellido,
                 CUIL: datos.CUIL,
-                Dirrecion: datos.Direccion,
+                Dirrecion: datos.Dirrecion,
                 Email: datos.Email,
                 Password: passHash,
-                Num_empleado:datos.Num_empleado,
+                Num_empleado:parseInt(datos.Num_empleado),
                 rol:datos.rol
             }
         });

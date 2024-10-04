@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import Header from "../components/header";
 import Footer from "../components/footer"
+import ConfirmacionTemporal from "../components/notificacionTemporal";
+import iconoElimar from "../assets/icon-eliminar.png";
+import iconoEditar from "../assets/icon-editar.png";
 import "react-calendar/dist/Calendar.css";
 import "../styles/calendario.css";
 
@@ -19,43 +22,8 @@ const Calendario = ({ view, hideHeader }) => {
     color: "#000000",
   });
   const [eventToEdit, setEventToEdit] = useState(null);
-
-  /* useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const formattedDate = date.toISOString().slice(0, 16);
-        const response = await fetch("http://localhost:3000/calendario/getCalendarioID", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ inicio: formattedDate }),
-      });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log(data)
-
-        if (data.mensaje) {
-          console.log(data.mensaje);
-        } else {
-          const formattedEvents = data.map((event) => ({
-            id: event._id,
-            title: event.titulo,
-            start: new Date(event.inicio),
-            end: new Date(event.fin),
-            color: event.color || "#000000",
-          }));
-          setEvents(formattedEvents);
-        }
-      } catch (error) {
-        console.error("Error al obtener eventos:", error);
-      }
-    };
-
-    fetchEvents();
-  }, [date]); */
+  const [showConfirmacion, setShowConfirmacion] = useState(false); 
+  const [mensajeConfirmacion, setMensajeConfirmacion] = useState(""); 
 
   const fetchAllEvents = async () => {
     try {
@@ -99,7 +67,6 @@ const Calendario = ({ view, hideHeader }) => {
   const handleDayClick = (date) => {
     setSelectedDate(date);
     setShowModal(true);
-    // Preestablecer los campos de fecha y hora para el nuevo evento
     const start = date.toISOString().slice(0, 16);
     const end = new Date(date.getTime() + 60 * 60 * 1000).toISOString().slice(0, 16); // Default to 1 hour later
     setNewEvent({ ...newEvent, start, end });
@@ -125,13 +92,19 @@ const Calendario = ({ view, hideHeader }) => {
       });
   
       if (response.ok) {
-        await fetchAllEvents(); // Actualiza la lista de eventos
+        await fetchAllEvents();
         setShowForm(false);
+        setShowConfirmacion(true); 
+        setMensajeConfirmacion("Evento agregado esxitosamente");
       } else {
         console.error("Error al agregar el evento:", response.statusText);
+        setShowConfirmacion(true); 
+        setMensajeConfirmacion("Error al agregar evento");
       }
     } catch (error) {
       console.error("Error al agregar el evento:", error);
+      setShowConfirmacion(true); 
+      setMensajeConfirmacion("Error al agregar evento");
     }
   };
 
@@ -154,11 +127,17 @@ const Calendario = ({ view, hideHeader }) => {
       if (response.ok) {
         await fetchAllEvents(); // Actualiza la lista de eventos
         setShowEditForm(false);
+        setShowConfirmacion(true); 
+        setMensajeConfirmacion("Evento actualizado exitosamente");
       } else {
         console.error("Error al actualizar el evento:", response.statusText);
+        setShowConfirmacion(true); 
+        setMensajeConfirmacion("Error al actualizar evento");
       }
     } catch (error) {
       console.error("Error al actualizar el evento:", error);
+      setShowConfirmacion(true); 
+        setMensajeConfirmacion("Error al actualizar evento");
     }
   };
   
@@ -174,12 +153,18 @@ const Calendario = ({ view, hideHeader }) => {
   
       if (response.ok) {
         await fetchAllEvents(); // Actualiza la lista de eventos después de eliminar
+        setShowConfirmacion(true); 
+        setMensajeConfirmacion("Evento eliminado exitosamente");
       } else {
         const errorData = await response.json();
         console.error("Error al eliminar el evento:", errorData.error || response.statusText);
+        setShowConfirmacion(true); 
+        setMensajeConfirmacion("Error al eliminar evento");
       }
     } catch (error) {
       console.error("Error al eliminar el evento:", error);
+      setShowConfirmacion(true); 
+      setMensajeConfirmacion("Error al eliminar evento");
     }
   };  
 
@@ -235,34 +220,39 @@ const Calendario = ({ view, hideHeader }) => {
               </button>
             </div>
             <h2>Eventos para {selectedDate.toLocaleDateString()}</h2>
-            <ul className="event-list">
-              {events
-                .filter(
-                  (event) =>
-                    selectedDate >= new Date(event.start).setHours(0, 0, 0, 0) &&
-                    selectedDate <= new Date(event.end).setHours(0, 0, 0, 0)
-                )
-                .map((event) => (
-                  <li key={event.id} style={{ backgroundColor: event.color, color: '#fff', padding: '2px' }}>
-                    {event.title}
-                    <button onClick={() => {
-                      setEventToEdit(event);
-                      setNewEvent({
-                        title: event.title,
-                        start: event.start.toISOString().slice(0, 16),
-                        end: event.end.toISOString().slice(0, 16),
-                        color: event.color,
-                      });
-                      setShowEditForm(true);
-                    }} className="botonEditar">
-                      Editar
-                    </button>
-                    <button onClick={() => handleDeleteEvent(event.id)} className="botonEliminar">
-                      Eliminar
-                    </button>
-                  </li>
-                ))}
-            </ul>
+            <div className="event-container">
+              <ul className="event-list">
+                {events
+                  .filter(
+                    (event) =>
+                      selectedDate >= new Date(event.start).setHours(0, 0, 0, 0) &&
+                      selectedDate <= new Date(event.end).setHours(0, 0, 0, 0)
+                  )
+                  .map((event) => (
+                    <li key={event.id} style={{ backgroundColor: event.color, color: '#fff', padding: '2px' }}>
+                      {event.title}
+                      <div className="botonesEliminarActualizar">
+                        <button onClick={() => {
+                          setEventToEdit(event);
+                          setNewEvent({
+                            title: event.title,
+                            start: event.start.toISOString().slice(0, 16),
+                            end: event.end.toISOString().slice(0, 16),
+                            color: event.color,
+                          });
+                          setShowEditForm(true);
+                        }} className="botonEditar">
+                          <img src={iconoEditar} alt="Actualizar" className="Editar" />
+                        </button>
+                        <button onClick={() => handleDeleteEvent(event.id)} className="botonEliminar">
+                          <img src={iconoElimar} alt="Eliminar" className="Eliminar" />
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+            
             {showForm && (
               <div className="formulario-agregar-evento">
                 <label>Título:</label>
@@ -361,6 +351,12 @@ const Calendario = ({ view, hideHeader }) => {
             )}
           </div>
         </div>
+      )}
+      {showConfirmacion && (
+          <ConfirmacionTemporal 
+            mensaje={mensajeConfirmacion} 
+            onClose={() => setShowConfirmacion(false)}
+          />
       )}
       <Footer/>
     </div>

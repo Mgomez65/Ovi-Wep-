@@ -1,0 +1,29 @@
+.cartel-confirmacion {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #161726;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    z-index: 1000;
+}
+  
+.cartel-contenido {
+    text-align: center;
+}
+
+.cartel-contenido button{
+    padding: 8px 12px;
+    border: none;
+    background-color: #374151;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cartel-contenido button:hover{
+    background-color: #272e3a;
+    color: white;
+}
