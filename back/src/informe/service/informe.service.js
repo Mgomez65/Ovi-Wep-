@@ -96,7 +96,22 @@ exports.updateInforme = async (idInforme, valor) => {
 
 exports.searchInforme = async (termino) => {
     try {
-        const isDate = (str) => !isNaN(Date.parse(str));
+        const isDate = (str) => {
+            // Detectar y convertir fechas en formato "DD-MM-YYYY" a "YYYY-MM-DD"
+            const [day, month, year] = str.split('-').map(Number);
+            if (day && month && year) {
+                const isoDate = new Date(`${year}-${month}-${day}`);
+                return !isNaN(isoDate.getTime()) ? isoDate : null;
+            }
+            return null;
+        };
+
+        // Función para verificar si el término tiene formato "YYYY-MM"
+        const isMonth = (str) => {
+            if (typeof str !== 'string') return false; // Asegurarse de que es una cadena
+            const [year, month] = str.split('-').map(Number);
+            return year && month && month >= 1 && month <= 12;
+        };
 
         // Construir el objeto de búsqueda
         const whereConditions = {
@@ -106,51 +121,78 @@ exports.searchInforme = async (termino) => {
                         contains: termino,
                     },
                 },
-                {
-                    contenido: {
-                        contains: termino,
-                        
-                    },
-                },
             ],
         };
-        const year = parseInt(termino, 10);
-        const isYear = !isNaN(year) && year > 0;
 
-        // Si es un año, agregar condiciones de fecha
-        if (isYear) {
-            const startOfYear = new Date(year, 0, 1); // 1 de enero del año
-            const startOfNextYear = new Date(year + 1, 0, 1); // 1 de enero del siguiente año
+        // Si es una fecha válida, buscar por fecha exacta (ignorando la hora)
+        const parsedDate = isDate(termino);
+        if (parsedDate) {
+            const startOfDay = new Date(parsedDate);
+            startOfDay.setHours(0, 0, 0, 0); // Establecer la hora al inicio del día
 
-            whereConditions.OR.push(
+            const endOfDay = new Date(parsedDate);
+            endOfDay.setHours(23, 59, 59, 999); // Establecer la hora al final del día
+
+            whereConditions.OR = [
                 {
                     fecha_inicio: {
-                        gte: startOfYear, // Mayor o igual a 1 de enero del año
-                        lt: startOfNextYear // Menor a 1 de enero del siguiente año
+                        gte: startOfDay, // Mayor o igual al inicio del día
+                        lt: endOfDay,    // Menor al final del día
                     },
                 },
                 {
                     fecha_final: {
-                        gte: startOfYear,
-                        lt: startOfNextYear
+                        gte: startOfDay,
+                        lt: endOfDay,
                     },
                 }
-            );
-        } else if (isDate(termino)) {
-            // Si es una fecha válida, agregar condiciones de fecha exactas
-            const fecha = new Date(termino);
-            whereConditions.OR.push(
+            ];
+        } 
+        // Si es un mes en formato "YYYY-MM", buscar dentro de ese mes
+        else if (isMonth(termino)) {
+            const [year, month] = termino.split('-').map(Number);
+            const startOfMonth = new Date(year, month - 1, 1); // Primer día del mes
+            const startOfNextMonth = new Date(year, month, 1); // Primer día del mes siguiente
+
+            whereConditions.OR = [
                 {
                     fecha_inicio: {
-                        equals: fecha,
+                        gte: startOfMonth, // Mayor o igual al primer día del mes
+                        lt: startOfNextMonth // Menor al primer día del mes siguiente
                     },
                 },
                 {
                     fecha_final: {
-                        equals: fecha,
+                        gte: startOfMonth,
+                        lt: startOfNextMonth
                     },
                 }
-            );
+            ];
+        }
+        // Si es un año, agregar condiciones de búsqueda por año
+        else {
+            const year = parseInt(termino, 10);
+            const isYear = !isNaN(year) && year > 0;
+
+            if (isYear) {
+                const startOfYear = new Date(year, 0, 1); // 1 de enero del año
+                const startOfNextYear = new Date(year + 1, 0, 1); // 1 de enero del siguiente año
+
+                whereConditions.OR = [
+                    {
+                        fecha_inicio: {
+                            gte: startOfYear, // Mayor o igual a 1 de enero del año
+                            lt: startOfNextYear // Menor a 1 de enero del siguiente año
+                        },
+                    },
+                    {
+                        fecha_final: {
+                            gte: startOfYear,
+                            lt: startOfNextYear
+                        },
+                    }
+                ];
+            }
         }
 
         // Ejecutar la búsqueda con las condiciones construidas
