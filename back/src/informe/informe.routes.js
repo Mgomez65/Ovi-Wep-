@@ -4,6 +4,8 @@ const controllerinforme = require("./controller/informe.controller")
 
 
 
+//rutas de genacion de pdf
+router.get('/descargar/:idInforme', controllerinforme.downloadPDF);
 
 
 router.post("/create",controllerinforme.createIforme)

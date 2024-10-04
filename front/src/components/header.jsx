@@ -4,6 +4,7 @@ import iconoVolver from "../assets/icon-volver.png";
 import iconoElimar from "../assets/icon-eliminar.png";
 import iconoEditar from "../assets/icon-editar.png";
 import iconoBuscar from "../assets/icon-buscar.png";
+import descargarIcon from '../assets/icon-download.png'
 import Menu from "./menuDesplegable";
 import "../styles/header.css";
 
@@ -98,6 +99,25 @@ function Header() {
     setIsConfirmModalVisible(false); // Cerrar el modal sin eliminar
   };
 
+  const handleDownload = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/informe/descargar/${idInforme}`, {
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `informe_${idInforme}.pdf`)
+      document.body.appendChild(link);
+      link.click();
+
+      link.parentNode.removeChild(link);
+    } catch (error) {
+      console.error('Error al descargar el informe:', error);
+    }
+  };
+
   return (
     <header className="header">
       <Link to="/home">
@@ -139,6 +159,9 @@ function Header() {
                           </button>
                           <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
                             <img src={iconoElimar} alt="Eliminar" className="Eliminar" />
+                          </button>
+                          <button onClick={handleDownload} className="botonEliminar">
+                            <img src={descargarIcon} alt="descargar" className="Descargar" />
                           </button>
                         </div>
                       </div>

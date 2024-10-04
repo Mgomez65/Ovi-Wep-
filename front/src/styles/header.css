@@ -109,10 +109,14 @@ body {
 .botonEditar, .botonEliminar {
     background-color: transparent !important;
     border: none;
-    padding: 5px !important;
+    padding: 2px !important;
 }
 
 .Eliminar{
+    height: 25px;
+}
+
+.Descargar{
     height: 25px;
 }
 
