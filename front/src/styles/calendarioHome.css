@@ -22,6 +22,7 @@ body {
 .week-view {
   display: flex;
   justify-content: space-between;
+  height: 22vh;
 }
 
 .day-tile {
