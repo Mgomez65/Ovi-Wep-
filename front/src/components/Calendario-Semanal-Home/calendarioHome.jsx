@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/calendarioHome.css';
+import './calendarioHome.css';
 
 const Calendario = ({ hideHeader }) => {
   const [date, setDate] = useState(new Date());

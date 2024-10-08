@@ -1,11 +1,11 @@
 import React from "react";
-import Clima from "../components/datosClimaticos";
-import Calendario from "../components/calendarioHome";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import Termometro from "../components/datosHumedad"
+import Clima from "../../components/Clima-Home/datosClimaticos";
+import Calendario from "../../components/Calendario-Semanal-Home/calendarioHome";
+import Header from "../../components/Header/header";
+import Footer from "../../components/Footer/footer";
+import Termometro from "../../components/Datos-Humedad-Home/datosHumedad";
 import { Link } from "react-router-dom";
-import "../styles/home.css";
+import "./home.css";
 
 const Home = () => {
   return (
@@ -23,14 +23,11 @@ const Home = () => {
         <div className="datosHumedad">
           <h3 className="tituloHumedad">Datos de la humedad en general:</h3>
           <div className="termometro">
-            <Termometro/>
+            <Termometro />
           </div>
         </div>
         <div>
-          <h3 className="mapa">
-            Mapa:
-            En proceso
-          </h3>
+          <h3 className="mapa">Mapa: En proceso</h3>
         </div>
       </main>
       <Footer />

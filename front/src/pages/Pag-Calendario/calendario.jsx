@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import Header from "../components/header";
-import Footer from "../components/footer"
-import ConfirmacionTemporal from "../components/notificacionTemporal";
-import iconoElimar from "../assets/icon-eliminar.png";
-import iconoEditar from "../assets/icon-editar.png";
+import Header from "../../components/Header/header";
+import Footer from "../../components/Footer/footer";
+import ConfirmacionTemporal from "../../components/Notificacion/notificacionTemporal";
+import iconoElimar from "../../assets/icon-eliminar.png";
+import iconoEditar from "../../assets/icon-editar.png";
 import "react-calendar/dist/Calendar.css";
-import "../styles/calendario.css";
+import "./calendario.css";
 
 const Calendario = ({ view, hideHeader }) => {
   const [date, setDate] = useState(new Date());
@@ -22,28 +22,31 @@ const Calendario = ({ view, hideHeader }) => {
     color: "#000000",
   });
   const [eventToEdit, setEventToEdit] = useState(null);
-  const [showConfirmacion, setShowConfirmacion] = useState(false); 
-  const [mensajeConfirmacion, setMensajeConfirmacion] = useState(""); 
+  const [showConfirmacion, setShowConfirmacion] = useState(false);
+  const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
 
   const fetchAllEvents = async () => {
     try {
-      const response = await fetch("http://localhost:3000/calendario/getCalendario", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
+      const response = await fetch(
+        "http://localhost:3000/calendario/getCalendario",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-  
+
       if (data.length) {
         const formattedEvents = data.map((event) => ({
-          id: event.id, 
+          id: event.id,
           title: event.titulo,
           start: new Date(event.inicio),
           end: new Date(event.fin),
@@ -51,7 +54,7 @@ const Calendario = ({ view, hideHeader }) => {
         }));
         setEvents(formattedEvents);
       } else {
-        console.log('No se encontraron eventos.');
+        console.log("No se encontraron eventos.");
         setEvents([]);
       }
     } catch (error) {
@@ -62,111 +65,128 @@ const Calendario = ({ view, hideHeader }) => {
   useEffect(() => {
     fetchAllEvents(); // Cargar todos los eventos al montar el componente
   }, []);
-  
 
   const handleDayClick = (date) => {
     setSelectedDate(date);
     setShowModal(true);
     const start = date.toISOString().slice(0, 16);
-    const end = new Date(date.getTime() + 60 * 60 * 1000).toISOString().slice(0, 16); // Default to 1 hour later
+    const end = new Date(date.getTime() + 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 16); // Default to 1 hour later
     setNewEvent({ ...newEvent, start, end });
   };
 
   const handleAddEvent = async () => {
     const start = newEvent.start || selectedDate.toISOString().slice(0, 16);
-    const end = newEvent.end || new Date(selectedDate.getTime() + 60 * 60 * 1000).toISOString().slice(0, 16);
-  
+    const end =
+      newEvent.end ||
+      new Date(selectedDate.getTime() + 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 16);
+
     try {
-      const response = await fetch("http://localhost:3000/calendario/createCalendario", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          titulo: newEvent.title,
-          inicio: start,
-          fin: end,
-          color: newEvent.color,
-        }),
-      });
-  
+      const response = await fetch(
+        "http://localhost:3000/calendario/createCalendario",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            titulo: newEvent.title,
+            inicio: start,
+            fin: end,
+            color: newEvent.color,
+          }),
+        }
+      );
+
       if (response.ok) {
         await fetchAllEvents();
         setShowForm(false);
-        setShowConfirmacion(true); 
+        setShowConfirmacion(true);
         setMensajeConfirmacion("Evento agregado esxitosamente");
       } else {
         console.error("Error al agregar el evento:", response.statusText);
-        setShowConfirmacion(true); 
+        setShowConfirmacion(true);
         setMensajeConfirmacion("Error al agregar evento");
       }
     } catch (error) {
       console.error("Error al agregar el evento:", error);
-      setShowConfirmacion(true); 
+      setShowConfirmacion(true);
       setMensajeConfirmacion("Error al agregar evento");
     }
   };
 
   const handleUpdateEvent = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/calendario/actualizarCalendario/${eventToEdit.id}`, {
-        method: "put",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          titulo: newEvent.title,
-          inicio: newEvent.start,
-          fin: newEvent.end,
-          color: newEvent.color,
-        }),
-      });
-  
+      const response = await fetch(
+        `http://localhost:3000/calendario/actualizarCalendario/${eventToEdit.id}`,
+        {
+          method: "put",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            titulo: newEvent.title,
+            inicio: newEvent.start,
+            fin: newEvent.end,
+            color: newEvent.color,
+          }),
+        }
+      );
+
       if (response.ok) {
         await fetchAllEvents(); // Actualiza la lista de eventos
         setShowEditForm(false);
-        setShowConfirmacion(true); 
+        setShowConfirmacion(true);
         setMensajeConfirmacion("Evento actualizado exitosamente");
       } else {
         console.error("Error al actualizar el evento:", response.statusText);
-        setShowConfirmacion(true); 
+        setShowConfirmacion(true);
         setMensajeConfirmacion("Error al actualizar evento");
       }
     } catch (error) {
       console.error("Error al actualizar el evento:", error);
-      setShowConfirmacion(true); 
-        setMensajeConfirmacion("Error al actualizar evento");
+      setShowConfirmacion(true);
+      setMensajeConfirmacion("Error al actualizar evento");
     }
   };
-  
+
   const handleDeleteEvent = async (eventId) => {
     try {
-      const response = await fetch(`http://localhost:3000/calendario/deleteCalendario/${eventId}`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
+      const response = await fetch(
+        `http://localhost:3000/calendario/deleteCalendario/${eventId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (response.ok) {
         await fetchAllEvents(); // Actualiza la lista de eventos después de eliminar
-        setShowConfirmacion(true); 
+        setShowConfirmacion(true);
         setMensajeConfirmacion("Evento eliminado exitosamente");
       } else {
         const errorData = await response.json();
-        console.error("Error al eliminar el evento:", errorData.error || response.statusText);
-        setShowConfirmacion(true); 
+        console.error(
+          "Error al eliminar el evento:",
+          errorData.error || response.statusText
+        );
+        setShowConfirmacion(true);
         setMensajeConfirmacion("Error al eliminar evento");
       }
     } catch (error) {
       console.error("Error al eliminar el evento:", error);
-      setShowConfirmacion(true); 
+      setShowConfirmacion(true);
       setMensajeConfirmacion("Error al eliminar evento");
     }
-  };  
+  };
 
   return (
     <div className="calendario-container">
@@ -192,7 +212,16 @@ const Calendario = ({ view, hideHeader }) => {
             return (
               <ul className="event-list">
                 {eventsForDay.map((event) => (
-                  <li key={event.id} style={{ backgroundColor: event.color, color: '#fff', padding: '2px' }}>{event.title}</li>
+                  <li
+                    key={event.id}
+                    style={{
+                      backgroundColor: event.color,
+                      color: "#fff",
+                      padding: "2px",
+                    }}
+                  >
+                    {event.title}
+                  </li>
                 ))}
               </ul>
             );
@@ -225,34 +254,56 @@ const Calendario = ({ view, hideHeader }) => {
                 {events
                   .filter(
                     (event) =>
-                      selectedDate >= new Date(event.start).setHours(0, 0, 0, 0) &&
+                      selectedDate >=
+                        new Date(event.start).setHours(0, 0, 0, 0) &&
                       selectedDate <= new Date(event.end).setHours(0, 0, 0, 0)
                   )
                   .map((event) => (
-                    <li key={event.id} style={{ backgroundColor: event.color, color: '#fff', padding: '2px' }}>
+                    <li
+                      key={event.id}
+                      style={{
+                        backgroundColor: event.color,
+                        color: "#fff",
+                        padding: "2px",
+                      }}
+                    >
                       {event.title}
                       <div className="botonesEliminarActualizar">
-                        <button onClick={() => {
-                          setEventToEdit(event);
-                          setNewEvent({
-                            title: event.title,
-                            start: event.start.toISOString().slice(0, 16),
-                            end: event.end.toISOString().slice(0, 16),
-                            color: event.color,
-                          });
-                          setShowEditForm(true);
-                        }} className="botonEditar">
-                          <img src={iconoEditar} alt="Actualizar" className="Editar" />
+                        <button
+                          onClick={() => {
+                            setEventToEdit(event);
+                            setNewEvent({
+                              title: event.title,
+                              start: event.start.toISOString().slice(0, 16),
+                              end: event.end.toISOString().slice(0, 16),
+                              color: event.color,
+                            });
+                            setShowEditForm(true);
+                          }}
+                          className="botonEditar"
+                        >
+                          <img
+                            src={iconoEditar}
+                            alt="Actualizar"
+                            className="Editar"
+                          />
                         </button>
-                        <button onClick={() => handleDeleteEvent(event.id)} className="botonEliminar">
-                          <img src={iconoElimar} alt="Eliminar" className="Eliminar" />
+                        <button
+                          onClick={() => handleDeleteEvent(event.id)}
+                          className="botonEliminar"
+                        >
+                          <img
+                            src={iconoElimar}
+                            alt="Eliminar"
+                            className="Eliminar"
+                          />
                         </button>
                       </div>
                     </li>
                   ))}
               </ul>
             </div>
-            
+
             {showForm && (
               <div className="formulario-agregar-evento">
                 <label>Título:</label>
@@ -353,12 +404,12 @@ const Calendario = ({ view, hideHeader }) => {
         </div>
       )}
       {showConfirmacion && (
-          <ConfirmacionTemporal 
-            mensaje={mensajeConfirmacion} 
-            onClose={() => setShowConfirmacion(false)}
-          />
+        <ConfirmacionTemporal
+          mensaje={mensajeConfirmacion}
+          onClose={() => setShowConfirmacion(false)}
+        />
       )}
-      <Footer/>
+      <Footer />
     </div>
   );
 };

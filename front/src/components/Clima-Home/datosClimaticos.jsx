@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaSun, FaCloudSun, FaCloud, FaCloudShowersHeavy, FaSnowflake } from 'react-icons/fa';
-import "../styles/clima.css";
-import ConfirmacionTemporal from "./notificacionTemporal";// Asegúrate de importar el componente
+import {
+  FaSun,
+  FaCloudSun,
+  FaCloud,
+  FaCloudShowersHeavy,
+  FaSnowflake,
+} from "react-icons/fa";
+import "./clima.css";
+import ConfirmacionTemporal from "../Notificacion/notificacionTemporal"; // Asegúrate de importar el componente
 
 const getWeatherIcon = (description) => {
-  if (description.includes('clear')) return <FaSun />;
-  if (description.includes('cloud')) return <FaCloud />;
-  if (description.includes('showers')) return <FaCloudShowersHeavy />;
-  if (description.includes('snow')) return <FaSnowflake />;
+  if (description.includes("clear")) return <FaSun />;
+  if (description.includes("cloud")) return <FaCloud />;
+  if (description.includes("showers")) return <FaCloudShowersHeavy />;
+  if (description.includes("snow")) return <FaSnowflake />;
   return <FaCloudSun />; // Por defecto, si no coincide con los anteriores
 };
 
@@ -25,7 +31,7 @@ const showNotification = (title, body) => {
   if (Notification.permission === "granted") {
     new Notification(title, {
       body,
-      icon: 'https://example.com/icon.png',
+      icon: "https://example.com/icon.png",
     });
   }
 };

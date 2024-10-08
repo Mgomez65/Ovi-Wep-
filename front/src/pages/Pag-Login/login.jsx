@@ -1,8 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import "../styles/login.css";
-import imagen from "../assets/Login/Racimo-de-uva.png";
+import "./login.css";
+import imagen from "../../assets/Login/Racimo-de-uva.png";
 
 const Login = () => {
   const navigate = useNavigate();

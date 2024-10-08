@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import iconoMenu from '../assets/icon-menu.png'
-import '../styles/menuDesplegable.css'
+import iconoMenu from '../../assets/icon-menu.png'
+import './menuDesplegable.css'
 import { Link, useNavigate } from 'react-router-dom';
 
 function MenuDesplegable() {

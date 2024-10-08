@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Calendario from './pages/calendario';
-import Home from './pages/home';
-import Register from './pages/verUsuario'; 
-import Login from './pages/login';
-import Informe from './pages/informe';
-import Inicio from './pages/inicio';
-import AboutOVI from './pages/about';
-import TermsConditions from './pages/terminosCondiciones';
-import PrivacyPolicy from './pages/politicas';
+import Calendario from './pages/Pag-Calendario/calendario';
+import Home from './pages/Pag-Home/home';
+import Register from './pages/Vista-de-Usuarios/verUsuario'; 
+import Login from './pages/Pag-Login/login';
+import Informe from './pages/Pag-Informe/informe';
+import Inicio from './pages/Pag-Index/inicio';
+import AboutOVI from './pages/Informacion-de-Ovi/Sobre-Nosotros/about';
+import TermsConditions from './pages/Informacion-de-Ovi/Terminos-y-Condiciones/terminosCondiciones';
+import PrivacyPolicy from './pages/Informacion-de-Ovi/Politicas-de-Privacidad/politicas';
 
 const App = () => {
   return (

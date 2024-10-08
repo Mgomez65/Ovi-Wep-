@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import ConfirmacionTemporal from "../components/notificacionTemporal"; // Importa el componente
-import "../styles/register.css";
+import Header from "../../components/Header/header";
+import Footer from "../../components/Footer/footer";
+import ConfirmacionTemporal from "../../components/Notificacion/notificacionTemporal"; // Importa el componente
+import "./verUsuario.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -40,7 +40,8 @@ const Register = () => {
   const handleUserClick = async (userId) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/users/${userId}`, {
+        `http://localhost:3000/api/users/${userId}`,
+        {
           withCredentials: true,
         }
       );
@@ -56,7 +57,6 @@ const Register = () => {
       setValue("Password", userData.Password);
 
       setSelectedUser(userData); // Asegúrate de que esto sea el objeto completo del usuario
-
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -167,7 +167,9 @@ const Register = () => {
         </div>
         <div className="formulario-conteiner">
           {selectedUser ? (
-            <form onSubmit={handleSubmit(onUpdate)}> {/* Cambiado aquí */}
+            <form onSubmit={handleSubmit(onUpdate)}>
+              {" "}
+              {/* Cambiado aquí */}
               <h2>Actualizar Usuario</h2>
               <div className="form-fields-container">
                 <div className="form-field">
@@ -197,7 +199,6 @@ const Register = () => {
                 {...register("CUIL", { required: "El CUIL es requerido" })}
               />
               {errors.CUIL && <span>{errors.CUIL.message}</span>}
-
               <input
                 type="email"
                 placeholder="Email"
@@ -210,7 +211,6 @@ const Register = () => {
                 })}
               />
               {errors.Email && <span>{errors.Email.message}</span>}
-
               <input
                 type="text"
                 placeholder="Número de empleado"
@@ -221,16 +221,16 @@ const Register = () => {
               {errors.Num_empleado && (
                 <span>{errors.Num_empleado.message}</span>
               )}
-
               <div className="form-field">
-                <select {...register("rol", { required: "El rol es requerido" })}>
+                <select
+                  {...register("rol", { required: "El rol es requerido" })}
+                >
                   <option value="">Selecciona un rol</option>
                   <option value="admin">Admin</option>
                   <option value="usuario">Usuario</option>
                 </select>
                 {errors.rol && <span>{errors.rol.message}</span>}
               </div>
-
               <input
                 type="text"
                 placeholder="Dirección"
@@ -239,7 +239,6 @@ const Register = () => {
                 })}
               />
               {errors.Direccion && <span>{errors.Direccion.message}</span>}
-
               <input
                 type="password"
                 placeholder="Contraseña"
@@ -248,7 +247,6 @@ const Register = () => {
                 })}
               />
               {errors.Password && <span>{errors.Password.message}</span>}
-
               <button type="submit">Actualizar Usuario</button>
             </form>
           ) : (
@@ -308,7 +306,9 @@ const Register = () => {
               )}
 
               <div className="form-field">
-                <select {...register("rol", { required: "El rol es requerido" })}>
+                <select
+                  {...register("rol", { required: "El rol es requerido" })}
+                >
                   <option value="">Selecciona un rol</option>
                   <option value="admin">Admin</option>
                   <option value="usuario">Usuario</option>
@@ -340,10 +340,7 @@ const Register = () => {
         </div>
       </div>
       {modalVisible && (
-        <ConfirmacionTemporal
-          mensaje={modalMessage}
-          onClose={closeModal}
-        />
+        <ConfirmacionTemporal mensaje={modalMessage} onClose={closeModal} />
       )}
       <Footer />
     </>

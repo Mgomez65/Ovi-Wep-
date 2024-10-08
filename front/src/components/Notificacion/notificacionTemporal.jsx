@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../styles/notificacionTemporal.css";
+import "./notificacionTemporal.css";
 
 function ConfirmacionTemporal({ mensaje, onClose, shouldReload }) {
   const [isVisible, setIsVisible] = useState(true);

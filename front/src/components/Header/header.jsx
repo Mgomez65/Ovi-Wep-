@@ -1,13 +1,13 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import axios from 'axios';
-import iconoVolver from "../assets/icon-volver.png";
-import iconoEliminar from "../assets/icon-eliminar.png"; // Corregido el nombre
-import iconoEditar from "../assets/icon-editar.png";
-import iconoBuscar from "../assets/icon-buscar.png";
-import descargarIcon from '../assets/icon-download.png';
-import Menu from "./menuDesplegable";
-import "../styles/header.css";
+import axios from "axios";
+import iconoVolver from "../../assets/icon-volver.png";
+import iconoEliminar from "../../assets/icon-eliminar.png"; // Corregido el nombre
+import iconoEditar from "../../assets/icon-editar.png";
+import iconoBuscar from "../../assets/icon-buscar.png";
+import descargarIcon from "../../assets/icon-download.png";
+import Menu from "../Menu-Desplegable/menuDesplegable";
+import "./header.css";
 
 function Header() {
   const location = useLocation();
@@ -31,15 +31,15 @@ function Header() {
       if (
         searchMenuRef.current &&
         !searchMenuRef.current.contains(event.target) &&
-        !event.target.closest('.botonInforme')
+        !event.target.closest(".botonInforme")
       ) {
         setIsSearchMenuVisible(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -71,35 +71,42 @@ function Header() {
   };
 
   useEffect(() => {
-    fetchFiles(); 
+    fetchFiles();
   }, []);
 
   useEffect(() => {
     if (searchTerm === "") {
-      setFilteredFiles(uploadedFiles); 
+      setFilteredFiles(uploadedFiles);
     } else {
-      const filtered = uploadedFiles.filter(file => 
+      const filtered = uploadedFiles.filter((file) =>
         file.titulo.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredFiles(filtered); 
+      setFilteredFiles(filtered);
     }
   }, [searchTerm, uploadedFiles]);
 
   const showDeleteConfirmation = (fileId) => {
-    setFileToDelete(fileId); 
-    setIsConfirmModalVisible(true); 
+    setFileToDelete(fileId);
+    setIsConfirmModalVisible(true);
   };
 
   const handleConfirmDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/informe/delete/${fileToDelete}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://localhost:3000/informe/delete/${fileToDelete}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       if (response.ok) {
-        setUploadedFiles(uploadedFiles.filter(file => file.id !== fileToDelete));
-        setFilteredFiles(filteredFiles.filter(file => file.id !== fileToDelete)); 
-        setIsConfirmModalVisible(false); 
+        setUploadedFiles(
+          uploadedFiles.filter((file) => file.id !== fileToDelete)
+        );
+        setFilteredFiles(
+          filteredFiles.filter((file) => file.id !== fileToDelete)
+        );
+        setIsConfirmModalVisible(false);
       } else {
         console.error("Error al eliminar el archivo");
       }
@@ -109,25 +116,30 @@ function Header() {
   };
 
   const handleCancelDelete = () => {
-    setIsConfirmModalVisible(false); 
+    setIsConfirmModalVisible(false);
   };
 
   const handleDownload = async (fileId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/informe/descargar/${fileId}`, {
-        responseType: 'blob',
-      });
+      const response = await axios.get(
+        `http://localhost:3000/informe/descargar/${fileId}`,
+        {
+          responseType: "blob",
+        }
+      );
 
-      const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
-      const link = document.createElement('a');
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { type: "application/pdf" })
+      );
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', `informe_${fileId}.pdf`);
+      link.setAttribute("download", `informe_${fileId}.pdf`);
       document.body.appendChild(link);
       link.click();
 
       link.parentNode.removeChild(link);
     } catch (error) {
-      console.error('Error al descargar el informe:', error);
+      console.error("Error al descargar el informe:", error);
     }
   };
 
@@ -144,11 +156,7 @@ function Header() {
       <div className="header">
         {isInformePage ? (
           <>
-            <a
-              href="#"
-              className="botonInforme"
-              onClick={toggleSearchMenu}
-            >
+            <a href="#" className="botonInforme" onClick={toggleSearchMenu}>
               {isSearchMenuVisible ? "Cerrar Informe" : "Ver Informe"}
             </a>
             {isSearchMenuVisible && (
@@ -159,7 +167,7 @@ function Header() {
                     placeholder="Buscar..."
                     className="search-input"
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                   <button className="search-button" onClick={handleSearch}>
                     <img src={iconoBuscar} alt="Buscar" className="Buscar" />
@@ -167,7 +175,10 @@ function Header() {
                 </div>
 
                 <div className="CrearInforme">
-                  <button onClick={handleCreateReport} className="botonCrearInforme">
+                  <button
+                    onClick={handleCreateReport}
+                    className="botonCrearInforme"
+                  >
                     Crear Informe
                   </button>
                 </div>
@@ -178,14 +189,35 @@ function Header() {
                       <div key={file.id} className="uploaded-file-item">
                         <span>{file.titulo}</span>
                         <div className="botonesEliminarActualizar">
-                          <button onClick={() => handleUpdateFile(file.id)} className="botonEditar">
-                            <img src={iconoEditar} alt="Actualizar" className="Editar" />
+                          <button
+                            onClick={() => handleUpdateFile(file.id)}
+                            className="botonEditar"
+                          >
+                            <img
+                              src={iconoEditar}
+                              alt="Actualizar"
+                              className="Editar"
+                            />
                           </button>
-                          <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
-                            <img src={iconoEliminar} alt="Eliminar" className="Eliminar" />
+                          <button
+                            onClick={() => showDeleteConfirmation(file.id)}
+                            className="botonEliminar"
+                          >
+                            <img
+                              src={iconoEliminar}
+                              alt="Eliminar"
+                              className="Eliminar"
+                            />
                           </button>
-                          <button onClick={() => handleDownload(file.id)} className="botonEliminar">
-                            <img src={descargarIcon} alt="Descargar" className="Descargar" />
+                          <button
+                            onClick={() => handleDownload(file.id)}
+                            className="botonEliminar"
+                          >
+                            <img
+                              src={descargarIcon}
+                              alt="Descargar"
+                              className="Descargar"
+                            />
                           </button>
                         </div>
                       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/datosHumedad.css';
+import './datosHumedad.css';
 
 const Termometro = () => {
     const [humidity, setHumidity] = useState(0);
