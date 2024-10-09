@@ -51,7 +51,6 @@ const Inicio = () => {
         </p>
       </div>
       <div className="containerImagenInicio">
-        <p>Eficiencia y seguridad para la gestión de tus plantas</p>
         <img src={imagenInicio} alt="Imagen" className="imagenInicio" />
       </div>
       <div className="containerVideo" id="TituloInfo">
