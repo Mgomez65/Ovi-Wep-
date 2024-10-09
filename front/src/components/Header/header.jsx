@@ -144,7 +144,6 @@ function Header() {
   };
 
   const handleSearch = () => {
-    console.log("Término de búsqueda:", searchTerm);
     const url = "http://localhost:3000/informe/search";
 
     fetch(url, {
@@ -162,11 +161,8 @@ function Header() {
         return response.json();
       })
       .then((data) => {
-        console.log("Datos recibidos:", data); // Verifica que los datos llegan
         if (data.length > 0) {
-          // Actualiza los archivos filtrados en el estado
-          setFilteredFiles(data); 
-          console.log("Archivos filtrados guardados:", data);
+          setFilteredFiles(data);
         } else {
           setFilteredFiles([]);
         }
