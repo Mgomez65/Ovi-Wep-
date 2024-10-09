@@ -71,8 +71,9 @@ exports.updateInforme = async (req, res) => {
 }
 
 exports.searchInforme = async (req, res) => {
-    const data = req.body.termino
+    const data = req.body.searchTerm
     const informes = await serciosInforme.searchInforme(data)
+    console.log(informes)
     if (!informes) {
         return res.status(404).send('No hay informes disponibles');
     }

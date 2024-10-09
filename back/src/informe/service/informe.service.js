@@ -34,14 +34,14 @@ exports.createIforme = async (valores) => {
             const mes = partes[1];
             const dia = partes[2];
 
-            return new Date(año, mes - 1, dia); // Devolver un objeto Date
+            return new Date(año, mes - 1, dia); 
         }
 
-        // Convertir las fechas
+      
         const fechaInicio = new Date(convertirFecha(valores.fecha_inicio));
         const fechaFinal = new Date(convertirFecha(valores.fecha_final));
 
-        // Validar si las fechas son válidas
+
         if (isNaN(fechaInicio.getTime()) || isNaN(fechaFinal.getTime())) {
             throw new Error("Fechas inválidas: Por favor asegúrate de que las fechas están en formato correcto.");
         }
