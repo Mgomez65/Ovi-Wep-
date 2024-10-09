@@ -25,6 +25,17 @@ const Calendario = ({ view, hideHeader }) => {
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
 
+  const colorOptions = [
+    { name: "Blanco", value: "#FFFFFF" },
+    { name: "Gris Claro", value: "#D3D3D3" },
+    { name: "Beige", value: "#F5F5DC" },
+    { name: "Amarillo", value: "#FFFF00" },
+    { name: "Naranja", value: "#FFA500" },
+    { name: "Rojo", value: "#d42c2c" },
+    { name: "Verde", value: "#22ff22" },
+    { name: "Azul", value: "#0044ff" },
+  ];
+
   const fetchAllEvents = async () => {
     try {
       const response = await fetch(
@@ -63,7 +74,7 @@ const Calendario = ({ view, hideHeader }) => {
   };
 
   useEffect(() => {
-    fetchAllEvents(); // Cargar todos los eventos al montar el componente
+    fetchAllEvents();
   }, []);
 
   const handleDayClick = (date) => {
@@ -72,7 +83,7 @@ const Calendario = ({ view, hideHeader }) => {
     const start = date.toISOString().slice(0, 16);
     const end = new Date(date.getTime() + 60 * 60 * 1000)
       .toISOString()
-      .slice(0, 16); // Default to 1 hour later
+      .slice(0, 16);
     setNewEvent({ ...newEvent, start, end });
   };
 
@@ -139,7 +150,7 @@ const Calendario = ({ view, hideHeader }) => {
       );
 
       if (response.ok) {
-        await fetchAllEvents(); // Actualiza la lista de eventos
+        await fetchAllEvents();
         setShowEditForm(false);
         setShowConfirmacion(true);
         setMensajeConfirmacion("Evento actualizado exitosamente");
@@ -169,7 +180,7 @@ const Calendario = ({ view, hideHeader }) => {
       );
 
       if (response.ok) {
-        await fetchAllEvents(); // Actualiza la lista de eventos después de eliminar
+        await fetchAllEvents();
         setShowConfirmacion(true);
         setMensajeConfirmacion("Evento eliminado exitosamente");
       } else {
@@ -330,15 +341,28 @@ const Calendario = ({ view, hideHeader }) => {
                     setNewEvent({ ...newEvent, end: e.target.value })
                   }
                 />
-                <label>Color del evento:</label>
                 <div className="color-picker-wrapper">
-                  <input
-                    type="color"
-                    value={newEvent.color}
-                    onChange={(e) =>
-                      setNewEvent({ ...newEvent, color: e.target.value })
-                    }
-                  />
+                  <label>Color del evento:</label>
+                  <div className="color-options">
+                    {colorOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        style={{
+                          backgroundColor: option.value,
+                          width: "30px",
+                          height: "30px",
+                          border:
+                            newEvent.color === option.value
+                              ? "2px solid black"
+                              : "none",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          setNewEvent({ ...newEvent, color: option.value })
+                        }
+                      />
+                    ))}
+                  </div>
                 </div>
                 <button onClick={handleAddEvent} className="boton">
                   Añadir evento
@@ -378,15 +402,28 @@ const Calendario = ({ view, hideHeader }) => {
                     setNewEvent({ ...newEvent, end: e.target.value })
                   }
                 />
-                <label>Color del evento:</label>
                 <div className="color-picker-wrapper">
-                  <input
-                    type="color"
-                    value={newEvent.color}
-                    onChange={(e) =>
-                      setNewEvent({ ...newEvent, color: e.target.value })
-                    }
-                  />
+                  <label>Color del evento:</label>
+                  <div className="color-options">
+                    {colorOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        style={{
+                          backgroundColor: option.value,
+                          width: "30px",
+                          height: "30px",
+                          border:
+                            newEvent.color === option.value
+                              ? "2px solid black"
+                              : "none",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          setNewEvent({ ...newEvent, color: option.value })
+                        }
+                      />
+                    ))}
+                  </div>
                 </div>
                 <button onClick={handleUpdateEvent} className="boton">
                   Actualizar Evento

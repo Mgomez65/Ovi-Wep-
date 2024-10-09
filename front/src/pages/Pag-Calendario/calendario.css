@@ -445,7 +445,7 @@ span {
     margin: 5px 0;
     padding: 8px;
     padding-left: 10px !important;
-    color: #fff;
+    color: #000 !important;
     width: 100%;
     box-sizing: border-box;
 }
