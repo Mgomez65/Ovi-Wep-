@@ -146,7 +146,7 @@ function Header() {
   const handleSearch = () => {
     console.log("Término de búsqueda:", searchTerm);
     const url = "http://localhost:3000/informe/search";
-  
+
     fetch(url, {
       method: "POST",
       credentials: "include",
@@ -156,12 +156,20 @@ function Header() {
       body: JSON.stringify({ searchTerm }),
     })
       .then((response) => {
-        console.log("Respuesta del servidor:", response);
+        if (!response.ok) {
+          throw new Error("Error en la respuesta del servidor");
+        }
         return response.json();
       })
       .then((data) => {
-        console.log("Datos recibidos:", data);
-        setFilteredFiles(data.filteredFiles || []); // Asegúrate de que 'filteredFiles' sea un arreglo
+        console.log("Datos recibidos:", data); // Verifica que los datos llegan
+        if (data.length > 0) {
+          // Actualiza los archivos filtrados en el estado
+          setFilteredFiles(data); 
+          console.log("Archivos filtrados guardados:", data);
+        } else {
+          setFilteredFiles([]);
+        }
       })
       .catch((error) => {
         console.error("Error fetching files:", error);
@@ -184,10 +192,9 @@ function Header() {
                 <div className="search-container">
                   <input
                     type="text"
-                    placeholder="Buscar..."
-                    className="search-input"
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => setSearchTerm(e.target.value)} // Actualiza el término de búsqueda
+                    placeholder="Buscar..."
                   />
                   <button className="search-button" onClick={handleSearch}>
                     <img src={iconoBuscar} alt="Buscar" className="Buscar" />
@@ -204,40 +211,19 @@ function Header() {
                 </div>
 
                 <div className="uploaded-files-container">
-                  {filteredFiles.length > 0 ? (
-                    filteredFiles.map((file) => (
+                  {filteredFiles && filteredFiles.length > 0 ? (
+                    filteredFiles.map((file, index) => (
                       <div key={file.id} className="uploaded-file-item">
                         <span>{file.titulo}</span>
                         <div className="botonesEliminarActualizar">
-                          <button
-                            onClick={() => handleUpdateFile(file.id)}
-                            className="botonEditar"
-                          >
-                            <img
-                              src={iconoEditar}
-                              alt="Actualizar"
-                              className="Editar"
-                            />
+                          <button onClick={() => handleUpdateFile(file.id)} className="botonEditar">
+                            <img src={iconoEditar} alt="Actualizar" className="Editar" />
                           </button>
-                          <button
-                            onClick={() => showDeleteConfirmation(file.id)}
-                            className="botonEliminar"
-                          >
-                            <img
-                              src={iconoEliminar}
-                              alt="Eliminar"
-                              className="Eliminar"
-                            />
+                          <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
+                            <img src={iconoEliminar} alt="Eliminar" className="Eliminar" />
                           </button>
-                          <button
-                            onClick={() => handleDownload(file.id)}
-                            className="botonEliminar"
-                          >
-                            <img
-                              src={descargarIcon}
-                              alt="Descargar"
-                              className="Descargar"
-                            />
+                          <button onClick={() => handleDownload(file.id)} className="botonEliminar">
+                            <img src={descargarIcon} alt="Descargar" className="Descargar" />
                           </button>
                         </div>
                       </div>
