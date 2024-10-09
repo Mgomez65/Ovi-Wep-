@@ -74,7 +74,7 @@ function Header() {
     fetchFiles();
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (searchTerm === "") {
       setFilteredFiles(uploadedFiles);
     } else {
@@ -83,7 +83,7 @@ function Header() {
       );
       setFilteredFiles(filtered);
     }
-  }, [searchTerm, uploadedFiles]);
+  }, [searchTerm, uploadedFiles]); */
 
   const showDeleteConfirmation = (fileId) => {
     setFileToDelete(fileId);
@@ -144,8 +144,28 @@ function Header() {
   };
 
   const handleSearch = () => {
-    // Puedes implementar la lógica de búsqueda aquí si es necesario
-    // En este caso, el filtrado se realiza automáticamente en el useEffect
+    console.log("Término de búsqueda:", searchTerm);
+    const url = "http://localhost:3000/informe/search";
+  
+    fetch(url, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ searchTerm }),
+    })
+      .then((response) => {
+        console.log("Respuesta del servidor:", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Datos recibidos:", data);
+        setFilteredFiles(data.filteredFiles || []); // Asegúrate de que 'filteredFiles' sea un arreglo
+      })
+      .catch((error) => {
+        console.error("Error fetching files:", error);
+      });
   };
 
   return (
