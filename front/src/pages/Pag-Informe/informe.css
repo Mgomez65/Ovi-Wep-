@@ -66,22 +66,37 @@
     font-family: Arial, sans-serif;
 }
 
-.containerImagenes h2 {
+.containerImagenes h2, .containerCalendario h2 {
     font-size: 17px;
     margin: 0;
     text-indent: 25px;
     margin: 10px;
     margin-top: 0;
-    
+
+}
+
+.containerUwu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.containerCalendario {
+    width: 60%;
+    background-color: #374151;
+    padding: 10px;
+    margin: 10px;
+    margin-top: 0;
+    border-radius: 3px;
+    margin-left: 4.5%;
 }
 
 .containerImagenes {
+    width: 40%;
     background-color: #374151;
     padding: 10px;
-    margin: 20px;
+    margin: 10px;
+    margin-top: 0;
     border-radius: 3px;
-    position: relative;
-    margin-left: 4.5%;
     margin-right: 4.5%;
 }
 
@@ -99,7 +114,7 @@ input[type="file"] {
     display: none;
 }
 
-.divBotonSubir{
+.divBotonSubir {
     display: flex;
     justify-content: flex-end;
     margin: 0;
@@ -107,6 +122,8 @@ input[type="file"] {
 }
 
 .botonSubir {
+    padding: 10px;
+    margin-right: 4.5%;
     text-decoration: none;
     border: none;
     display: block;
@@ -116,10 +133,8 @@ input[type="file"] {
     font-size: 16px;
     border-radius: 3px;
     margin-bottom: 10px;
-    width: 30%;
+    width: 15%;
     text-align: center;
-    font-size: 14px;
-    margin-left: 5%;
 }
 
 .botonSubir:hover {
@@ -172,12 +187,12 @@ input[type="file"] {
     background-color: #272e3a;
 }
 
-.botonesForm{
+.botonesForm {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin: 0;
 }
 
-.uploaded-files-container{
+.uploaded-files-container {
     color: black;
 }

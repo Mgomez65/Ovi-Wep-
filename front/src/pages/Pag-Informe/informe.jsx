@@ -6,6 +6,8 @@ import Footer from "../../components/Footer/footer";
 import ConfirmacionTemporal from "../../components/Notificacion/notificacionTemporal";
 import "./informe.css";
 
+import Calendario from "../../components/calendario-mensual-informe/calendarioInforme";
+
 const Informe = () => {
   const [titulo, setTitulo] = useState("");
   const [fechaInicio, setFechaInicio] = useState("");
@@ -207,48 +209,50 @@ const Informe = () => {
             />
           </div>
 
-          <div className="containerImagenes">
-            <h2>Imágenes relacionadas</h2>
-            {existingFiles.length > 0 && (
-              <div>
-                <h3>Archivos existentes:</h3>
-                <ul>
-                  {existingFiles.map((file, index) => (
-                    <li key={index}>{file.nombre}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <div className="upload-container">
-              <div className="botonesForm">
-                <label htmlFor="fileInput" className="custom-file-upload">
-                  Seleccionar Imágenes
-                </label>
-                <input
-                  type="file"
-                  id="fileInput"
-                  name="files"
-                  accept="image/*"
-                  multiple
-                  onChange={handleFileChange}
-                  style={{ display: "none" }}
-                />
-                <div className="divBotonSubir">
-                  <button
-                    type="submit"
-                    disabled={uploading}
-                    className="botonSubir"
-                  >
-                    {uploading
-                      ? "Subiendo..."
-                      : selectedInforme
-                      ? "Guardar Informe"
-                      : "Crear Informe"}
-                  </button>
+          <div className="containerUwu">
+            <div className="containerCalendario">
+              <h2>Plan de riego</h2>
+              <Calendario/>
+            </div>
+            <div className="containerImagenes">
+              <h2>Imágenes relacionadas</h2>
+              {existingFiles.length > 0 && (
+                <div>
+                  <h3>Archivos existentes:</h3>
+                  <ul>
+                    {existingFiles.map((file, index) => (
+                      <li key={index}>{file.nombre}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <div className="upload-container">
+                <div className="botonesForm">
+                  <label htmlFor="fileInput" className="custom-file-upload">
+                    Seleccionar Imágenes
+                  </label>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    name="files"
+                    accept="image/*"
+                    multiple
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                  />
                 </div>
               </div>
+              {uploadMessage && <p>{uploadMessage}</p>}
             </div>
-            {uploadMessage && <p>{uploadMessage}</p>}
+          </div>
+          <div className="divBotonSubir">
+            <button type="submit" disabled={uploading} className="botonSubir">
+              {uploading
+                ? "Subiendo..."
+                : selectedInforme
+                ? "Guardar Informe"
+                : "Crear Informe"}
+            </button>
           </div>
         </form>
         {showConfirmacion && (
