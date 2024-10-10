@@ -91,13 +91,12 @@ const Informe = () => {
       );
       const result = await response.json();
       if (response.ok) {
-        alert(result.mensage);
-        setUploadMessage("Archivo actualizado exitosamente");
-        window.location.reload();
+        setMensajeConfirmacion("Informe creado exitosamente");
+        setShowConfirmacion(true);
+        setExistingFiles(selectedFiles);
+        setSelectedFiles([]);
       } else {
-        const errorText = await response.text();
-        console.error("Error en la respuesta del servidor:", errorText);
-        setMensajeConfirmacion("Error al actualizar el archivo");
+        setMensajeConfirmacion("Error al enviar los datos");
         setShowConfirmacion(true);
       }
     } catch (error) {
@@ -137,14 +136,10 @@ const Informe = () => {
       });
       const result = await response.json();
       if (response.ok) {
-        setMensajeConfirmacion("Informe creado exitosamente");
+        setMensajeConfirmacion("Informe actualizado exitosamente");
         setShowConfirmacion(true);
-        setExistingFiles(selectedFiles); // Muestra las imágenes recién subidas
-        setSelectedFiles([]); // Limpia el array de archivos seleccionados
       } else {
-        const errorText = await response.text();
-        console.error("Error en la respuesta del servidor:", errorText);
-        setMensajeConfirmacion("Error al enviar los datos");
+        setMensajeConfirmacion("Error al actualizar el archivo");
         setShowConfirmacion(true);
       }
     } catch (error) {
@@ -312,6 +307,7 @@ const Informe = () => {
         <ConfirmacionTemporal
           mensaje={mensajeConfirmacion}
           onClose={() => setShowConfirmacion(false)}
+          shouldReload={true}
         />
       )}
       <Footer />

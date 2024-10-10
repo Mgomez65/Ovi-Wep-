@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./notificacionTemporal.css";
 
 function ConfirmacionTemporal({ mensaje, onClose, shouldReload }) {
