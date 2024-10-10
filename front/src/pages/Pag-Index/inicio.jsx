@@ -63,7 +63,7 @@ const Inicio = () => {
           </p>
         </section>
         <section className="videoInformatico">
-          <video src="" controls autoplay muted className="video"></video>
+        <video src="/Ovi-Video-Inicio.mp4" controls autoplay muted className="video"></video>
           {/* <iframe
             width="560"
             height="315"
