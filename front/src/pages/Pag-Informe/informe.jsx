@@ -20,6 +20,7 @@ const Informe = () => {
   const [existingFiles, setExistingFiles] = useState([]);
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const location = useLocation();
   const fileId = location.state?.fileId;
@@ -153,8 +154,14 @@ const Informe = () => {
   };
 
   const handleFileChange = (event) => {
-    const newFiles = Array.from(event.target.files);
-    setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    const files = Array.from(event.target.files);
+    setSelectedFiles(files); // Almacena todos los archivos seleccionados
+    setSelectedImage(files[0]); // Establece la primera imagen como seleccionada para previsualización
+  };
+
+  const handleDeleteImage = () => {
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== 0)); // Elimina la primera imagen seleccionada
+    setSelectedImage(null); // Resetea el archivo seleccionado
   };
 
   return (
