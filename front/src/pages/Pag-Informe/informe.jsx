@@ -19,6 +19,7 @@ const Informe = () => {
   const [existingFiles, setExistingFiles] = useState([]);
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const location = useLocation();
   const fileId = location.state?.fileId;
@@ -155,9 +156,34 @@ const Informe = () => {
     }
   };
 
+  // Función para manejar la selección de archivos
   const handleFileChange = (event) => {
-    const newFiles = Array.from(event.target.files);
-    setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    const files = Array.from(event.target.files);
+    setSelectedFiles((prev) => [...prev, ...files]); // Añadir las nuevas imágenes seleccionadas
+    setCurrentIndex(0); // Restablecer el índice al principio del carrusel
+  };
+
+  // Función para eliminar la imagen actual del carrusel
+  const handleDeleteImage = () => {
+    setSelectedFiles((prev) =>
+      prev.filter((_, index) => index !== currentIndex)
+    );
+    setCurrentIndex((prev) =>
+      prev === 0 ? 0 : prev - 1
+    ); // Ajustar el índice después de eliminar
+  };
+
+  // Funciones para navegar por el carrusel
+  const handleNextImage = () => {
+    setCurrentIndex((prev) =>
+      prev === selectedFiles.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const handlePrevImage = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? selectedFiles.length - 1 : prev - 1
+    );
   };
 
   return (
