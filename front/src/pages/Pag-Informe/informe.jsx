@@ -5,7 +5,6 @@ import Header from "../../components/Header/header";
 import Footer from "../../components/Footer/footer";
 import ConfirmacionTemporal from "../../components/Notificacion/notificacionTemporal";
 import "./informe.css";
-
 import Calendario from "../../components/calendario-mensual-informe/calendarioInforme";
 
 const Informe = () => {
@@ -20,7 +19,6 @@ const Informe = () => {
   const [existingFiles, setExistingFiles] = useState([]);
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const location = useLocation();
   const fileId = location.state?.fileId;
@@ -51,6 +49,7 @@ const Informe = () => {
           );
           setContenido(data.contenido || "");
           setSelectedInforme(data);
+          setExistingFiles(data.imagenes || []); // Asumiendo que la respuesta incluye imágenes
         } catch (error) {
           console.error("Error al obtener el informe:", error);
           setShowConfirmacion(true);
@@ -123,6 +122,7 @@ const Informe = () => {
       fecha_inicio: fechaInicio,
       fecha_final: fechaFinal,
       contenido,
+      imagenes: selectedFiles, // Incluye las imágenes seleccionadas
     };
 
     try {
@@ -138,6 +138,8 @@ const Informe = () => {
       if (response.ok) {
         setMensajeConfirmacion("Informe creado exitosamente");
         setShowConfirmacion(true);
+        setExistingFiles(selectedFiles); // Muestra las imágenes recién subidas
+        setSelectedFiles([]); // Limpia el array de archivos seleccionados
       } else {
         const errorText = await response.text();
         console.error("Error en la respuesta del servidor:", errorText);
@@ -154,14 +156,8 @@ const Informe = () => {
   };
 
   const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    setSelectedFiles(files); // Almacena todos los archivos seleccionados
-    setSelectedImage(files[0]); // Establece la primera imagen como seleccionada para previsualización
-  };
-
-  const handleDeleteImage = () => {
-    setSelectedFiles((prev) => prev.filter((_, i) => i !== 0)); // Elimina la primera imagen seleccionada
-    setSelectedImage(null); // Resetea el archivo seleccionado
+    const newFiles = Array.from(event.target.files);
+    setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
   };
 
   return (
@@ -218,8 +214,8 @@ const Informe = () => {
 
           <div className="containerUwu">
             <div className="containerCalendario">
-              <h2>Plan de riego</h2>
-              <Calendario/>
+              <h2>Plan de Riego</h2>
+              <Calendario />
             </div>
             <div className="containerImagenes">
               <h2>Imágenes relacionadas</h2>
@@ -249,9 +245,32 @@ const Informe = () => {
                   />
                 </div>
               </div>
-              {uploadMessage && <p>{uploadMessage}</p>}
+
+              {/* Mostrar el carrusel si hay imágenes seleccionadas */}
+              {selectedFiles.length > 0 && (
+                <div className="carousel-container">
+                  <div className="carousel">
+                    <button onClick={handlePrevImage} className="botonCarrucel">Anterior</button>
+                    <button onClick={handleNextImage} className="botonCarrucel">Siguiente</button>
+                    <img
+                      src={URL.createObjectURL(selectedFiles[currentIndex])}
+                      alt={`Imagen ${currentIndex + 1}`}
+                      className="image-preview"
+                    />
+                  </div>
+
+                  {/* Botón de eliminar imagen */}
+                  <div className="botonEliminarContainer">
+                    <button onClick={handleDeleteImage} className="remove-button">
+                      Eliminar
+                    </button>
+                  </div>
+                  
+                </div>
+              )}
             </div>
           </div>
+
           <div className="divBotonSubir">
             <button type="submit" disabled={uploading} className="botonSubir">
               {uploading
@@ -262,13 +281,13 @@ const Informe = () => {
             </button>
           </div>
         </form>
-        {showConfirmacion && (
-          <ConfirmacionTemporal
-            mensaje={mensajeConfirmacion}
-            onClose={() => setShowConfirmacion(false)}
-          />
-        )}
       </div>
+      {showConfirmacion && (
+        <ConfirmacionTemporal
+          mensaje={mensajeConfirmacion}
+          onClose={() => setShowConfirmacion(false)}
+        />
+      )}
       <Footer />
     </>
   );
