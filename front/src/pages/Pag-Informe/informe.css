@@ -117,8 +117,8 @@ input[type="file"] {
 .divBotonSubir {
     display: flex;
     justify-content: flex-end;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .botonSubir {
@@ -141,12 +141,28 @@ input[type="file"] {
     background-color: #272e3a;
 }
 
+.carousel{
+    text-align: center;
+}
+
 .image-preview {
-    max-width: 250px;
+    width: 450px;
     height: auto;
     display: block;
     margin: 10px;
     margin-left: 0;
+}
+
+.botonCarrucel{
+    padding: 5px;
+    background-color: #161726;
+    color: white;
+    border: none;
+    text-decoration: none;
+    margin: 3px;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: center;
 }
 
 .remove-button {
