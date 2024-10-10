@@ -4,30 +4,36 @@ import './datosHumedad.css';
 const Termometro = () => {
     const [humidity, setHumidity] = useState(0);
 
-    /* useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('URL_DE_TU_API');
-                const data = await response.json();
-                setHumidity(data.humidity);
-            } catch (error) {
-                console.error('Error al obtener datos:', error);
-            }
-        };
-
-        fetchData();
-    }, []); */
+    const fetchData = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/api/humedad-actual", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+            }})
+            const data = await response.json();
+            setHumidity(data.humedad)
+        }catch (error) {
+            console.error('Error al obtener datos:', error);
+        }
+    };
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            fetchData();
+        }, 500);
+        return () => clearInterval(interval);
+    }, []);
+
+    /* useEffect(() => {
         const fetchData = () => {
             setTimeout(() => {
                 const simulatedHumidity = 80;
                 setHumidity(simulatedHumidity);
             }, 1000);
         };
-
         fetchData();
-    }, []);
+    }, []); */
 
     return (
         <div>
