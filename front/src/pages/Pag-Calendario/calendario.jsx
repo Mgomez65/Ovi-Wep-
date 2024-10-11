@@ -8,6 +8,8 @@ import iconoEditar from "../../assets/icon-editar.png";
 import "react-calendar/dist/Calendar.css";
 import "./calendario.css";
 
+import IrrigationPlan from "../../components/Plan-de-Riego/planRiego";
+
 const Calendario = ({ view, hideHeader }) => {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
@@ -36,8 +38,17 @@ const Calendario = ({ view, hideHeader }) => {
     { name: "Azul", value: "#0044ff" },
   ];
 
-  const fetchAllEvents = async () => {
+  const handleSelectPlan = (plan) => {
+    setNewEvent({
+      title: plan.title,
+      start: plan.start.toISOString().slice(0, 16),
+      end: plan.end.toISOString().slice(0, 16),
+      color: plan.color,
+    });
+    setShowModal(true);
+  };
 
+  const fetchAllEvents = async () => {
     try {
       const response = await fetch(
         "http://localhost:3000/calendario/getCalendario",
@@ -206,6 +217,7 @@ const Calendario = ({ view, hideHeader }) => {
       <div className="Container">
         <div className="planesRiegoContainer">
           <h2>Planes de Riego</h2>
+          <IrrigationPlan onSelectPlan={handleSelectPlan}/>
         </div>
 
         <div className="calendarioContainer">
