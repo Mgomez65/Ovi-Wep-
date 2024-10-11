@@ -7,17 +7,18 @@ function Footer() {
   };
 
   return (
-    <footer className="footer">{/* 
-      <section className="seccionFooter">Ovi</section> */}
+    <footer className="footer">
       <div className="seccionFooter">
-          <p>
-            <p className="tituloContacto">Contacto:</p>
-            <p className="footer-correo">
-              info@ovi.com
-            </p>
-            Tel: +123 456 789
+        <p>
+          <p className="tituloContacto">Contacto:</p>
+          <p className="footer-correo">
+            info@ovi.com
           </p>
-        </div>
+            Tel: +123 456 789
+        </p>
+      </div>
+
+      <img src="/Logo-Ovi.png" alt="Logo" className="logo"/>
 
       <div className="containerSeccion2">
 
@@ -29,11 +30,11 @@ function Footer() {
           </nav>
         </div>
 
-
         <div className="footer-section">
           <p>© 2024 Ovi S.A.S. Todos los derechos reservados.</p>
         </div>
       </div>
+      
     </footer>
   );
 }

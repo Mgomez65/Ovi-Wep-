@@ -4,7 +4,7 @@ import './datosHumedad.css';
 const Termometro = () => {
     const [humidity, setHumidity] = useState(0);
 
-    /* const fetchData = async () => {
+    const fetchData = async () => {
         try {
             const response = await fetch("http://localhost:3001/api/humedad-actual", {
               method: "GET",
@@ -23,9 +23,9 @@ const Termometro = () => {
             fetchData();
         }, 500);
         return () => clearInterval(interval);
-    }, []); */
+    }, []);
 
-    useEffect(() => {
+    /* useEffect(() => {
         const fetchData = () => {
             setTimeout(() => {
                 const simulatedHumidity = 80;
@@ -33,7 +33,7 @@ const Termometro = () => {
             }, 1000);
         };
         fetchData();
-    }, []);
+    }, []); */
 
     return (
         <div>

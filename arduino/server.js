@@ -23,7 +23,7 @@ connection.connect(err => {
 }); */
 
 // Configuración del puerto serial
-const serialPort = new SerialPort({ path: 'COM4', baudRate: 9600 }); // Cambia 'COM5' al puerto correcto
+const serialPort = new SerialPort({ path: 'COM3', baudRate: 9600 }); // Cambia 'COM5' al puerto correcto
 const parser = new ReadlineParser();
 serialPort.pipe(parser);
 

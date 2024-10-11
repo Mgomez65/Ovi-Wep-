@@ -18,7 +18,7 @@ body {
   padding-right: 2%;
   font-size: 60px;
   text-align: right;
-  order: 2;
+  order: 3;
 }
 
 .containerSeccion2{
@@ -72,3 +72,10 @@ nav {
   color: #ffffff;
 }
 
+.logo{
+  padding-right: 2%;
+  font-size: 60px;
+  text-align: right;
+  order: 2;
+  width: 140px;
+}
