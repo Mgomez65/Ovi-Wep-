@@ -22,7 +22,7 @@ span {
 
 /* Estilo para el calendario */
 .react-calendar {
-    width: 90%;
+    width: 100%;
     height: auto;
     background-color: #374151;
     border-radius: 5px;
@@ -30,8 +30,6 @@ span {
     padding: 15px;
     overflow: hidden;
     margin-top: 0px;
-    margin-left: 4.5%;
-    margin-right: 4.5%;
     margin-bottom: 20px;
 }
 
@@ -459,4 +457,27 @@ span {
 
 .Eliminar, .Editar {
     height: 25px;
+}
+
+.Container{
+    display: flex;
+    gap: 20px;
+    padding-top: 20px;
+    margin-left: 4.5%;
+    margin-right: 4.5%;
+}
+
+.planesRiegoContainer{
+    border-radius: 5px;
+    width: 25%;
+    background-color: #374151;
+    margin-bottom: 20px;
+}
+
+.planesRiegoContainer h2{
+    margin-left: 5%;
+}
+
+.calendarioContainer{
+    width: 75%;
 }

@@ -37,6 +37,7 @@ const Calendario = ({ view, hideHeader }) => {
   ];
 
   const fetchAllEvents = async () => {
+
     try {
       const response = await fetch(
         "http://localhost:3000/calendario/getCalendario",
@@ -202,250 +203,252 @@ const Calendario = ({ view, hideHeader }) => {
   return (
     <div className="calendario-container">
       <Header />
-      {!hideHeader && (
-        <div className="calendario-header">
-          <h1 className="tituloCalendario">Calendario de OVI</h1>
+      <div className="Container">
+        <div className="planesRiegoContainer">
+          <h2>Planes de Riego</h2>
         </div>
-      )}
 
-      <div className="calendario">
-        <Calendar
-          value={date}
-          onChange={setDate}
-          onClickDay={handleDayClick}
-          tileContent={({ date, view }) => {
-            const eventsForDay = events.filter(
-              (event) =>
-                date >= new Date(event.start).setHours(0, 0, 0, 0) &&
-                date <= new Date(event.end).setHours(0, 0, 0, 0)
-            );
+        <div className="calendarioContainer">
+          <div className="calendario">
+            <Calendar
+              value={date}
+              onChange={setDate}
+              onClickDay={handleDayClick}
+              tileContent={({ date, view }) => {
+                const eventsForDay = events.filter(
+                  (event) =>
+                    date >= new Date(event.start).setHours(0, 0, 0, 0) &&
+                    date <= new Date(event.end).setHours(0, 0, 0, 0)
+                );
 
-            return (
-              <ul className="event-list">
-                {eventsForDay.map((event) => (
-                  <li
-                    key={event.id}
-                    style={{
-                      backgroundColor: event.color,
-                      color: "#fff",
-                      padding: "2px",
-                    }}
-                  >
-                    {event.title}
-                  </li>
-                ))}
-              </ul>
-            );
-          }}
-        />
-      </div>
-
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button
-                type="button"
-                onClick={() => setShowModal(false)}
-                className="botonCerrar"
-              >
-                Cerrar
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowForm(true)}
-                className="botonAgregar"
-              >
-                Agregar Evento
-              </button>
-            </div>
-            <h2>Eventos para {selectedDate.toLocaleDateString()}</h2>
-            <div className="event-container">
-              <ul className="event-list">
-                {events
-                  .filter(
-                    (event) =>
-                      selectedDate >=
-                        new Date(event.start).setHours(0, 0, 0, 0) &&
-                      selectedDate <= new Date(event.end).setHours(0, 0, 0, 0)
-                  )
-                  .map((event) => (
-                    <li
-                      key={event.id}
-                      style={{
-                        backgroundColor: event.color,
-                        color: "#fff",
-                        padding: "2px",
-                      }}
-                    >
-                      {event.title}
-                      <div className="botonesEliminarActualizar">
-                        <button
-                          onClick={() => {
-                            setEventToEdit(event);
-                            setNewEvent({
-                              title: event.title,
-                              start: event.start.toISOString().slice(0, 16),
-                              end: event.end.toISOString().slice(0, 16),
-                              color: event.color,
-                            });
-                            setShowEditForm(true);
-                          }}
-                          className="botonEditar"
-                        >
-                          <img
-                            src={iconoEditar}
-                            alt="Actualizar"
-                            className="Editar"
-                          />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteEvent(event.id)}
-                          className="botonEliminar"
-                        >
-                          <img
-                            src={iconoElimar}
-                            alt="Eliminar"
-                            className="Eliminar"
-                          />
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-
-            {showForm && (
-              <div className="formulario-agregar-evento">
-                <label>Título:</label>
-                <input
-                  type="text"
-                  value={newEvent.title}
-                  onChange={(e) =>
-                    setNewEvent({ ...newEvent, title: e.target.value })
-                  }
-                />
-                <label>Fecha y hora de inicio:</label>
-                <input
-                  type="datetime-local"
-                  value={newEvent.start}
-                  onChange={(e) =>
-                    setNewEvent({ ...newEvent, start: e.target.value })
-                  }
-                />
-                <label>Fecha y hora de finalización:</label>
-                <input
-                  type="datetime-local"
-                  value={newEvent.end}
-                  onChange={(e) =>
-                    setNewEvent({ ...newEvent, end: e.target.value })
-                  }
-                />
-                <div className="color-picker-wrapper">
-                  <label>Color del evento:</label>
-                  <div className="color-options">
-                    {colorOptions.map((option) => (
-                      <button
-                        key={option.value}
+                return (
+                  <ul className="event-list">
+                    {eventsForDay.map((event) => (
+                      <li
+                        key={event.id}
                         style={{
-                          backgroundColor: option.value,
-                          width: "30px",
-                          height: "30px",
-                          border:
-                            newEvent.color === option.value
-                              ? "2px solid black"
-                              : "none",
-                          cursor: "pointer",
+                          backgroundColor: event.color,
+                          color: "#fff",
+                          padding: "2px",
                         }}
-                        onClick={() =>
-                          setNewEvent({ ...newEvent, color: option.value })
-                        }
-                      />
+                      >
+                        {event.title}
+                      </li>
                     ))}
-                  </div>
-                </div>
-                <button onClick={handleAddEvent} className="boton">
-                  Añadir evento
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                  className="boton"
-                >
-                  Cancelar
-                </button>
-              </div>
-            )}
-            {showEditForm && (
-              <div className="formulario-editar-evento">
-                <label>Título:</label>
-                <input
-                  type="text"
-                  value={newEvent.title}
-                  onChange={(e) =>
-                    setNewEvent({ ...newEvent, title: e.target.value })
-                  }
-                />
-                <label>Fecha y hora de inicio:</label>
-                <input
-                  type="datetime-local"
-                  value={newEvent.start}
-                  onChange={(e) =>
-                    setNewEvent({ ...newEvent, start: e.target.value })
-                  }
-                />
-                <label>Fecha y hora de finalización:</label>
-                <input
-                  type="datetime-local"
-                  value={newEvent.end}
-                  onChange={(e) =>
-                    setNewEvent({ ...newEvent, end: e.target.value })
-                  }
-                />
-                <div className="color-picker-wrapper">
-                  <label>Color del evento:</label>
-                  <div className="color-options">
-                    {colorOptions.map((option) => (
-                      <button
-                        key={option.value}
-                        style={{
-                          backgroundColor: option.value,
-                          width: "30px",
-                          height: "30px",
-                          border:
-                            newEvent.color === option.value
-                              ? "2px solid black"
-                              : "none",
-                          cursor: "pointer",
-                        }}
-                        onClick={() =>
-                          setNewEvent({ ...newEvent, color: option.value })
-                        }
-                      />
-                    ))}
-                  </div>
-                </div>
-                <button onClick={handleUpdateEvent} className="boton">
-                  Actualizar Evento
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowEditForm(false)}
-                  className="boton"
-                >
-                  Cancelar
-                </button>
-              </div>
-            )}
+                  </ul>
+                );
+              }}
+            />
           </div>
+
+          {showModal && (
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                    className="botonCerrar"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowForm(true)}
+                    className="botonAgregar"
+                  >
+                    Agregar Evento
+                  </button>
+                </div>
+                <h2>Eventos para {selectedDate.toLocaleDateString()}</h2>
+                <div className="event-container">
+                  <ul className="event-list">
+                    {events
+                      .filter(
+                        (event) =>
+                          selectedDate >=
+                            new Date(event.start).setHours(0, 0, 0, 0) &&
+                          selectedDate <= new Date(event.end).setHours(0, 0, 0, 0)
+                      )
+                      .map((event) => (
+                        <li
+                          key={event.id}
+                          style={{
+                            backgroundColor: event.color,
+                            color: "#fff",
+                            padding: "2px",
+                          }}
+                        >
+                          {event.title}
+                          <div className="botonesEliminarActualizar">
+                            <button
+                              onClick={() => {
+                                setEventToEdit(event);
+                                setNewEvent({
+                                  title: event.title,
+                                  start: event.start.toISOString().slice(0, 16),
+                                  end: event.end.toISOString().slice(0, 16),
+                                  color: event.color,
+                                });
+                                setShowEditForm(true);
+                              }}
+                              className="botonEditar"
+                            >
+                              <img
+                                src={iconoEditar}
+                                alt="Actualizar"
+                                className="Editar"
+                              />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteEvent(event.id)}
+                              className="botonEliminar"
+                            >
+                              <img
+                                src={iconoElimar}
+                                alt="Eliminar"
+                                className="Eliminar"
+                              />
+                            </button>
+                          </div>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+
+                {showForm && (
+                  <div className="formulario-agregar-evento">
+                    <label>Título:</label>
+                    <input
+                      type="text"
+                      value={newEvent.title}
+                      onChange={(e) =>
+                        setNewEvent({ ...newEvent, title: e.target.value })
+                      }
+                    />
+                    <label>Fecha y hora de inicio:</label>
+                    <input
+                      type="datetime-local"
+                      value={newEvent.start}
+                      onChange={(e) =>
+                        setNewEvent({ ...newEvent, start: e.target.value })
+                      }
+                    />
+                    <label>Fecha y hora de finalización:</label>
+                    <input
+                      type="datetime-local"
+                      value={newEvent.end}
+                      onChange={(e) =>
+                        setNewEvent({ ...newEvent, end: e.target.value })
+                      }
+                    />
+                    <div className="color-picker-wrapper">
+                      <label>Color del evento:</label>
+                      <div className="color-options">
+                        {colorOptions.map((option) => (
+                          <button
+                            key={option.value}
+                            style={{
+                              backgroundColor: option.value,
+                              width: "30px",
+                              height: "30px",
+                              border:
+                                newEvent.color === option.value
+                                  ? "2px solid black"
+                                  : "none",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setNewEvent({ ...newEvent, color: option.value })
+                            }
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <button onClick={handleAddEvent} className="boton">
+                      Añadir evento
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowForm(false)}
+                      className="boton"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                )}
+                {showEditForm && (
+                  <div className="formulario-editar-evento">
+                    <label>Título:</label>
+                    <input
+                      type="text"
+                      value={newEvent.title}
+                      onChange={(e) =>
+                        setNewEvent({ ...newEvent, title: e.target.value })
+                      }
+                    />
+                    <label>Fecha y hora de inicio:</label>
+                    <input
+                      type="datetime-local"
+                      value={newEvent.start}
+                      onChange={(e) =>
+                        setNewEvent({ ...newEvent, start: e.target.value })
+                      }
+                    />
+                    <label>Fecha y hora de finalización:</label>
+                    <input
+                      type="datetime-local"
+                      value={newEvent.end}
+                      onChange={(e) =>
+                        setNewEvent({ ...newEvent, end: e.target.value })
+                      }
+                    />
+                    <div className="color-picker-wrapper">
+                      <label>Color del evento:</label>
+                      <div className="color-options">
+                        {colorOptions.map((option) => (
+                          <button
+                            key={option.value}
+                            style={{
+                              backgroundColor: option.value,
+                              width: "30px",
+                              height: "30px",
+                              border:
+                                newEvent.color === option.value
+                                  ? "2px solid black"
+                                  : "none",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              setNewEvent({ ...newEvent, color: option.value })
+                            }
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <button onClick={handleUpdateEvent} className="boton">
+                      Actualizar Evento
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowEditForm(false)}
+                      className="boton"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {showConfirmacion && (
+            <ConfirmacionTemporal
+              mensaje={mensajeConfirmacion}
+              onClose={() => setShowConfirmacion(false)}
+            />
+          )}
         </div>
-      )}
-      {showConfirmacion && (
-        <ConfirmacionTemporal
-          mensaje={mensajeConfirmacion}
-          onClose={() => setShowConfirmacion(false)}
-        />
-      )}
+      </div>
       <Footer />
     </div>
   );
