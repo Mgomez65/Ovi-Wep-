@@ -1,10 +1,11 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-exports.getCalendarioId = async (inicio)=>{
+
+exports.getCalendarioId = async (id)=>{
     try {
-        return prisma.calendario.fields({
+        return prisma.PlanDeRiego.findUnique({
         where:{
-            "inicio": inicio,}       
+            "id": id,}       
         })
     }catch (error) {
         console.error("Error al consultar el calendario:", error);
@@ -13,9 +14,10 @@ exports.getCalendarioId = async (inicio)=>{
 };
 
 
+
 exports.getCalendarios = async ()=>{
     try {
-        return prisma.calendario.findMany()
+        return prisma.PlanDeRiego.findMany()
     } catch (error) {
         console.error("Error al consultar el calendario:", error);
         throw error;
@@ -25,16 +27,13 @@ exports.getCalendarios = async ()=>{
 
 
 
-
-exports.createCalendario = async (calendario)=>{
+exports.createPlanDeRiego = async (data)=>{
     try {
-        const NuevoCalendario =await prisma.calendario.create({
+        const NuevoCalendario =await prisma.PlanDeRiego.create({
             data: {
-                titulo: calendario.titulo,
-                inicio: new Date(calendario.inicio),
-                fin: new Date(calendario.fin),
-                color: calendario.color,
-
+                inicio: new Date(data.inicio),
+                fin: new Date(data.fin),
+                idInforme: parseInt(data.idInforme)
             },
         });
         return NuevoCalendario;    
@@ -43,6 +42,25 @@ exports.createCalendario = async (calendario)=>{
         throw error;
     }
 }
+
+
+
+exports.deletePlanDeRiego = async (calendarioId) => {
+    try {
+        return prisma.PlanDeRiego.delete({
+            where: {
+                id: calendarioId,
+            },
+    })      
+    } catch (error) {
+        console.error("Error al eliminar el calendario:", error);
+        throw error;
+    }
+};
+
+
+
+
 exports.updateCalendario = async (calendarioId, datos) => {
     try {
         const calendarioUpdate = await prisma.calendario.update({
@@ -59,21 +77,6 @@ exports.updateCalendario = async (calendarioId, datos) => {
         return calendarioUpdate
     } catch (error) {
         console.error("Error al actualizar el calendario:", error);
-        throw error;
-    }
-};
-
-
-
-exports.deleteCalendario = async (calendarioId) => {
-    try {
-        return prisma.calendario.delete({
-            where: {
-                id: calendarioId,
-            },
-    })      
-    } catch (error) {
-        console.error("Error al eliminar el calendario:", error);
         throw error;
     }
 };

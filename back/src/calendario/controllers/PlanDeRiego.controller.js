@@ -1,11 +1,22 @@
 
-const servicioClima = require("../services/Calendario.service")
+const servicioPlan = require("../services/Calendario.service")
 
-exports.getCalendarioId = async (req, res) => {
+exports.getPlanRiegoID = async (req, res) => {
     try {
-        let data = req.body
-        console.log(data)
-        let calendario = await servicioClima.getCalendarioId(data.inicio)
+        let data = parseInt(req.params.id)
+        let calendario = await servicioPlan.getCalendarioId(data)
+        if (!calendario) {
+            return res.status(404).send('No hay eventos para la fecha');
+        }
+        res.status(200).json(calendario);
+    } catch (error) {
+        console.log(error)
+    }
+}
+exports.getPlanDiaID = async (req, res) => {
+    try {
+        let data = parseInt(req.params.id)
+        let calendario = await servicioPlan.getPlanDiaID(data)
         if (!calendario) {
             return res.status(404).send('No hay eventos para la fecha');
         }
@@ -15,10 +26,12 @@ exports.getCalendarioId = async (req, res) => {
     }
 }
 
-exports.getCalendario = async (req, res) => {
+
+
+exports.getPlanRiego = async (req, res) => {
     try {
         let calendario = req.body
-        const respuesta = await servicioClima.getCalendarios()
+        const respuesta = await servicioPlan.getCalendarios()
         if (respuesta.length === 0) {
             return res.status(404).send('no hay ningun evento en estas fechas ');
         }
@@ -29,10 +42,15 @@ exports.getCalendario = async (req, res) => {
     }
 }
 
-exports.CreateCalendario = async (req, res) => {
+
+
+
+
+
+exports.createPlanRiego = async (req, res) => {
     try {
         const data = req.body
-        const  calendario = await servicioClima.createCalendario(data)
+        const  calendario = await servicioPlan.createPlanDeRiego(data)
         if (!calendario) {
             return res.status(500).send('Error interno del servidor');  
         } 
@@ -44,10 +62,14 @@ exports.CreateCalendario = async (req, res) => {
 
 }
 
+
+
+
+
 exports.DeleteCalendario = async (req, res) => {
     try {
         const calendarioId = parseInt(req.params.id);
-        const resultado = await servicioClima.deleteCalendario(calendarioId);  
+        const resultado = await servicioPlan.deletePlanDeRiego(calendarioId);  
         if (!resultado) {
             return res.status(404).json({ message: "Calendario no encontrado." });
         } 
@@ -62,7 +84,7 @@ exports.UpdataCalendarioPut = async (req, res) => {
     try {
         const calendarioId = parseInt(req.params.id);
         const datos = req.body  
-        const respuesta = await servicioClima.updateCalendario(calendarioId,datos)
+        const respuesta = await servicioPlan.updateCalendario(calendarioId,datos)
         if(!respuesta) {
             return res.status(404).json({ message: "Calendario no encontrado." });
         } 

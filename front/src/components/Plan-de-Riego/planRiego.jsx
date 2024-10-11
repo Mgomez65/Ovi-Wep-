@@ -13,7 +13,7 @@ const IrrigationPlan = () => {
 
     const fetchPlans = async () => {
         try {
-            const response = await axios.get('/* URL_DE_TU_API */');
+            const response = await axios.get('http://localhost:3000/calendario/getPlanDeRiego');
             setPlans(response.data);
         } catch (error) {
             console.error('Error al obtener los planes:', error);
@@ -96,7 +96,7 @@ const IrrigationPlan = () => {
                 {Array.isArray(plans) && plans.length > 0 ? (
                     plans.map((plan) => (
                         <li key={plan.id} onClick={() => handlePlanSelect(plan)}>
-                            {plan.name} - {plan.frequency}
+                            {plan.inico} - {plan.fin}
                             <button onClick={() => deletePlan(plan.id)}>Eliminar</button>
                         </li>
                     ))

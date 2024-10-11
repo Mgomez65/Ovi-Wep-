@@ -12,13 +12,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-model Informe {
-  id             Int      @id @default(autoincrement()) // Llave primaria con autoincremento
-  titulo         String
-  contenido      String
-  fecha_inicio   DateTime
-  fecha_final DateTime 
-}
+
 
 model Usuario {
   Num_empleado             Int      @id @unique
@@ -30,10 +24,31 @@ model Usuario {
   Password  String
   rol  String
 }
-model Calendario {
+
+model Informe {
+  id             Int      @id @default(autoincrement()) // Llave primaria con autoincremento
+  titulo         String
+  contenido      String
+  fecha_inicio   DateTime
+  fecha_final DateTime 
+  planDeRiego PlanDeRiego?
+}
+
+model PlanDeRiego {
   id Int @id @default(autoincrement())
-  titulo String
   inicio DateTime
   fin   DateTime
+  diaPlan DiaPlan[]
+  informe Informe @relation(fields:[idInforme],references:[id])
+  idInforme Int @unique
+}
+
+
+model DiaPlan{
+  id Int @id @default(autoincrement())
+  fechaDia DateTime 
+  titulo String
   color String @db.VarChar(7)
+  plan PlanDeRiego @relation(fields:[idPlan], references:[id])
+  idPlan Int 
 }

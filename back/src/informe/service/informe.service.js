@@ -4,16 +4,28 @@ const prisma = new PrismaClient();
 
 exports.getInforme = async () => {
     try {
-        return await prisma.informe.findMany()
+        return await prisma.informe.findMany({
+            include: {
+                planDeRiego: true
+            },
+        });
     } catch (error) {
         console.error("Error al consultar el informe:", error);
         throw error;
     }
 }
+
 exports.getInformeId = async (idInforme) => {
     try {
         return await prisma.informe.findFirst({
-            where: { id: idInforme }
+            where: { id: idInforme },
+            include: {
+                planDeRiego:{
+                    include:{
+                        diaPlan: true
+                    }
+                }
+            },
         });
     } catch (error) {
         console.error("Error al consultar el informe:", error);
