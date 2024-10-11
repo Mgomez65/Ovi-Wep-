@@ -33,7 +33,8 @@ exports.createPlanDeRiego = async (data)=>{
             data: {
                 inicio: new Date(data.inicio),
                 fin: new Date(data.fin),
-                idInforme: parseInt(data.idInforme)
+                idInforme: parseInt(data.idInforme),
+                titulo: data.titulo
             },
         });
         return NuevoCalendario;    
