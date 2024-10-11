@@ -49,7 +49,7 @@ const IrrigationPlan = () => {
 
     const deletePlan = async (id) => {
         try {
-            await axios.delete(`URL_DE_TU_API/${id}`);
+            await axios.delete(`http://localhost:3000/calendario/deletePlanDia//${id}`);
             fetchPlans(); 
         } catch (error) {
             console.error('Error al eliminar el plan:', error);
