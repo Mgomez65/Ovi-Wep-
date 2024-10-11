@@ -36,6 +36,7 @@ model Informe {
 
 model PlanDeRiego {
   id Int @id @default(autoincrement())
+  titulo String 
   inicio DateTime
   fin   DateTime
   diaPlan DiaPlan[]

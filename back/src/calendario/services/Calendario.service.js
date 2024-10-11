@@ -45,11 +45,16 @@ exports.createPlanDeRiego = async (data)=>{
 
 
 
-exports.deletePlanDeRiego = async (calendarioId) => {
+exports.deletePlanDeRiego = async (id) => {
     try {
+        console.log(id)
+        await prisma.DiaPlan.deleteMany({
+            where: {
+                idPlan: id,
+            },})
         return prisma.PlanDeRiego.delete({
             where: {
-                id: calendarioId,
+                id: id,
             },
     })      
     } catch (error) {

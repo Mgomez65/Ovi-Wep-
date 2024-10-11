@@ -1,4 +1,4 @@
-const servicioPlan = require("../services/planDia.service")
+const servicioPlan = require("../services/Calendario.service")
 
 
 exports.getPlanDiaID = async (req, res) => {
@@ -46,7 +46,8 @@ exports.CreateDiaPlan = async (req, res) => {
 exports.DeletePlanDia = async (req, res) => {
     try {
         const data = parseInt(req.params.id);
-        const resultado = await servicioPlan.deletePlanDIa(data);  
+        console.log(data)
+        const resultado = await servicioPlan.deletePlanDeRiego(data);  
         if (!resultado) {
             return res.status(404).json({ message: "Calendario no encontrado." });
         } 
