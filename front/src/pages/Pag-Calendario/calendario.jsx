@@ -144,7 +144,7 @@ const Calendario = ({ view, hideHeader }) => {
         );
       } else {
         await axios.post(
-          "http://localhost:3000/calendario/createPlan",
+          "http://localhost:3000/calendario/createCalendario",
           planToSend
         );
       }
@@ -164,7 +164,7 @@ const Calendario = ({ view, hideHeader }) => {
 
   const deletePlan = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/calendario/deletePlan/${id}`);
+      await axios.delete(`http://localhost:3000/calendario/deleteCalendario/${id}`);
       fetchPlans();
     } catch (error) {
       console.error("Error al eliminar el plan:", error);
