@@ -13,28 +13,11 @@ import iconoEditar from "../../assets/icon-editar.png";
 const Calendario = ({ view, hideHeader }) => {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
 
-  const colorOptions = [
-    { name: "Blanco", value: "#FFFFFF" },
-    { name: "Gris Claro", value: "#D3D3D3" },
-    { name: "Beige", value: "#F5F5DC" },
-    { name: "Amarillo", value: "#FFFF00" },
-    { name: "Naranja", value: "#FFA500" },
-    { name: "Rojo", value: "#d42c2c" },
-    { name: "Verde", value: "#22ff22" },
-    { name: "Azul", value: "#0044ff" },
-  ];
-
-  const handleDayClick = (date) => {
-    setSelectedDate(date);
-    setShowModal(true);
-  };
-
-  // Plan de riego
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -43,6 +26,14 @@ const Calendario = ({ view, hideHeader }) => {
     inicio: "",
     fin: "",
     idInforme: 0,
+  });
+  const [showEventList, setShowEventList] = useState(false);
+  const [eventData, setEventData] = useState({
+    title: "",
+    start: "",
+    end: "",
+    color: "#FFFFFF",
+    id: null,
   });
 
   const fetchPlans = async () => {
@@ -56,33 +47,105 @@ const Calendario = ({ view, hideHeader }) => {
     }
   };
 
+  const fetchEvents = async (planId) => {
+    if (planId) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/calendario/getEventosPorPlan/${planId}`
+        );
+        const formattedEvents = response.data.map(event => ({
+          id: event.id,
+          title: event.titulo,
+          start: new Date(event.inicio),
+          end: new Date(event.fin),
+          color: event.color || '#000',
+        }));
+        setEvents(formattedEvents);
+        setFilteredEvents(formattedEvents); // Actualiza el estado para mostrar eventos filtrados
+      } catch (error) {
+        console.error("Error al obtener los eventos:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchPlans();
   }, []);
 
-  const handleInputChange = (e) => {
+  useEffect(() => {
+    if (selectedPlan) {
+      fetchEvents(selectedPlan); // Llama a fetchEvents con el plan seleccionado
+    }
+  }, [selectedPlan]);
+
+  const handleEventInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setEventData({ ...eventData, [name]: value });
+  };
+
+  const createOrUpdateEvent = async () => {
+    try {
+      const eventToSend = {
+        title: eventData.title,
+        inicio: new Date(eventData.start),
+        fin: new Date(eventData.end),
+        color: eventData.color,
+        idPlan: selectedPlan,
+      };
+
+      if (eventData.id) {
+        await axios.put(
+          `http://localhost:3000/calendario/actualizarEvento/${eventData.id}`,
+          eventToSend
+        );
+      } else {
+        await axios.post(
+          "http://localhost:3000/calendario/createEvento",
+          eventToSend
+        );
+      }
+
+      fetchEvents(selectedPlan); // Actualiza eventos después de crear/actualizar
+      setShowEventList(false);
+      setEventData({
+        title: "",
+        start: "",
+        end: "",
+        color: "#FFFFFF",
+        id: null,
+      });
+    } catch (error) {
+      console.error("Error al guardar el evento:", error);
+    }
+  };
+
+  const deleteEvent = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/calendario/deleteEvento/${id}`);
+      fetchEvents(selectedPlan); // Actualiza eventos después de eliminar
+    } catch (error) {
+      console.error("Error al eliminar el evento:", error);
+    }
   };
 
   const createOrUpdatePlan = async () => {
     try {
-      const dataToSend = {
-        titulo: formData.titulo || "",
+      const planToSend = {
+        titulo: formData.titulo,
         inicio: new Date(formData.inicio),
         fin: new Date(formData.fin),
-        idInforme: parseInt(formData.idInforme),
+        idInforme: formData.idInforme,
       };
 
       if (selectedPlan) {
         await axios.put(
-          `http://localhost:3000/calendario/actualizarCalendario/${selectedPlan}`,
-          dataToSend
+          `http://localhost:3000/calendario/actualizarPlan/${selectedPlan}`,
+          planToSend
         );
       } else {
         await axios.post(
-          "http://localhost:3000/calendario/createCalendario",
-          dataToSend
+          "http://localhost:3000/calendario/createPlan",
+          planToSend
         );
       }
 
@@ -94,7 +157,6 @@ const Calendario = ({ view, hideHeader }) => {
         fin: "",
         idInforme: 0,
       });
-      setSelectedPlan(null);
     } catch (error) {
       console.error("Error al guardar el plan:", error);
     }
@@ -102,24 +164,54 @@ const Calendario = ({ view, hideHeader }) => {
 
   const deletePlan = async (id) => {
     try {
-      await axios.delete(
-        `http://localhost:3000/calendario/deletePlanDia/${id}`
-      );
+      await axios.delete(`http://localhost:3000/calendario/deletePlan/${id}`);
       fetchPlans();
     } catch (error) {
       console.error("Error al eliminar el plan:", error);
     }
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handlePlanSelect = (plan) => {
-    setSelectedPlan(plan.id);
+    setSelectedPlan(plan.id); // Selecciona el plan y carga sus eventos
     setFormData({
       titulo: plan.titulo,
       inicio: plan.inicio,
       fin: plan.fin,
-      idInforme: plan.idInforme || 0,
+      idInforme: plan.idInforme,
     });
     setShowForm(true);
+  };
+
+  const handleDateSelect = (selectedDate) => {
+    setDate(selectedDate);
+    // Filtrar eventos para la fecha seleccionada
+    const eventsOnSelectedDate = events.filter(event =>
+      event.start.toDateString() === selectedDate.toDateString()
+    );
+    setFilteredEvents(eventsOnSelectedDate); // Actualiza los eventos filtrados
+    setShowEventList(true); // Muestra la lista de eventos
+  };
+
+  const handleEventClick = (event) => {
+    setEventData({
+      title: event.title,
+      start: event.start.toISOString().split('T')[0],
+      end: event.end.toISOString().split('T')[0],
+      color: event.color,
+      id: event.id,
+    });
+    setShowEventList(true);
+  };
+
+  const handleShowEvents = (plan) => {
+    setSelectedPlan(plan.id); // Selecciona el plan y carga sus eventos
+    fetchEvents(plan.id); // Carga los eventos del plan seleccionado
+    setShowEventList(true); // Muestra la lista de eventos
   };
 
   return (
@@ -188,7 +280,7 @@ const Calendario = ({ view, hideHeader }) => {
               <ul className="planRiegoUL">
                 {Array.isArray(plans) && plans.length > 0 ? (
                   plans.map((plan) => (
-                    <li key={plan.id} className="PlanRiegoLI">
+                    <li key={plan.id} className="PlanRiegoLI" onClick={() => handleShowEvents(plan)}>
                       {plan.titulo}
                       <div className="botonesEliminarActualizar">
                         <button onClick={() => handlePlanSelect(plan)} className="botonEditar">
@@ -201,53 +293,81 @@ const Calendario = ({ view, hideHeader }) => {
                     </li>
                   ))
                 ) : (
-                  <li>No hay planes disponibles</li>
+                  <li>No hay planes de riego disponibles.</li>
                 )}
               </ul>
             </div>
           </div>
         </div>
-
         <div className="calendarioContainer">
-          <div className="calendario">
-            <Calendar
-              value={date}
-              onChange={setDate}
-              onClickDay={handleDayClick}
-              tileContent={({ date, view }) => {
-                const eventsForDay = events.filter(
-                  (event) =>
-                    date >= new Date(event.start).setHours(0, 0, 0, 0) &&
-                    date <= new Date(event.end).setHours(0, 0, 0, 0)
-                );
-
-                return (
-                  <ul className="event-list">
-                    {eventsForDay.map((event) => (
-                      <li
-                        key={event.id}
-                        style={{
-                          backgroundColor: event.color,
-                          color: "#fff",
-                          padding: "2px",
-                        }}
-                      >
-                        {event.title}
-                      </li>
-                    ))}
-                  </ul>
-                );
-              }}
-            />
-          </div>
-
-          {showConfirmacion && (
-            <ConfirmacionTemporal
-              mensaje={mensajeConfirmacion}
-              onClose={() => setShowConfirmacion(false)}
-            />
-          )}
+          <Calendar
+            onChange={handleDateSelect}
+            value={date}
+            tileContent={({ date }) => {
+              const eventsOnDate = filteredEvents.filter(event =>
+                event.start.toDateString() === date.toDateString()
+              );
+              return eventsOnDate.length > 0 ? (
+                <div className="event-tile">
+                  {eventsOnDate.map(event => (
+                    <div
+                      key={event.id}
+                      className="event"
+                      onClick={() => handleEventClick(event)}
+                      style={{ backgroundColor: event.color }}
+                    >
+                      {event.title}
+                    </div>
+                  ))}
+                </div>
+              ) : null;
+            }}
+          />
         </div>
+        {showEventList && (
+          <div className="event-list-notification">
+            <h2>Eventos del {date.toDateString()}</h2>
+            {filteredEvents.length > 0 ? ( // Cambiar aquí para mostrar eventos filtrados
+              filteredEvents.map(event => (
+                <div key={event.id} className="event-item">
+                  <span>{event.title}</span>
+                  <button onClick={() => deleteEvent(event.id)} className="botonEliminarEvento">Eliminar</button>
+                </div>
+              ))
+            ) : (
+              <p>No hay eventos para este día.</p>
+            )}
+            <input
+              type="text"
+              name="title"
+              placeholder="Título del Evento"
+              value={eventData.title}
+              onChange={handleEventInputChange}
+            />
+            <input
+              type="date"
+              name="start"
+              placeholder="Inicio"
+              value={eventData.start}
+              onChange={handleEventInputChange}
+            />
+            <input
+              type="date"
+              name="end"
+              placeholder="Fin"
+              value={eventData.end}
+              onChange={handleEventInputChange}
+            />
+            <input
+              type="color"
+              name="color"
+              value={eventData.color}
+              onChange={handleEventInputChange}
+            />
+            <button onClick={createOrUpdateEvent} className="botonAgregarEvento">Guardar Evento</button>
+            <button onClick={() => setShowEventList(false)} className="botonCerrar">Cerrar</button>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
