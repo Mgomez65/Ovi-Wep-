@@ -20,7 +20,7 @@ const Informe = () => {
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [datos, setDatos] = useState();
+  const [datos, setDatos] = useState(null);
 
 
 
@@ -39,9 +39,9 @@ const Informe = () => {
             throw new Error("Error al obtener el informe");
           }
           const data = await response.json();
-          console.log("Datos obtenidos:", data);
-          setDatos(data)
-          console.log(datos)
+          setDatos(data);
+    
+          console.log(data)
           setTitulo(data.titulo || "");
           setFechaInicio(
             data.fecha_inicio
@@ -240,8 +240,8 @@ const Informe = () => {
 
           <div className="containerUwu">
             <div className="containerCalendario">
-              <h2>Plan de Riego</h2>
-              <Calendario />
+              <h2>Plan de Riego  {datos && datos.planDeRiego && datos.planDeRiego.titulo}</h2>
+              <Calendario  eventos={datos && datos.planDeRiego ? datos.planDeRiego.diaPlan : []} />
             </div>
             <div className="containerImagenes">
               <h2>Imágenes relacionadas</h2>
