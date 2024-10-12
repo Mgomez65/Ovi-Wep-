@@ -1,4 +1,4 @@
-const servicioPlan = require("../services/Calendario.service")
+const servicioPlan = require("../services/planDia.service")
 
 
 exports.getPlanDiaID = async (req, res) => {

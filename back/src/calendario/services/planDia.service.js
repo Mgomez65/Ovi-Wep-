@@ -1,3 +1,6 @@
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 exports.getPlanDiaID = async (inicio)=>{
     try {
         return prisma.DiaPlan.findMany({
@@ -19,6 +22,7 @@ exports.getPlanDia = async ()=>{
 }
 exports.createDiaPlan = async (data)=>{
     try {
+        console.log(data)
         const NuevoCalendario =await prisma.DiaPlan.create({
             data: {
                 fechaDia:data.fechaDia,

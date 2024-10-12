@@ -20,6 +20,9 @@ const Informe = () => {
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [datos, setDatos] = useState();
+
+
 
   const location = useLocation();
   const fileId = location.state?.fileId;
@@ -37,6 +40,8 @@ const Informe = () => {
           }
           const data = await response.json();
           console.log("Datos obtenidos:", data);
+          setDatos(data)
+          console.log(datos)
           setTitulo(data.titulo || "");
           setFechaInicio(
             data.fecha_inicio
