@@ -4,6 +4,9 @@ pasos
     arichivo .env HOST_PUERTO = 3000
     DATABASE_URL="mysql://root:44625617ma.@localhost:3306/ovi_users"
     3) npx prisma migrate deploy
+
+Para generar de nuevo migraciones:
+npx prisma migrate dev
     
 
 Archivo .env:
