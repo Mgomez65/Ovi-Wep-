@@ -26,12 +26,20 @@ model Usuario {
 }
 
 model Informe {
-  id             Int      @id @default(autoincrement()) // Llave primaria con autoincremento
+  id             Int      @id @default(autoincrement()) 
   titulo         String
   contenido      String
   fecha_inicio   DateTime
   fecha_final DateTime 
   planDeRiego PlanDeRiego?
+  imagenInforme ImagenesInforme?
+}
+model ImagenesInforme{
+  id Int      @id @default(autoincrement())
+  url String   
+  informe Informe @relation(fields:[idInforme],references:[id])
+  idInforme Int @unique
+
 }
 
 model PlanDeRiego {
