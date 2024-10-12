@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import iconoVolver from "../../assets/icon-volver.png";
-import iconoEliminar from "../../assets/icon-eliminar.png"; // Corregido el nombre
+import iconoEliminar from "../../assets/icon-eliminar.png";
 import iconoEditar from "../../assets/icon-editar.png";
 import iconoBuscar from "../../assets/icon-buscar.png";
 import descargarIcon from "../../assets/icon-download.png";
@@ -189,7 +189,7 @@ function Header() {
                   <input
                     type="text"
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)} // Actualiza el término de búsqueda
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Buscar..."
                   />
                   <button className="search-button" onClick={handleSearch}>

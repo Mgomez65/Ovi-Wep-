@@ -293,12 +293,19 @@ span {
 .botonCerrar {
     background-color: #374151;
     color: #fff;
-    padding: 8px 12px;
+    padding: 5px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-size: 0.9em;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.botonAgregar{
+    margin-bottom: 3px;
 }
 
 .eventId {
@@ -330,11 +337,11 @@ span {
 
 .botonCerrar:hover,
 .botonAgregar:hover {
-    background-color: #161726;
+    background-color: #272e3a;
 }
 
 .botonActualizar:hover {
-    background-color: #1e293b;
+    background-color: #272e3a;
 }
 
 
@@ -480,4 +487,74 @@ span {
 
 .calendarioContainer{
     width: 75%;
+}
+
+/* Estilo del plan de riego */
+
+.irrigation-plan {
+    padding: 20px;
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: #161726;
+    padding: 20px;
+}
+
+.form-notification input {
+    display: block;
+    margin: 10px 0;
+    background-color: #dfdfdf;
+    text-decoration: none;
+    border: none;
+    width: 95%;
+    padding: 5px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.planRiegoUL{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.PlanRiegoLI{
+    background-color: #161726;
+    border: none;
+    margin: 5px;
+    text-decoration: none;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2px;
+}
+
+.botonCrearPlanRiego{
+    background-color: #161726;
+    color: white;
+    border: none;
+    text-decoration: none;
+    padding: 5px;
+    width: 96.5%;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.botonCrearPlanRiego:hover{
+    background-color: #000;
 }
