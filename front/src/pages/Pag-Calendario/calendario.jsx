@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Calendar from "react-calendar";
 import Header from "../../components/Header/header";
 import Footer from "../../components/Footer/footer";
@@ -14,7 +14,7 @@ const Calendario = ({ view, hideHeader }) => {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Estado para el modal
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
 
@@ -53,15 +53,15 @@ const Calendario = ({ view, hideHeader }) => {
         const response = await axios.get(
           `http://localhost:3000/calendario/getEventosPorPlan/${planId}`
         );
-        const formattedEvents = response.data.map(event => ({
+        const formattedEvents = response.data.map((event) => ({
           id: event.id,
           title: event.titulo,
           start: new Date(event.inicio),
           end: new Date(event.fin),
-          color: event.color || '#000',
+          color: event.color || "#000",
         }));
         setEvents(formattedEvents);
-        setFilteredEvents(formattedEvents); // Actualiza el estado para mostrar eventos filtrados
+        setFilteredEvents(formattedEvents);
       } catch (error) {
         console.error("Error al obtener los eventos:", error);
       }
@@ -74,7 +74,7 @@ const Calendario = ({ view, hideHeader }) => {
 
   useEffect(() => {
     if (selectedPlan) {
-      fetchEvents(selectedPlan); // Llama a fetchEvents con el plan seleccionado
+      fetchEvents(selectedPlan);
     }
   }, [selectedPlan]);
 
@@ -105,7 +105,7 @@ const Calendario = ({ view, hideHeader }) => {
         );
       }
 
-      fetchEvents(selectedPlan); // Actualiza eventos después de crear/actualizar
+      fetchEvents(selectedPlan);
       setShowEventList(false);
       setEventData({
         title: "",
@@ -122,7 +122,7 @@ const Calendario = ({ view, hideHeader }) => {
   const deleteEvent = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/calendario/deleteEvento/${id}`);
-      fetchEvents(selectedPlan); // Actualiza eventos después de eliminar
+      fetchEvents(selectedPlan);
     } catch (error) {
       console.error("Error al eliminar el evento:", error);
     }
@@ -164,7 +164,9 @@ const Calendario = ({ view, hideHeader }) => {
 
   const deletePlan = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/calendario/deleteCalendario/${id}`);
+      await axios.delete(
+        `http://localhost:3000/calendario/deleteCalendario/${id}`
+      );
       fetchPlans();
     } catch (error) {
       console.error("Error al eliminar el plan:", error);
@@ -177,7 +179,7 @@ const Calendario = ({ view, hideHeader }) => {
   };
 
   const handlePlanSelect = (plan) => {
-    setSelectedPlan(plan.id); // Selecciona el plan y carga sus eventos
+    setSelectedPlan(plan.id);
     setFormData({
       titulo: plan.titulo,
       inicio: plan.inicio,
@@ -189,19 +191,19 @@ const Calendario = ({ view, hideHeader }) => {
 
   const handleDateSelect = (selectedDate) => {
     setDate(selectedDate);
-    // Filtrar eventos para la fecha seleccionada
-    const eventsOnSelectedDate = events.filter(event =>
-      event.start.toDateString() === selectedDate.toDateString()
+    const eventsOnSelectedDate = events.filter(
+      (event) => event.start.toDateString() === selectedDate.toDateString()
     );
-    setFilteredEvents(eventsOnSelectedDate); // Actualiza los eventos filtrados
-    setShowEventList(true); // Muestra la lista de eventos
+    setFilteredEvents(eventsOnSelectedDate);
+    setShowEventList(true);
+    setShowModal(true); // Abre el modal al seleccionar una fecha
   };
 
   const handleEventClick = (event) => {
     setEventData({
       title: event.title,
-      start: event.start.toISOString().split('T')[0],
-      end: event.end.toISOString().split('T')[0],
+      start: event.start.toISOString().split("T")[0],
+      end: event.end.toISOString().split("T")[0],
       color: event.color,
       id: event.id,
     });
@@ -209,9 +211,9 @@ const Calendario = ({ view, hideHeader }) => {
   };
 
   const handleShowEvents = (plan) => {
-    setSelectedPlan(plan.id); // Selecciona el plan y carga sus eventos
-    fetchEvents(plan.id); // Carga los eventos del plan seleccionado
-    setShowEventList(true); // Muestra la lista de eventos
+    setSelectedPlan(plan.id);
+    fetchEvents(plan.id);
+    setShowEventList(true);
   };
 
   return (
@@ -273,103 +275,84 @@ const Calendario = ({ view, hideHeader }) => {
                     onChange={handleInputChange}
                     className="inputSinSpinner"
                   />
-                  <button onClick={createOrUpdatePlan} className="botonAgregar">Guardar</button>
-                  <button onClick={() => setShowForm(false)} className="botonCerrar">Cancelar</button>
+                  <button
+                    onClick={createOrUpdatePlan}
+                    className="botonAgregar"
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    onClick={() => setShowForm(false)}
+                    className="botonCerrar"
+                  >
+                    Cancelar
+                  </button>
                 </div>
               )}
               <ul className="planRiegoUL">
-                {Array.isArray(plans) && plans.length > 0 ? (
-                  plans.map((plan) => (
-                    <li key={plan.id} className="PlanRiegoLI" onClick={() => handleShowEvents(plan)}>
-                      {plan.titulo}
-                      <div className="botonesEliminarActualizar">
-                        <button onClick={() => handlePlanSelect(plan)} className="botonEditar">
-                          <img src={iconoEditar} alt="Editar" className="Editar" />
-                        </button>
-                        <button onClick={() => deletePlan(plan.id)} className="botonEliminar">
-                          <img src={iconoEliminar} alt="Eliminar" className="Eliminar" />
-                        </button>
-                      </div>
-                    </li>
-                  ))
-                ) : (
-                  <li>No hay planes de riego disponibles.</li>
-                )}
+                {plans.map((plan) => (
+                  <li key={plan.id} className="PlanRiegoLI">
+                    <span onClick={() => handleShowEvents(plan)}>{plan.titulo}</span>
+                    <div className="botonesEliminarActualizar">
+                      <button
+                        className="botonEditar"
+                        onClick={() => handlePlanSelect(plan)}
+                      >
+                        <img src={iconoEditar} alt="Editar" className="Editar"/>
+                      </button>
+                      <button
+                        className="botonEliminar"
+                        onClick={() => deletePlan(plan.id)}
+                      >
+                        <img src={iconoEliminar} alt="Eliminar" className="Eliminar"/>
+                      </button>
+                    </div>
+                    
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
         </div>
         <div className="calendarioContainer">
           <Calendar
-            onChange={handleDateSelect}
+            onChange={setDate}
             value={date}
-            tileContent={({ date }) => {
-              const eventsOnDate = filteredEvents.filter(event =>
-                event.start.toDateString() === date.toDateString()
-              );
-              return eventsOnDate.length > 0 ? (
-                <div className="event-tile">
-                  {eventsOnDate.map(event => (
-                    <div
-                      key={event.id}
-                      className="event"
-                      onClick={() => handleEventClick(event)}
-                      style={{ backgroundColor: event.color }}
-                    >
-                      {event.title}
-                    </div>
-                  ))}
-                </div>
-              ) : null;
-            }}
+            onClickDay={handleDateSelect}
           />
-        </div>
-        {showEventList && (
-          <div className="event-list-notification">
-            <h2>Eventos del {date.toDateString()}</h2>
-            {filteredEvents.length > 0 ? ( // Cambiar aquí para mostrar eventos filtrados
-              filteredEvents.map(event => (
-                <div key={event.id} className="event-item">
-                  <span>{event.title}</span>
-                  <button onClick={() => deleteEvent(event.id)} className="botonEliminarEvento">Eliminar</button>
-                </div>
-              ))
-            ) : (
-              <p>No hay eventos para este día.</p>
-            )}
-            <input
-              type="text"
-              name="title"
-              placeholder="Título del Evento"
-              value={eventData.title}
-              onChange={handleEventInputChange}
-            />
-            <input
-              type="date"
-              name="start"
-              placeholder="Inicio"
-              value={eventData.start}
-              onChange={handleEventInputChange}
-            />
-            <input
-              type="date"
-              name="end"
-              placeholder="Fin"
-              value={eventData.end}
-              onChange={handleEventInputChange}
-            />
-            <input
-              type="color"
-              name="color"
-              value={eventData.color}
-              onChange={handleEventInputChange}
-            />
-            <button onClick={createOrUpdateEvent} className="botonAgregarEvento">Guardar Evento</button>
-            <button onClick={() => setShowEventList(false)} className="botonCerrar">Cerrar</button>
+          <div className="event-list">
+            <ul>
+              {filteredEvents.map((event) => (
+                <li key={event.id}>
+                  {event.title} ({event.start.toLocaleDateString()} -{" "}
+                  {event.end.toLocaleDateString()})
+                  <button onClick={() => handleEventClick(event)}>
+                    Editar
+                  </button>
+                  <button onClick={() => deleteEvent(event.id)}>Eliminar</button>
+                </li>
+              ))}
+            </ul>
           </div>
-        )}
+        </div>
       </div>
       <Footer />
+      {showModal && (
+        <div className="modal">
+          <h3>Eventos para {date.toDateString()}</h3>
+          <ul>
+            {filteredEvents.map((event) => (
+              <li key={event.id}>                  <span>{event.title}</span>
+              </li>
+            ))}
+          </ul>
+          <button onClick={() => setShowModal(false)}>Cerrar</button>
+        </div>
+      )}
+      <ConfirmacionTemporal
+        mensaje={mensajeConfirmacion}
+        visible={showConfirmacion}
+      />
     </div>
   );
 };

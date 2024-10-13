@@ -6,7 +6,8 @@ exports.getInforme = async () => {
     try {
         return await prisma.informe.findMany({
             include: {
-                planDeRiego: true
+                planDeRiego: true,
+                imagenInforme: true,
             },
         });
     } catch (error) {
@@ -20,6 +21,7 @@ exports.getInformeId = async (idInforme) => {
         return await prisma.informe.findFirst({
             where: { id: idInforme },
             include: {
+                imagenInforme: true,
                 planDeRiego:{
                     include:{
                         diaPlan: true
@@ -34,13 +36,14 @@ exports.getInformeId = async (idInforme) => {
 }
 exports.createIforme = async (valores) => {
     try {
+        console.log(valores);
+
         // Función para convertir 'DD-MM-YYYY' a 'YYYY-MM-DD'
         function convertirFecha(fecha) {
             if (!fecha) {
                 throw new Error("La fecha no puede ser undefined");
             }
 
-            // Asumiendo que la fecha es una cadena en formato 'YYYY-MM-DD'
             const partes = fecha.split("-");
             const año = partes[0];
             const mes = partes[1];
@@ -49,30 +52,42 @@ exports.createIforme = async (valores) => {
             return new Date(año, mes - 1, dia); 
         }
 
-      
         const fechaInicio = new Date(convertirFecha(valores.fecha_inicio));
         const fechaFinal = new Date(convertirFecha(valores.fecha_final));
-
 
         if (isNaN(fechaInicio.getTime()) || isNaN(fechaFinal.getTime())) {
             throw new Error("Fechas inválidas: Por favor asegúrate de que las fechas están en formato correcto.");
         }
 
+        // Crear el informe en la base de datos
         const nuevoInforme = await prisma.informe.create({
             data: {
                 titulo: valores.titulo,
                 contenido: valores.contenido,
                 fecha_inicio: fechaInicio,
                 fecha_final: fechaFinal,
+    
+                
             }
         });
+
+        // Si deseas guardar la imagen en otra tabla, puedes hacerlo aquí
+        if (valores.imagen_url) {
+            await prisma.ImagenesInforme.create({
+                data: {
+                    url: valores.imagen_url,
+                    idInforme: nuevoInforme.id, // Asegúrate de que esto coincida con la relación
+                }
+            });
+        }
 
         return nuevoInforme;
     } catch (error) {
         console.error("Error al crear el informe:", error);
         throw error;
     }
-}
+};
+
 
 exports.deleteInforme = async (idInforme) => {
     try {

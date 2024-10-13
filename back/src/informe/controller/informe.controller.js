@@ -30,18 +30,27 @@ exports.getInformeId = async (req, res) => {
         console.log(error)
     }
 }
+// controller/informe.controller.js
+
 exports.createIforme = async (req, res) => {
     try {
-        const data = req.body
-        const informe = await serciosInforme.createIforme(data)
+        const data = req.body;
+        
+        // Si hay una imagen, agrega la URL al objeto de datos
+        if (req.file) {
+            data.imagen_url = req.file.path; // Guarda la ruta de la imagen
+        }
+
+        const informe = await serciosInforme.createIforme(data);
         if (!informe) {
             return res.status(500).send('Error interno del servidor');
         }
-        res.status(200).json({mensage:"informe creado con exitosamente "})
+        res.status(200).json({ mensaje: "Informe creado exitosamente" });
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}
+};
+
 
 exports.deleteInforme = async (req, res) => {
     try {
