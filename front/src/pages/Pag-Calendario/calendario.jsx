@@ -24,26 +24,26 @@ const Calendario = () => {
   const fetchEvents = async (planId) => {
     if (planId) {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/calendario/getPlanDIa`, 
-          { params: { planId } } 
+        const response = await axios.post(
+          `http://localhost:3000/calendario/getPlanDia`, 
+          { idPlan: planId }
         );
-        console.log("Eventos recibidos:", response.data); // Log para verificar los eventos recibidos
+        console.log("Eventos recibidos:", response.data); // Verificar los eventos recibidos
         const formattedEvents = response.data.map((event) => ({
           id: event.id,
           title: event.titulo,
-          start: new Date(event.inicio),
-          end: new Date(event.fin),
+          start: new Date(event.fechaDia),
+          end: new Date(event.fechaDia),
           color: event.color || "#000",
         }));
-        console.log("Eventos formateados:", formattedEvents); // Log para verificar eventos formateados
+        console.log("Eventos formateados:", formattedEvents);
         setEvents(formattedEvents);
       } catch (error) {
         console.error("Error al obtener los eventos:", error);
       }
     }
   };
-
+  
   useEffect(() => {
     if (selectedPlan) {
       fetchEvents(selectedPlan);
@@ -54,9 +54,9 @@ const Calendario = () => {
     setDate(selectedDate);
     console.log("Fecha seleccionada:", selectedDate); // Log para verificar la fecha seleccionada
     const eventsOnSelectedDate = events.filter(
-      (event) => event.start.toDateString() === selectedDate.toDateString()
+      (event) => event.start.toDateString() === selectedDate.toDateString() // Compara la fecha seleccionada
     );
-    console.log("Eventos en la fecha seleccionada:", eventsOnSelectedDate); // Log para verificar eventos filtrados
+    console.log("Eventos en la fecha seleccionada:", eventsOnSelectedDate); // Verificar eventos filtrados
     setFilteredEvents(eventsOnSelectedDate);
     setShowModal(true);
   };

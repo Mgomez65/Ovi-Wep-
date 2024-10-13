@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import iconoEliminar from "../../assets/icon-eliminar.png";
-import iconoEditar from "../../assets/icon-editar.png";
+/* import iconoEditar from "../../assets/icon-editar.png"; */
 import './planRiego.css'
 
 const PlanesDeRiego = ({ onPlanSelect }) => {
@@ -112,8 +112,9 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
   };
 
   const handleShowEvents = (plan) => {
-    console.log("Mostrando eventos para el plan:", plan);
-  };
+    handlePlanSelect(plan); // Llama a la función de selección de plan
+    onPlanSelect(plan.id); // Envía el ID del plan al componente de calendario
+};
 
   return (
     <div className="planesRiegoContainer">
@@ -185,11 +186,11 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
               <li
                 key={plan.id}
                 className="PlanRiegoLI"
-                onClick={() => handleShowEvents(plan)}
+                onClick={() => handlePlanSelect(plan)}
               >
                 <span>{plan.titulo}</span>
                 <div className="botonesEliminarActualizar">
-                  <button
+                  {/*<button
                     className="botonEditar"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -197,7 +198,7 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
                     }}
                   >
                     <img src={iconoEditar} alt="Editar" className="Editar" />
-                  </button>
+                  </button>*/}
                   <button
                     className="botonEliminar"
                     onClick={(e) => {
