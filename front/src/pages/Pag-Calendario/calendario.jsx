@@ -6,6 +6,7 @@ import Footer from "../../components/Footer/footer";
 import PlanesDeRiego from "../../components/Plan-de-Riego/planRiego";
 import "react-calendar/dist/Calendar.css";
 import "./calendario.css";
+import { es } from 'date-fns/locale';
 
 const Calendario = () => {
   const [date, setDate] = useState(new Date());
@@ -20,6 +21,7 @@ const Calendario = () => {
     id: null,
   });
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   const fetchEvents = async (planId) => {
     if (planId) {
@@ -74,12 +76,11 @@ const Calendario = () => {
 
   const createOrUpdateEvent = async () => {
     try {
-      // Asegúrate de que `fechaDia` sea la fecha seleccionada en el calendario.
       const eventToSend = {
         titulo: eventData.title,
         color: eventData.color,
         idPlan: selectedPlan,
-        fechaDia: date.toISOString().split("T")[0], // Formato ISO para la fecha
+        fechaDia: date.toISOString().split("T")[0],
       };
   
       if (eventData.id) {
@@ -94,7 +95,6 @@ const Calendario = () => {
         );
       }
   
-      // Actualiza los eventos después de la creación o actualización
       fetchEvents(selectedPlan);
       setEventData({
         title: "",
@@ -107,25 +107,11 @@ const Calendario = () => {
       console.error("Error al guardar el evento:", error);
     }
   };
-  
-  // En el modal, donde se define el evento:
-  const handleAddEvent = () => {
-    setEventData({
-      title: "", // o el título que desees
-      start: date.toISOString().split("T")[0], // Aquí estableces la fecha seleccionada
-      end: date.toISOString().split("T")[0], // Aquí estableces la fecha seleccionada
-      color: "#FFFFFF", // O el color que desees por defecto
-      id: null, // Indica que es un nuevo evento
-    });
-    setShowModal(true);
-  };
-  
 
   const handleInputChange = (e) => {
     setEventData({ ...eventData, [e.target.name]: e.target.value });
   };
 
-  // Función para renderizar el contenido de las celdas del calendario
   const renderTileContent = ({ date, view }) => {
     if (view === "month") {
       const eventsOnThisDay = events.filter(
@@ -136,7 +122,7 @@ const Calendario = () => {
           {eventsOnThisDay.map((event) => (
             <div
               key={event.id}
-              style={{ backgroundColor: event.color, padding: "2px", borderRadius: "5px" }}
+              style={{ backgroundColor: event.color, padding: "2px", borderRadius: "5px", marginTop: "25px" }}
             >
               {event.title}
             </div>
@@ -156,58 +142,64 @@ const Calendario = () => {
           <Calendar
             onChange={setDate}
             value={date}
+            locale={es}
             onClickDay={handleDateSelect}
-            tileContent={renderTileContent} // Mostrar eventos en el calendario
+            tileContent={renderTileContent}
           />
           {showModal && (
-            <div className="modal">
-              <h2>Eventos en {date.toDateString()}</h2>
-              {filteredEvents.length > 0 ? (
-                filteredEvents.map((event) => (
-                  <div key={event.id} onClick={() => handleEventClick(event)}>
-                    <span>{event.title}</span>
-                    <span>{event.start.toLocaleString()}</span>
-                    <span>{event.end.toLocaleString()}</span>
-                  </div>
-                ))
-              ) : (
-                <p>No hay eventos para esta fecha.</p>
-              )}
-              <h3>Agregar Nuevo Evento</h3>
-              <form>
-                <label>Título:</label>
-                <input
-                  type="text"
-                  name="title"
-                  value={eventData.title}
-                  onChange={handleInputChange}
-                />
-                <label>Fecha de inicio:</label>
-                <input
-                  type="date"
-                  name="start"
-                  value={eventData.start}
-                  onChange={handleInputChange}
-                />
-                <label>Fecha de fin:</label>
-                <input
-                  type="date"
-                  name="end"
-                  value={eventData.end}
-                  onChange={handleInputChange}
-                />
-                <label>Color:</label>
-                <input
-                  type="color"
-                  name="color"
-                  value={eventData.color}
-                  onChange={handleInputChange}
-                />
-                <button type="button" onClick={createOrUpdateEvent}>
-                  Guardar Evento
-                </button>
-              </form>
-              <button onClick={() => setShowModal(false)}>Cerrar</button>
+            <div className="modal-overlay">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h2>Eventos en {date.toDateString()}</h2>
+                  
+                </div>
+                <div className="modal-body">
+                  {filteredEvents.length > 0 ? (
+                    filteredEvents.map((event) => (
+                      <div key={event.id} onClick={() => handleEventClick(event)}>
+                        <span>{event.title}</span>
+                        <span>{event.start.toLocaleString()}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No hay eventos para esta fecha.</p>
+                  )}
+
+                  <button className="boton" onClick={() => setShowForm(true)}>
+                    Agregar Evento
+                  </button>
+                  <button className="boton" onClick={() => setShowModal(false)} style={{marginLeft: "10px", marginTop: "15px"}}>
+                    Cerrar
+                  </button>
+
+                  {showForm && (
+                    <form className="formulario-agregar-evento">
+                      <label>Título:</label>
+                      <input
+                        type="text"
+                        name="title"
+                        value={eventData.title}
+                        onChange={handleInputChange}
+                      />
+                      <label>Color:</label>
+                      <div className="color-picker-wrapper">
+                        <input
+                          type="color"
+                          name="color"
+                          value={eventData.color}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <button type="button" className="boton" onClick={createOrUpdateEvent}>
+                        Guardar Evento
+                      </button>
+                      <button type="button" className="boton" onClick={() => setShowForm(false)}>
+                        Cerrar Formulario
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -214,7 +214,7 @@ span {
 .formulario-agregar-evento input,
 .formulario-agregar-evento textarea,
 .formulario-agregar-evento select {
-    width: calc(100% - 22px);
+    width: 100%;
     padding: 8px;
     margin: 8px 0;
     border-radius: 4px;
@@ -274,16 +274,17 @@ span {
 
 .modal-content {
     background-color: #272e3a;
-    padding: 20px;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: 400px;
     width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     padding: 5px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.192);
@@ -303,6 +304,10 @@ span {
     width: 100%;
     align-items: center;
     justify-content: center;
+}
+
+.botonCerrar{
+    width: 30%;
 }
 
 .botonAgregar{
@@ -344,8 +349,6 @@ span {
 .botonActualizar:hover {
     background-color: #272e3a;
 }
-
-
 
 /* Formulario editar evento */
 
@@ -440,7 +443,7 @@ span {
 .event-list {
     list-style-type: none;
     padding: 0;
-    margin-top: 15px;
+    margin-top: 25px;
     flex-grow: 1;
 }
 
@@ -488,4 +491,36 @@ span {
 
 .calendarioContainer{
     width: 75%;
+}
+
+/* Estilos para el formulario de agregar evento */
+.formulario-agregar-evento {
+    background-color: #161726;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+/* Estilos para los labels */
+.formulario-agregar-evento label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Estilo para el botón */
+.boton {
+    background-color: #374151;
+    color: white; /* Color del texto */
+    padding: 10px 15px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar el ratón */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+/* Efecto hover para el botón */
+.boton:hover {
+    background-color: #161726; /* Color de fondo en hover */
 }
