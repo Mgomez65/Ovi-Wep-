@@ -20,7 +20,7 @@ const Informe = () => {
   const [showConfirmacion, setShowConfirmacion] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [datos, setDatos] = useState(null);
+  const [datos, setDatos] = useState({});
 
 
 
@@ -40,7 +40,6 @@ const Informe = () => {
           }
           const data = await response.json();
           setDatos(data);
-    
           console.log(data)
           setTitulo(data.titulo || "");
           setFechaInicio(
@@ -115,46 +114,37 @@ const Informe = () => {
     event.preventDefault();
 
     if (!titulo || !fechaInicio || !fechaFinal || !contenido) {
-      setUploadMessage("Por favor, completa todos los campos del formulario.");
-      return;
+        setUploadMessage("Por favor, completa todos los campos del formulario.");
+        return;
     }
 
+    const formData = new FormData();
+    formData.append("titulo", titulo);
+    formData.append("fecha_inicio", fechaInicio);
+    formData.append("fecha_final", fechaFinal);
+    formData.append("contenido", contenido);
+    selectedFiles.forEach((file) => {
+        formData.append("imagen", file); // Agregar cada imagen al FormData
+    });
     setUploading(true);
-    setUploadMessage("");
-
-    const data = {
-      titulo,
-      fecha_inicio: fechaInicio,
-      fecha_final: fechaFinal,
-      contenido,
-      imagenes: selectedFiles, // Incluye las imágenes seleccionadas
-    };
-
     try {
-      const response = await fetch("http://localhost:3000/informe/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
-      const result = await response.json();
-      if (response.ok) {
-        setMensajeConfirmacion("Informe actualizado exitosamente");
-        setShowConfirmacion(true);
-      } else {
-        setMensajeConfirmacion("Error al actualizar el archivo");
-        setShowConfirmacion(true);
-      }
+        const response = await fetch("http://localhost:3000/informe/create", {
+            method: "POST",
+            body: formData,
+            credentials: "include",
+        });
+        if (response.ok) {
+            setMensajeConfirmacion("Informe creado exitosamente");
+        } else {
+            setMensajeConfirmacion("Error al enviar los datos");
+        }
     } catch (error) {
-      console.error("Error al enviar los datos:", error);
-      setMensajeConfirmacion("Error al enviar los datos");
-      setShowConfirmacion(true);
+        setMensajeConfirmacion("Error al enviar los datos");
     } finally {
-      setUploading(false);
+        setUploading(false);
     }
-  };
+};
+
 
   // Función para manejar la selección de archivos
   const handleFileChange = (event) => {
@@ -307,6 +297,13 @@ const Informe = () => {
             </button>
           </div>
         </form>
+        <div>
+        <img
+            src={`/img/${datos.imagenInforme?.url}`} // Asegúrate de que `file.imagen_url` contenga solo el nombre del archivo
+            alt={`Imagen `}
+            style={{ width: '100px', height: 'auto' }} // Ajusta el tamaño según sea necesario
+          />
+        </div>
       </div>
       {showConfirmacion && (
         <ConfirmacionTemporal
