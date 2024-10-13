@@ -30,9 +30,15 @@ exports.getPlanDia = async (req, res) => {
 
 exports.CreateDiaPlan = async (req, res) => {
     try {
-        const data = req.body
+        const data = req.body;
+        const fechaDia = new Date(data.fechaDia);
+        console.log(data)
+     
+        fechaDia.setDate(fechaDia.getDate() + 1);
+        data.fechaDia = fechaDia.toISOString();
         console.log(data)
         const  calendario = await servicioPlan.createDiaPlan(data)
+        
         if (!calendario) {
             return res.status(500).send('Error interno del servidor');  
         } 
