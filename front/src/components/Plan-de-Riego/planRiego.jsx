@@ -96,8 +96,7 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
       fin: plan.fin,
       idInforme: plan.idInforme,
     });
-    setShowForm(true);
-    onPlanSelect(plan.id); // Notificar al componente padre sobre la selección del plan
+    onPlanSelect(plan.id);
   };
 
   const resetForm = () => {
@@ -112,8 +111,8 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
   };
 
   const handleShowEvents = (plan) => {
-    handlePlanSelect(plan); // Llama a la función de selección de plan
-    onPlanSelect(plan.id); // Envía el ID del plan al componente de calendario
+    handlePlanSelect(plan);
+    onPlanSelect(plan.id);
 };
 
   return (
@@ -123,8 +122,8 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
         <div className="irrigation-plan">
           <button
             onClick={() => {
-              setShowForm(true); // Asegúrate de que esto se ejecute
-              setSelectedPlan(null); // Asegúrate de limpiar la selección
+              setShowForm(true);
+              setSelectedPlan(null);
               setFormData({
                 titulo: "",
                 inicio: "",
@@ -188,7 +187,7 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
                 className="PlanRiegoLI"
                 onClick={() => handlePlanSelect(plan)}
               >
-                <span>{plan.titulo}</span>
+                <span className="botonPlanRiegoLi">{plan.titulo}</span>
                 <div className="botonesEliminarActualizar">
                   {/*<button
                     className="botonEditar"
