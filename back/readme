@@ -7,7 +7,9 @@ pasos
 
 Para generar de nuevo migraciones:
 npx prisma migrate dev
-    
+
+Para ingresar a Prisma studio:
+Npx prisma studio
 
 Archivo .env:
 HOST_PUERTO = 3000
