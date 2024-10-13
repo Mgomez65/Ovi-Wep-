@@ -33,11 +33,7 @@ exports.createDiaPlan = async (data)=>{
         console.log(data)
         const NuevoCalendario =await prisma.DiaPlan.create({
             data: {
-<<<<<<< HEAD
-                fechaDia:new Date(data.fechaDia),
-=======
                 fechaDia: new Date(data.fechaDia).toISOString(),
->>>>>>> e3497f2edc9685cd3f9577bf1ded771075cac196
                 titulo: data.titulo,
                 color: data.color,
                 idPlan:data.idPlan
