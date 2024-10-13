@@ -35,6 +35,7 @@ exports.getInformeId = async (req, res) => {
 exports.createIforme = async (req, res) => {
     try {
         const data = req.body;
+        console.log(data)
         
         // Si hay una imagen, agrega la URL al objeto de datos
         if (req.file) {

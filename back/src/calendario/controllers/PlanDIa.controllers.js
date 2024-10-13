@@ -3,7 +3,7 @@ const servicioPlan = require("../services/planDia.service")
 
 exports.getPlanDiaID = async (req, res) => {
     try {
-        let data = parseInt(req.params.id)
+        let data = req.body
         let calendario = await servicioPlan.getPlanDiaID(data)
         if (!calendario) {
             return res.status(404).send('No hay eventos para la fecha');
@@ -16,7 +16,8 @@ exports.getPlanDiaID = async (req, res) => {
 
 exports.getPlanDia = async (req, res) => {
     try {
-        const respuesta = await servicioPlan.getPlanDia()
+        const data = req.body.idPlan
+        const respuesta = await servicioPlan.getPlanDia(data)
         if (respuesta.length === 0) {
             return res.status(404).send('no hay ningun evento en estas fechas ');
         }

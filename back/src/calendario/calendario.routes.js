@@ -6,7 +6,7 @@ const controllersDia = require('./controllers/PlanDIa.controllers')
 const middlewares = require("../middlewares/autenticado.middlewares")
 //mostrar
 router.get('/getPlanDeRiego',controllers.getPlanRiego) //anda
-router.get('/getPlanDIa',controllersDia.getPlanDia) //anda 
+router.post('/getPlanDIa',controllersDia.getPlanDia) //anda 
 
 
 router.get('/getPlan/:id',controllers.getPlanRiegoID)//Anda

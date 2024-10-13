@@ -1,20 +1,28 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-exports.getPlanDiaID = async (inicio)=>{
+exports.getPlanDiaID = async (data)=>{
     try {
+        console.log(data)
         return prisma.DiaPlan.findMany({
         where:{
-            "inicio": inicio,}       
+            "idPlan": data.idPlan,
+            "fechaDia":data.fechaDia
+        }       
         })
     }catch (error) {
         console.error("Error al consultar el calendario:", error);
         throw error;
     }
 };
-exports.getPlanDia = async ()=>{
+
+exports.getPlanDia = async (data)=>{
     try {
-        return prisma.DiaPlan.findMany()
+        return prisma.DiaPlan.findMany({
+            where:{
+                "idPlan": data
+            }
+    })
     } catch (error) {
         console.error("Error al consultar el calendario:", error);
         throw error;
