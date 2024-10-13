@@ -20,7 +20,7 @@ function ConfirmacionTemporal({ mensaje, onClose, shouldReload }) {
     <div className="cartel-confirmacion">
       <div className="cartel-contenido">
         <p>{mensaje}</p>
-        <button onClose={handleClose}>Cerrar</button>
+        <button onClick={handleClose}>Cerrar</button>
       </div>
     </div>
   );

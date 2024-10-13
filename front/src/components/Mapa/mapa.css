@@ -1,0 +1,78 @@
+.vineyard-map {
+    text-align: center;
+    color: black;
+}
+
+.map {
+    position: relative;
+    width: 600px; /* Ancho del mapa */
+    height: 400px; /* Alto del mapa */
+    border: 2px solid #333;
+    margin: 0 auto;
+    background-color: #1eff00; /* Color de fondo del mapa */
+}
+
+.area {
+    position: absolute;
+    cursor: pointer;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: background-color 0.3s;
+}
+
+/* Área 1 con forma irregular */
+.area1 {
+    top: 10%; /* Ajustar la posición de la zona */
+    left: 10%;
+    width: 40%; /* Ajustar el ancho */
+    height: 40%; /* Ajustar la altura */
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 45%); /* Forma irregular */
+    border: 2px solid transparent; /* Para que el borde se aplique correctamente */
+}
+
+.area1-border {
+    position: absolute;
+    top: 10%; /* Mismas coordenadas que el área */
+    left: 10%;
+    width: 40%; /* Mismas dimensiones que el área */
+    height: 40%; /* Mismas dimensiones que el área */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 60%); /* Mismas coordenadas que el área */
+    pointer-events: none; /* Evita que este div intercepte clics */
+}
+
+/* Línea inferior para el borde de la forma irregular */
+.area1-border::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; /* Ajustar según sea necesario */
+    left: 0;
+    right: 0;
+    height: 2px; /* Grosor del borde */
+    background-color: black; /* Color del borde */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 60%); /* Mismas coordenadas que el área */
+}
+
+.area2 {
+    top: 10%;
+    left: 55%;
+    width: 30%;
+    height: 30%;
+}
+
+.area3 {
+    top: 50%;
+    left: 10%;
+    width: 75%;
+    height: 40%;
+}
+
+.area:hover {
+    background-color: rgb(128, 128, 128); /* Color de hover */
+}
+
+.info {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+}

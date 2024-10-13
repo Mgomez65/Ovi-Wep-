@@ -3,31 +3,15 @@ import axios from "axios";
 import Calendar from "react-calendar";
 import Header from "../../components/Header/header";
 import Footer from "../../components/Footer/footer";
-import ConfirmacionTemporal from "../../components/Notificacion/notificacionTemporal";
+import PlanesDeRiego from "../../components/Plan-de-Riego/planRiego";
 import "react-calendar/dist/Calendar.css";
 import "./calendario.css";
 
-import iconoEliminar from "../../assets/icon-eliminar.png";
-import iconoEditar from "../../assets/icon-editar.png";
-
-const Calendario = ({ view, hideHeader }) => {
+const Calendario = () => {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [showModal, setShowModal] = useState(false); // Estado para el modal
-  const [showConfirmacion, setShowConfirmacion] = useState(false);
-  const [mensajeConfirmacion, setMensajeConfirmacion] = useState("");
-
-  const [plans, setPlans] = useState([]);
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
-    titulo: "",
-    inicio: "",
-    fin: "",
-    idInforme: 0,
-  });
-  const [showEventList, setShowEventList] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [eventData, setEventData] = useState({
     title: "",
     start: "",
@@ -35,24 +19,16 @@ const Calendario = ({ view, hideHeader }) => {
     color: "#FFFFFF",
     id: null,
   });
-
-  const fetchPlans = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:3000/calendario/getPlanDeRiego"
-      );
-      setPlans(response.data);
-    } catch (error) {
-      console.error("Error al obtener los planes:", error);
-    }
-  };
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
   const fetchEvents = async (planId) => {
     if (planId) {
       try {
         const response = await axios.get(
-          `http://localhost:3000/calendario/getEventosPorPlan/${planId}`
+          `http://localhost:3000/calendario/getPlanDIa`, 
+          { params: { planId } } 
         );
+        console.log("Eventos recibidos:", response.data); // Log para verificar los eventos recibidos
         const formattedEvents = response.data.map((event) => ({
           id: event.id,
           title: event.titulo,
@@ -60,8 +36,8 @@ const Calendario = ({ view, hideHeader }) => {
           end: new Date(event.fin),
           color: event.color || "#000",
         }));
+        console.log("Eventos formateados:", formattedEvents); // Log para verificar eventos formateados
         setEvents(formattedEvents);
-        setFilteredEvents(formattedEvents);
       } catch (error) {
         console.error("Error al obtener los eventos:", error);
       }
@@ -69,18 +45,30 @@ const Calendario = ({ view, hideHeader }) => {
   };
 
   useEffect(() => {
-    fetchPlans();
-  }, []);
-
-  useEffect(() => {
     if (selectedPlan) {
       fetchEvents(selectedPlan);
     }
   }, [selectedPlan]);
 
-  const handleEventInputChange = (e) => {
-    const { name, value } = e.target;
-    setEventData({ ...eventData, [name]: value });
+  const handleDateSelect = (selectedDate) => {
+    setDate(selectedDate);
+    console.log("Fecha seleccionada:", selectedDate); // Log para verificar la fecha seleccionada
+    const eventsOnSelectedDate = events.filter(
+      (event) => event.start.toDateString() === selectedDate.toDateString()
+    );
+    console.log("Eventos en la fecha seleccionada:", eventsOnSelectedDate); // Log para verificar eventos filtrados
+    setFilteredEvents(eventsOnSelectedDate);
+    setShowModal(true);
+  };
+
+  const handleEventClick = (event) => {
+    setEventData({
+      title: event.title,
+      start: event.start.toISOString().split("T")[0],
+      end: event.end.toISOString().split("T")[0],
+      color: event.color,
+      id: event.id,
+    });
   };
 
   const createOrUpdateEvent = async () => {
@@ -100,13 +88,12 @@ const Calendario = ({ view, hideHeader }) => {
         );
       } else {
         await axios.post(
-          "http://localhost:3000/calendario/createEvento",
+          "http://localhost:3000/calendario/createDiaPlan",
           eventToSend
         );
       }
 
       fetchEvents(selectedPlan);
-      setShowEventList(false);
       setEventData({
         title: "",
         start: "",
@@ -119,240 +106,37 @@ const Calendario = ({ view, hideHeader }) => {
     }
   };
 
-  const deleteEvent = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/calendario/deleteEvento/${id}`);
-      fetchEvents(selectedPlan);
-    } catch (error) {
-      console.error("Error al eliminar el evento:", error);
-    }
-  };
-
-  const createOrUpdatePlan = async () => {
-    try {
-      const planToSend = {
-        titulo: formData.titulo,
-        inicio: new Date(formData.inicio),
-        fin: new Date(formData.fin),
-        idInforme: formData.idInforme,
-      };
-
-      if (selectedPlan) {
-        await axios.put(
-          `http://localhost:3000/calendario/actualizarPlan/${selectedPlan}`,
-          planToSend
-        );
-      } else {
-        await axios.post(
-          "http://localhost:3000/calendario/createCalendario",
-          planToSend
-        );
-      }
-
-      fetchPlans();
-      setShowForm(false);
-      setFormData({
-        titulo: "",
-        inicio: "",
-        fin: "",
-        idInforme: 0,
-      });
-    } catch (error) {
-      console.error("Error al guardar el plan:", error);
-    }
-  };
-
-  const deletePlan = async (id) => {
-    try {
-      await axios.delete(
-        `http://localhost:3000/calendario/deleteCalendario/${id}`
-      );
-      fetchPlans();
-    } catch (error) {
-      console.error("Error al eliminar el plan:", error);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handlePlanSelect = (plan) => {
-    setSelectedPlan(plan.id);
-    setFormData({
-      titulo: plan.titulo,
-      inicio: plan.inicio,
-      fin: plan.fin,
-      idInforme: plan.idInforme,
-    });
-    setShowForm(true);
-  };
-
-  const handleDateSelect = (selectedDate) => {
-    setDate(selectedDate);
-    const eventsOnSelectedDate = events.filter(
-      (event) => event.start.toDateString() === selectedDate.toDateString()
-    );
-    setFilteredEvents(eventsOnSelectedDate);
-    setShowEventList(true);
-    setShowModal(true); // Abre el modal al seleccionar una fecha
-  };
-
-  const handleEventClick = (event) => {
-    setEventData({
-      title: event.title,
-      start: event.start.toISOString().split("T")[0],
-      end: event.end.toISOString().split("T")[0],
-      color: event.color,
-      id: event.id,
-    });
-    setShowEventList(true);
-  };
-
-  const handleShowEvents = (plan) => {
-    setSelectedPlan(plan.id);
-    fetchEvents(plan.id);
-    setShowEventList(true);
-  };
-
   return (
     <div className="calendario-container">
       <Header />
       <div className="Container">
-        <div className="planesRiegoContainer">
-          <h2>Planes de Riego</h2>
-          <div>
-            <div className="irrigation-plan">
-              <button
-                onClick={() => {
-                  setShowForm(true);
-                  setSelectedPlan(null);
-                  setFormData({
-                    titulo: "",
-                    inicio: "",
-                    fin: "",
-                    idInforme: 0,
-                  });
-                }}
-                className="botonCrearPlanRiego"
-              >
-                Crear Plan de Riego
-              </button>
-              {showForm && (
-                <div className="form-notification">
-                  <h2>
-                    {selectedPlan
-                      ? "Editar Plan de Riego"
-                      : "Crear Plan de Riego"}
-                  </h2>
-                  <input
-                    type="text"
-                    name="titulo"
-                    placeholder="Nombre"
-                    value={formData.titulo}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    type="date"
-                    name="inicio"
-                    placeholder="Fecha de Inicio"
-                    value={formData.inicio}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    type="date"
-                    name="fin"
-                    placeholder="Fecha de Fin"
-                    value={formData.fin}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    type="number"
-                    name="idInforme"
-                    placeholder="ID Informe"
-                    value={formData.idInforme}
-                    onChange={handleInputChange}
-                    className="inputSinSpinner"
-                  />
-                  <button
-                    onClick={createOrUpdatePlan}
-                    className="botonAgregar"
-                  >
-                    Guardar
-                  </button>
-                  <button
-                    onClick={() => setShowForm(false)}
-                    className="botonCerrar"
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              )}
-              <ul className="planRiegoUL">
-                {plans.map((plan) => (
-                  <li key={plan.id} className="PlanRiegoLI">
-                    <span onClick={() => handleShowEvents(plan)}>{plan.titulo}</span>
-                    <div className="botonesEliminarActualizar">
-                      <button
-                        className="botonEditar"
-                        onClick={() => handlePlanSelect(plan)}
-                      >
-                        <img src={iconoEditar} alt="Editar" className="Editar"/>
-                      </button>
-                      <button
-                        className="botonEliminar"
-                        onClick={() => deletePlan(plan.id)}
-                      >
-                        <img src={iconoEliminar} alt="Eliminar" className="Eliminar"/>
-                      </button>
-                    </div>
-                    
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="calendarioContainer">
+        <PlanesDeRiego onPlanSelect={setSelectedPlan} />
+        <div className="react-calendar">
           <Calendar
             onChange={setDate}
             value={date}
             onClickDay={handleDateSelect}
           />
-          <div className="event-list">
-            <ul>
-              {filteredEvents.map((event) => (
-                <li key={event.id}>
-                  {event.title} ({event.start.toLocaleDateString()} -{" "}
-                  {event.end.toLocaleDateString()})
-                  <button onClick={() => handleEventClick(event)}>
-                    Editar
-                  </button>
-                  <button onClick={() => deleteEvent(event.id)}>Eliminar</button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {showModal && (
+            <div className="modal">
+              <h2>Eventos en {date.toDateString()}</h2>
+              {filteredEvents.length > 0 ? (
+                filteredEvents.map((event) => (
+                  <div key={event.id} onClick={() => handleEventClick(event)}>
+                    <span>{event.title}</span>
+                    <span>{event.start.toLocaleString()}</span>
+                    <span>{event.end.toLocaleString()}</span>
+                  </div>
+                ))
+              ) : (
+                <p>No hay eventos para esta fecha.</p>
+              )}
+              <button onClick={() => setShowModal(false)}>Cerrar</button>
+            </div>
+          )}
         </div>
       </div>
       <Footer />
-      {showModal && (
-        <div className="modal">
-          <h3>Eventos para {date.toDateString()}</h3>
-          <ul>
-            {filteredEvents.map((event) => (
-              <li key={event.id}>                  <span>{event.title}</span>
-              </li>
-            ))}
-          </ul>
-          <button onClick={() => setShowModal(false)}>Cerrar</button>
-        </div>
-      )}
-      <ConfirmacionTemporal
-        mensaje={mensajeConfirmacion}
-        visible={showConfirmacion}
-      />
     </div>
   );
 };
