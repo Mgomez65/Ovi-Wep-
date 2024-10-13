@@ -2,11 +2,18 @@ const serciosInforme = require("../service/informe.service")
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const PDFDocument = require('pdfkit');
+const path = require('path');
 
-
+const formateoFecha = (data)=>{
+    fecha = new Date (data)
+    dia = fecha.getDate().toString().padStart(2,"0");
+    semana = (fecha.getMonth() + 1).toString().padStart(2,"0");
+    año = fecha.getFullYear()
+    return `${año}-${semana}-${dia}`
+}
 exports.getInforme = async (req, res) => {
     try {
-        
+
         const informes = await serciosInforme.getInforme()
         if (!informes) {
             return res.status(404).send('No hay informes disponibles');
@@ -36,10 +43,13 @@ exports.createIforme = async (req, res) => {
     try {
         const data = req.body;
         console.log(data)
-        
+        data.fecha_inicio = formateoFecha(data.fecha_inicio)
+        data.fecha_final = formateoFecha(data.fecha_final)
+
+
         // Si hay una imagen, agrega la URL al objeto de datos
         if (req.file) {
-            data.imagen_url = req.file.path; // Guarda la ruta de la imagen
+            data.imagen_url = path.basename(req.file.path); // Guarda solo el nombre del archivo
         }
 
         const informe = await serciosInforme.createIforme(data);
@@ -70,6 +80,8 @@ exports.updateInforme = async (req, res) => {
     try {
         const informeId = parseInt(req.params.id,10)
         const data = req.body
+        data.fecha_inicio = formateoFecha(data.fecha_inicio)
+        data.fecha_final = formateoFecha(data.fecha_final)
         const informe = await serciosInforme.updateInforme(informeId, data)
         if (!informe) {
             return res.status(404).send('Informe no encontrado');

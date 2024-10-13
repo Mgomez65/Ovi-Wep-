@@ -3,20 +3,27 @@ const router = express.Router();
 const controllerinforme = require("./controller/informe.controller");
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
-// Configuración de multer
+const uploadPath = path.resolve(__dirname, '../../../front/public/img');
+// Crea la carpeta si no existe
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
+
+// Configuración del almacenamiento
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
+  destination: (req, file, cb) => {
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
 });
 
-const upload = multer({ storage: storage });
+// Middleware de multer
+const upload = multer({ storage });
 
-// Rutas
 router.get('/descargar/:idInforme', controllerinforme.downloadPDF);
 router.post("/create", upload.single('imagen'), controllerinforme.createIforme);
 router.get("/users", controllerinforme.getInforme);

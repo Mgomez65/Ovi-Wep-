@@ -29,8 +29,8 @@ model Informe {
   id             Int      @id @default(autoincrement()) 
   titulo         String
   contenido      String
-  fecha_inicio   DateTime
-  fecha_final DateTime 
+  fecha_inicio   String
+  fecha_final String 
   planDeRiego PlanDeRiego?
   imagenInforme ImagenesInforme?
 }
