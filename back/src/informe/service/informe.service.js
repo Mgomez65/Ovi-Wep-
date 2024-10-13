@@ -91,16 +91,51 @@ exports.createIforme = async (valores) => {
 
 exports.deleteInforme = async (idInforme) => {
     try {
-        return await prisma.informe.delete({
-            where: {
-                ["id"]: idInforme,
-            },
+        console.log('ID Informe:', idInforme);
+        const informe = await prisma.informe.findUnique({
+            where: { id: idInforme },
+            include: { planDeRiego: true, imagenInforme: true } 
         });
+        console.log('Informe encontrado:', informe);
+  
+        if (!informe) {
+            throw new Error('El Informe no existe.');
+        }
+
+
+        if (informe.planDeRiego) {
+            console.log('Eliminando DiaPlan para el PlanDeRiego con ID:', informe.planDeRiego.id);
+            await prisma.diaPlan.deleteMany({
+                where: { idPlan: informe.planDeRiego.id }
+            });
+
+            console.log('Eliminando PlanDeRiego con ID:', informe.planDeRiego.id);
+            await prisma.planDeRiego.delete({
+                where: { id: informe.planDeRiego.id }
+            });
+        }
+
+        if (informe.imagenInforme) {
+            console.log('Eliminando ImagenInforme con ID:', informe.imagenInforme.id);
+            await prisma.imagenesInforme.delete({
+                where: { id: informe.imagenInforme.id }
+            });
+        }
+
+        
+        await prisma.informe.delete({
+            where: { id: idInforme }
+        });
+
+        return { message: 'El Informe se eliminó correctamente.' };
     } catch (error) {
         console.error("Error al eliminar el informe:", error);
-        throw error;
+        throw new Error(`No se pudo eliminar el informe: ${error.message}`);
     }
-}
+};
+
+
+  
 exports.updateInforme = async (idInforme, valor) => {
     try {
         const informeUpdate = await prisma.informe.update({
