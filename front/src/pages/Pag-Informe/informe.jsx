@@ -22,12 +22,11 @@ const Informe = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [datos, setDatos] = useState({});
 
-
-
   const location = useLocation();
   const fileId = location.state?.fileId;
 
   useEffect(() => {
+    setShowConfirmacion(false);
     const fetchInforme = async () => {
       if (fileId) {
         try {
@@ -54,7 +53,7 @@ const Informe = () => {
           );
           setContenido(data.contenido || "");
           setSelectedInforme(data);
-          setExistingFiles(data.imagenes || []); // Asumiendo que la respuesta incluye imágenes
+          setExistingFiles(data.imagenes || []);
         } catch (error) {
           console.error("Error al obtener el informe:", error);
           setShowConfirmacion(true);
@@ -124,7 +123,7 @@ const Informe = () => {
     formData.append("fecha_final", fechaFinal);
     formData.append("contenido", contenido);
     selectedFiles.forEach((file) => {
-        formData.append("imagen", file); // Agregar cada imagen al FormData
+        formData.append("imagen", file);
     });
     setUploading(true);
     try {
@@ -135,35 +134,34 @@ const Informe = () => {
         });
         if (response.ok) {
             setMensajeConfirmacion("Informe creado exitosamente");
+            setShowConfirmacion(true);
         } else {
             setMensajeConfirmacion("Error al enviar los datos");
+            setShowConfirmacion(true);
         }
     } catch (error) {
         setMensajeConfirmacion("Error al enviar los datos");
+        setShowConfirmacion(true);
     } finally {
         setUploading(false);
     }
-};
-
-
-  // Función para manejar la selección de archivos
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    setSelectedFiles((prev) => [...prev, ...files]); // Añadir las nuevas imágenes seleccionadas
-    setCurrentIndex(0); // Restablecer el índice al principio del carrusel
   };
 
-  // Función para eliminar la imagen actual del carrusel
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files);
+    setSelectedFiles((prev) => [...prev, ...files]);
+    setCurrentIndex(0);
+  };
+
   const handleDeleteImage = () => {
     setSelectedFiles((prev) =>
       prev.filter((_, index) => index !== currentIndex)
     );
     setCurrentIndex((prev) =>
       prev === 0 ? 0 : prev - 1
-    ); // Ajustar el índice después de eliminar
+    );
   };
 
-  // Funciones para navegar por el carrusel
   const handleNextImage = () => {
     setCurrentIndex((prev) =>
       prev === selectedFiles.length - 1 ? 0 : prev + 1
@@ -275,13 +273,29 @@ const Informe = () => {
                     />
                   </div>
 
-                  {/* Botón de eliminar imagen */}
                   <div className="botonEliminarContainer">
                     <button onClick={handleDeleteImage} className="remove-button">
                       Eliminar
                     </button>
                   </div>
                   
+                </div>
+              )}
+              {/* Carrusel para mostrar las imágenes del informe guardado */} 
+              {datos.imagenInforme?.url ? ( // Usa el encadenamiento opcional aquí
+                <div className="carrusel-container">
+                    <h2>Imágenes del Informe</h2>
+                    <div className="carrusel">
+                        <img
+                            src={`/img/${datos.imagenInforme.url}`} // Se eliminó el encadenamiento opcional aquí ya que ya hemos comprobado que existe
+                            alt={`Imagen del informe con descripción: ${datos.imagenInforme.descripcion || 'sin descripción'}`} // Añadir una descripción más completa
+                            style={{ width: '400px', height: 'auto' }}
+                        />
+                    </div>
+                </div>
+              ) : (
+                <div className="no-imagen">
+                    <p>No hay imágenes disponibles para este informe.</p> {/* Mensaje si no hay imágenes */}
                 </div>
               )}
             </div>
@@ -297,21 +311,7 @@ const Informe = () => {
             </button>
           </div>
         </form>
-        <div>
-        <img
-            src={`/img/${datos.imagenInforme?.url}`} // Asegúrate de que `file.imagen_url` contenga solo el nombre del archivo
-            alt={`Imagen `}
-            style={{ width: '100px', height: 'auto' }} // Ajusta el tamaño según sea necesario
-          />
-        </div>
       </div>
-      {showConfirmacion && (
-        <ConfirmacionTemporal
-          mensaje={mensajeConfirmacion}
-          onClose={() => setShowConfirmacion(false)}
-          shouldReload={true}
-        />
-      )}
       <Footer />
     </>
   );

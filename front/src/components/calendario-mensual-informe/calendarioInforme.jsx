@@ -6,7 +6,6 @@ const Calendario = ({ eventos }) => {
   const [events, setEvents] = useState(eventos);
 
   useEffect(() => {
-    // Actualiza los eventos cuando el prop cambia
     setEvents(eventos);
   }, [eventos]);
 
