@@ -295,7 +295,7 @@ const Informe = () => {
                 </div>
               ) : (
                 <div className="no-imagen">
-                    <p>No hay imágenes disponibles para este informe.</p> {/* Mensaje si no hay imágenes */}
+                    <p></p> {/* Mensaje si no hay imágenes */}
                 </div>
               )}
             </div>
