@@ -70,9 +70,10 @@ body {
     border: none;
     border-radius: 5px;
     background-color: #374151;
-    height: 300px;
+    height: auto;
     margin-left: 4.5%;
     margin-right: 4.5%;
-    
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 

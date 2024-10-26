@@ -9,7 +9,7 @@ import Inicio from "./pages/Pag-Index/inicio";
 import AboutOVI from "./pages/Informacion-de-Ovi/Sobre-Nosotros/about";
 import TermsConditions from "./pages/Informacion-de-Ovi/Terminos-y-Condiciones/terminosCondiciones";
 import PrivacyPolicy from "./pages/Informacion-de-Ovi/Politicas-de-Privacidad/politicas";
-import VineyardMap from "./components/Mapa/mapa";
+
 
 const App = () => {
   return (
@@ -25,7 +25,6 @@ const App = () => {
           <Route path="/about" element={<AboutOVI />} />
           <Route path="/terminos-y-condiciones" element={<TermsConditions />} />
           <Route path="/politicas-de-privacidad" element={<PrivacyPolicy />} />
-          <Route path="/map" element={<VineyardMap />} />
         </Routes>
       </Router>
     </>
