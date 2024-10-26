@@ -1,5 +1,4 @@
-const express = require('express'); 
-const mysql = require('mysql2');
+const express = require('express');
 const cors = require('cors');
 const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
@@ -7,51 +6,66 @@ const { ReadlineParser } = require('@serialport/parser-readline');
 const app = express();
 const port = 3001;
 
-let ultimoDatoHumedad = null; // Variable para almacenar el último dato de humedad recibido
+let ultimoDatoHumedad1 = null; // Variable para el dato de humedad del primer Arduino
+let ultimoDatoHumedad2 = null; // Variable para el dato de humedad del segundo Arduino
 
-// Conexión a la base de datos MySQL (por si lo necesitas en el futuro)
-/* const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'humedad_db'
+// Configuración del primer puerto serial (Arduino 1)
+const serialPort1 = new SerialPort({ path: 'COM4', baudRate: 9600 }, (err) => {
+  if (err) {
+    console.error(`Error al abrir COM4: ${err.message}`);
+  }
+});
+const parser1 = new ReadlineParser();
+serialPort1.pipe(parser1);
+
+// Configuración del segundo puerto serial (Arduino 2)
+let serialPort2;
+try {
+  serialPort2 = new SerialPort({ path: 'COM5', baudRate: 9600 }, (err) => {
+    if (err) {
+      console.error(`Error al abrir COM5: ${err.message}`);
+    }
+  });
+  const parser2 = new ReadlineParser();
+  serialPort2.pipe(parser2);
+
+  parser2.on('data', (data) => {
+    const humedad = parseFloat(data.trim());
+    console.log(`Humedad recibida del Arduino 2: ${humedad}`);
+    ultimoDatoHumedad2 = humedad;
+  });
+
+  serialPort2.on('error', (err) => {
+    console.error(`Error en el puerto serial de COM5: ${err.message}`);
+  });
+} catch (error) {
+  console.error(`No se pudo conectar a COM5: ${error.message}`);
+}
+
+// Leer datos del primer Arduino
+parser1.on('data', (data) => {
+  const humedad = parseFloat(data.trim());
+  console.log(`Humedad recibida del Arduino 1: ${humedad}`);
+  ultimoDatoHumedad1 = humedad;
 });
 
-connection.connect(err => {
-  if (err) throw err;
-  console.log('Conectado a la base de datos MySQL');
-}); */
-
-// Configuración del puerto serial
-const serialPort = new SerialPort({ path: 'COM3', baudRate: 9600 }); // Cambia 'COM5' al puerto correcto
-const parser = new ReadlineParser();
-serialPort.pipe(parser);
-
-// Leer los datos enviados por el Arduino
-parser.on('data', (data) => {
-  const humedad = parseFloat(data.trim());
-  console.log(`Humedad recibida: ${humedad}`);
-  
-  // Actualizar la variable con el último dato de humedad
-  return ultimoDatoHumedad = humedad;
+serialPort1.on('error', (err) => {
+  console.error(`Error en el puerto serial de COM4: ${err.message}`);
 });
 
 // Middleware CORS para permitir el acceso desde el frontend
 app.use(cors({ origin: 'http://localhost:5173' }));
 
-// Ruta para enviar el último dato de humedad al frontend
+// Ruta para enviar datos al frontend
 app.get('/api/humedad-actual', (req, res) => {
-  console.log(ultimoDatoHumedad)
-  if (ultimoDatoHumedad !== null) {
-    res.status(200).json({ humedad: ultimoDatoHumedad });
-  } else {
-    res.status(404).json({ mensaje: 'No hay datos de humedad disponibles todavía' });
-  }
+  const respuesta = {
+    humedad1: ultimoDatoHumedad1 !== null ? ultimoDatoHumedad1 : "No disponible",
+    humedad2: ultimoDatoHumedad2 !== null ? ultimoDatoHumedad2 : "No disponible",
+  };
+  res.status(200).json(respuesta);
 });
 
-// API para obtener los datos de la base de datos (si lo necesitas)
-
-
+// Inicia el servidor en el puerto definido
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en http://localhost:${port}`);
 });
