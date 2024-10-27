@@ -21,7 +21,7 @@ serialPort1.pipe(parser1);
 // Configuración del segundo puerto serial (Arduino 2)
 let serialPort2;
 try {
-  serialPort2 = new SerialPort({ path: 'COM5', baudRate: 9600 }, (err) => {
+  serialPort2 = new SerialPort({ path: 'COM3', baudRate: 9600 }, (err) => {
     if (err) {
       console.error(`Error al abrir COM5: ${err.message}`);
     }
