@@ -157,8 +157,7 @@ const Calendario = () => {
                   {filteredEvents.length > 0 ? (
                     filteredEvents.map((event) => (
                       <div key={event.id} onClick={() => handleEventClick(event)}>
-                        <span>{event.title}</span>
-                        <span>{event.start.toLocaleString()}</span>
+                        <span style={{'backgroundColor': event.color, 'fontSize': '18px', 'padding': '5px', 'borderRadius': '3px'}}>{event.title}</span>
                       </div>
                     ))
                   ) : (
@@ -173,13 +172,16 @@ const Calendario = () => {
                   </button>
 
                   {showForm && (
-                    <form className="formulario-agregar-evento">
+                    <form className="formulario-editar-evento">
                       <label>Título:</label>
                       <input
                         type="text"
                         name="title"
+                        placeholder="Título"
+                        className="form-titulo"
                         value={eventData.title}
                         onChange={handleInputChange}
+                        style={{'width': '100%'}}
                       />
                       <label>Color:</label>
                       <div className="color-picker-wrapper">

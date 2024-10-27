@@ -246,7 +246,17 @@ span {
     padding: 7px;
     border: 0px solid #000;
     border-radius: 4px;
-    background-color: #272e3a3a;
+    background-color: #ccc;
+}
+
+.form-titulo {
+    display: block;
+    margin: 10px 0;
+    background-color: #dfdfdf;
+    text-decoration: none;
+    border: none;
+    width: 95%;
+    padding: 5px;
 }
 
 .color-picker-wrapper input[type="color"] {
@@ -403,13 +413,13 @@ span {
 .formulario-editar-evento input,
 .formulario-editar-evento textarea,
 .formulario-editar-evento select {
-    width: calc(100% - 22px);
+    width: 90%;
     padding: 8px;
     margin: 8px 0;
     border-radius: 4px;
     border: 1px solid #272e3a3a;
-    background-color: #272e3a3a;
-    color: #fff;
+    background-color: #ccc;
+    color: #000;
     font-size: 0.9em;
 }
 
@@ -495,7 +505,7 @@ span {
 
 /* Estilos para el formulario de agregar evento */
 .formulario-agregar-evento {
-    background-color: #161726;
+    background-color: #272e3a;
     padding: 20px;
     border-radius: 5px;
     max-width: 400px;

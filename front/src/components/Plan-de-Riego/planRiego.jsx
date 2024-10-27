@@ -136,7 +136,7 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
             Crear Plan de Riego
           </button>
           {showForm && (
-            <div className="form-notification">
+            <div className="formulario-editar-evento">
               <h2>
                 {selectedPlan ? "Editar Plan de Riego" : "Crear Plan de Riego"}
               </h2>
@@ -167,15 +167,14 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
                 placeholder="ID Informe"
                 value={formData.idInforme}
                 onChange={handleInputChange}
-                className="inputSinSpinner"
               />
               <button
                 onClick={selectedPlan ? updatePlan : createPlan}
-                className="botonAgregar"
+                className="boton"
               >
                 {selectedPlan ? "Actualizar" : "Guardar"}
               </button>
-              <button onClick={resetForm} className="botonCerrar">
+              <button onClick={resetForm} className="boton">
                 Cancelar
               </button>
             </div>
