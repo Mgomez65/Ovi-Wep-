@@ -4,24 +4,32 @@ import './mapa.css';
 const Mapa = () => {
     const [humidity1, setHumidity1] = useState(null);
     const [humidity2, setHumidity2] = useState(null);
+    const [humidity3, setHumidity3] = useState(59);
 
     useEffect(() => {
         const fetchHumidityData = async () => {
             try {
                 const response = await fetch('http://localhost:3001/api/humedad-actual');
                 const data = await response.json();
-                setHumidity1(data.humedad1 !== "No disponible" ? data.humedad1 : null);
-                /* setHumidity2(data.humedad2 !== "No disponible" ? data.humedad2 : null); */
-                setHumidity2(25);
+                setHumidity1(data.humedad1 !== "No disponible" ? data.humedad1 : null); 
+                /* setHumidity2(data.humedad2 !== "No disponible" ? data.humedad2 : null);  */
+                /* setHumidity1(77); */
+                setHumidity2(75); 
             } catch (error) {
                 console.error('Error al obtener los datos de humedad:', error);
             }
         };
 
         const interval = setInterval(fetchHumidityData, 500);
-
         return () => clearInterval(interval);
     }, []);
+
+    const getColorByHumidity = (humidity) => {
+        if (humidity === null) return '#ccc'; // Color gris si no hay datos
+        if (humidity < 30) return '#ff0000';  // Rojo claro para baja humedad
+        if (humidity < 60) return '#ffff00';  // Amarillo claro para humedad media
+        return '#00ff00'; // Verde claro para alta humedad
+    };
 
     return (
         <div className="vineyard-map">
@@ -31,16 +39,19 @@ const Mapa = () => {
                     <div className="area-border area1-border"></div>
                     <div
                         className="area area1"
+                        style={{ backgroundColor: getColorByHumidity(humidity1) }}
                     >
                         Zona 1
                     </div>
                     <div
                         className="area area2"
+                        style={{ backgroundColor: getColorByHumidity(humidity2) }}
                     >
                         Zona 2
                     </div>
                     <div
                         className="area area3"
+                        style={{ backgroundColor: getColorByHumidity(humidity3) }}
                     >
                         Zona 3
                     </div>
@@ -67,9 +78,9 @@ const Mapa = () => {
                 <div className="thermometer1">
                     <div
                         className="thermometer1-fill"
-                        style={{ width: `30%` }}
+                        style={{ width: `${humidity3}%` }}
                     />
-                    <div className="thermometer1-label">30%</div>
+                    <div className="thermometer1-label">{humidity3}%</div>
                 </div>
             </div>
         </div>

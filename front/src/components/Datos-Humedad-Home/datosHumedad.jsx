@@ -23,20 +23,21 @@ const Termometro = () => {
         },
       });
       const data = await response.json();
+
       const hum1 = data.humedad1 !== "No disponible" ? parseInt(data.humedad1) : null;
       /* const hum2 = data.humedad2 !== "No disponible" ? parseInt(data.humedad2) : null; */
-      const hum2 = 25;
+      /* const hum3 = data.humedad3 !== "No disponible" ? parseInt(data.humedad3) : null; */
+      const hum2 = 75;
+      const hum3 = 59;
 
-      if (hum1 !== null && hum2 !== null) {
-        const averageHumidity = (hum1 + hum2) / 2;
-        setHumidity(Math.round(averageHumidity));
-      } else if (hum1 !== null) {
-        setHumidity(Math.round(hum1));
-      } else if (hum2 !== null) {
-        setHumidity(Math.round(hum2));
-      } else {
-        setHumidity(0);
-      }
+      // Calcular el promedio de los valores disponibles
+      const humidityValues = [hum1, hum2, hum3].filter((val) => val !== null);
+      const averageHumidity = 
+        humidityValues.length > 0 
+          ? humidityValues.reduce((acc, val) => acc + val, 0) / humidityValues.length 
+          : 0;
+
+      setHumidity(Math.round(averageHumidity));
     } catch (error) {
       console.error("Error al obtener datos:", error);
     }
