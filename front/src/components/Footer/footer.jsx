@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import "./footer.css";
 
@@ -9,13 +10,13 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="seccionFooter">
-        <p>
+        <div>
           <p className="tituloContacto">Contacto:</p>
           <p className="footer-correo">
             info@ovi.com
           </p>
             Tel: +123 456 789
-        </p>
+        </div>
       </div>
 
       <img src="/Logo-Ovi.png" alt="Logo" className="logo"/>
