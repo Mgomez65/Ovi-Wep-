@@ -35,11 +35,13 @@ exports.login = async (req, res) => {
         const data = req.body;
         console.log(data)
         const respuesta = await servisioUsuario.getuserId("Email", data.Email);
-        console.log(respuesta)
+       console.log(respuesta)
         if (!respuesta) {
             return res.status(404).json({mesnsage:'No se ha encontrado un usuario con este email'});
         }   
-        const passwordMatch = await bcryptjs.compare(data.Password, respuesta.Password);
+
+        const passwordMatch = await bcryptjs.compare(data.password, respuesta.Password);
+
         if (!passwordMatch) {
             return res.status(401).send('Contraseña incorrecta');
         }

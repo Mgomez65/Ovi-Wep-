@@ -17,7 +17,7 @@ exports.getSelectUSer = async (columna, valor) => {
 
 exports.createUser = async (datos,passHash)=>{
     try {
-        console.log(datos)       
+        console.log("enntre: ,datos")       
         const nuevoUsuario = await prisma.usuario.create({
             data: {
                 Nombre: datos.Nombre,
