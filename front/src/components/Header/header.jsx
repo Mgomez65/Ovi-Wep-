@@ -1,4 +1,4 @@
-  import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import iconoVolver from "../../assets/icon-volver.png";
@@ -7,7 +7,7 @@ import iconoEditar from "../../assets/icon-editar.png";
 import iconoBuscar from "../../assets/icon-buscar.png";
 import descargarIcon from "../../assets/icon-download.png";
 import Menu from "../Menu-Desplegable/menuDesplegable";
-import Auth from '../Auth-Admin/Auth-Admin';
+import Auth from "../Auth-Admin/Auth-Admin";
 import "./header.css";
 
 function Header() {
@@ -22,6 +22,8 @@ function Header() {
   const [filteredFiles, setFilteredFiles] = useState([]);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [fileToDelete, setFileToDelete] = useState(null);
+
+  const [isReadOnly, setIsReadOnly] = useState(true);
 
   const toggleSearchMenu = (event) => {
     event.preventDefault();
@@ -72,20 +74,14 @@ function Header() {
     }
   };
 
+  //solo lectura del informe
+  const handleLeerInforme = (fileId) => {
+    navigate("/informe", { state: { fileId } });
+  };
+
   useEffect(() => {
     fetchFiles();
   }, []);
-
-  /* useEffect(() => {
-    if (searchTerm === "") {
-      setFilteredFiles(uploadedFiles);
-    } else {
-      const filtered = uploadedFiles.filter((file) =>
-        file.titulo.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredFiles(filtered);
-    }
-  }, [searchTerm, uploadedFiles]); */
 
   const showDeleteConfirmation = (fileId) => {
     setFileToDelete(fileId);
@@ -214,24 +210,57 @@ function Header() {
                       <div key={file.id} className="uploaded-file-item">
                         <span>{file.titulo}</span>
                         <div className="botonesEliminarActualizar">
-                        <Auth setUserRol={setUserRol} />
-                          {userRol === 'admin' ? (
+                          <Auth setUserRol={setUserRol} />
+                          {userRol === "admin" ? (
                             <>
-                              <button onClick={() => handleUpdateFile(file.id)} className="botonEditar">
-                                <img src={iconoEditar} alt="Actualizar" className="Editar" />
+                              <button
+                                onClick={() => handleUpdateFile(file.id)}
+                                className="botonEditar"
+                              >
+                                <img
+                                  src={iconoEditar}
+                                  alt="Actualizar"
+                                  className="Editar"
+                                />
                               </button>
-                              <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
-                                <img src={iconoEliminar} alt="Eliminar" className="Eliminar" />
+                              <button
+                                onClick={() => showDeleteConfirmation(file.id)}
+                                className="botonEliminar"
+                              >
+                                <img
+                                  src={iconoEliminar}
+                                  alt="Eliminar"
+                                  className="Eliminar"
+                                />
                               </button>
-                              <button onClick={() => handleDownload(file.id)} className="botonEliminar">
-                                <img src={descargarIcon} alt="Descargar" className="Descargar" />
+                              <button
+                                onClick={() => handleDownload(file.id)}
+                                className="botonEliminar"
+                              >
+                                <img
+                                  src={descargarIcon}
+                                  alt="Descargar"
+                                  className="Descargar"
+                                />
                               </button>
+                              <button onClick={() => handleLeerInforme(file.id)}>Leer Informe</button>
                             </>
                           ) : (
-                            <button onClick={() => handleDownload(file.id)} className="botonEliminar">
-                              <img src={descargarIcon} alt="Descargar" className="Descargar" />
+                            <>
+                            <button
+                              onClick={() => handleDownload(file.id)}
+                              className="botonEliminar"
+                            >
+                              <img
+                                src={descargarIcon}
+                                alt="Descargar"
+                                className="Descargar"
+                              />
                             </button>
+                            <button onClick={() => handleLeerInforme(file.id)}>Leer Informe</button>
+                            </>
                           )}
+                          
                         </div>
                       </div>
                     ))
