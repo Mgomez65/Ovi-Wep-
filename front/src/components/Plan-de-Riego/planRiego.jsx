@@ -185,30 +185,31 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
           )}
           <ul className="planRiegoUL">
             {plans.map((plan) => (
-              <li
-                key={plan.id}
-                className="PlanRiegoLI"
-                onClick={() => handlePlanSelect(plan)}
-              >
-                <span className="botonPlanRiegoLi">{plan.titulo}</span>
-                <div className="botonesEliminarActualizar">
-                {userRol === 'admin' && (
-                    <button
-                      className="botonEliminar"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deletePlan(plan.id);
-                      }}
-                    >
-                      <img
-                        src={iconoEliminar}
-                        alt="Eliminar"
-                        className="Eliminar"
-                      />
-                    </button>
-                )}
-                </div>
-              </li>
+              <div onClick={() => handlePlanSelect(plan)}  className="botonPlanRiegoLi">
+                <li
+                  key={plan.id}
+                  className="PlanRiegoLI"
+                >
+                  <span>{plan.titulo}</span>
+                  <div className="botonesEliminarActualizar">
+                  {userRol === 'admin' && (
+                      <button
+                        className="botonEliminar"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deletePlan(plan.id);
+                        }}
+                      >
+                        <img
+                          src={iconoEliminar}
+                          alt="Eliminar"
+                          className="Eliminar"
+                        />
+                      </button>
+                  )}
+                  </div>
+                </li>
+              </div>
             ))}
           </ul>
         </div>

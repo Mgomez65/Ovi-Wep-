@@ -98,12 +98,17 @@ body {
 }
 
 .uploaded-file-item {
+    width: 100%;
     margin-top: 10px;
     padding: 10px;
     background-color: #374151;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.tituloSpan{
+    font-size: 15px;
 }
   
 .botonEditar, .botonEliminar {

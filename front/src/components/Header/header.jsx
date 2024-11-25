@@ -195,22 +195,24 @@ function Header() {
                   </button>
                 </div>
 
-                <div className="CrearInforme">
-                  <button
-                    onClick={handleCreateReport}
-                    className="botonCrearInforme"
-                  >
-                    Crear Informe
-                  </button>
-                </div>
+                <Auth setUserRol={setUserRol} />
+                {userRol === "admin" && (
+                  <div className="CrearInforme">
+                    <button
+                      onClick={handleCreateReport}
+                      className="botonCrearInforme"
+                    >
+                      Crear Informe
+                    </button>
+                  </div>
+                )}
 
                 <div className="uploaded-files-container">
                   {filteredFiles && filteredFiles.length > 0 ? (
                     filteredFiles.map((file, index) => (
-                      <div key={file.id} className="uploaded-file-item">
-                        <span>{file.titulo}</span>
+                      <button onClick={() => handleLeerInforme(file.id)} key={file.id} className="uploaded-file-item">
+                        <span className="tituloSpan">{file.titulo}</span>
                         <div className="botonesEliminarActualizar">
-                          <Auth setUserRol={setUserRol} />
                           {userRol === "admin" ? (
                             <>
                               <button
@@ -243,10 +245,8 @@ function Header() {
                                   className="Descargar"
                                 />
                               </button>
-                              <button onClick={() => handleLeerInforme(file.id)}>Leer Informe</button>
                             </>
                           ) : (
-                            <>
                             <button
                               onClick={() => handleDownload(file.id)}
                               className="botonEliminar"
@@ -257,12 +257,10 @@ function Header() {
                                 className="Descargar"
                               />
                             </button>
-                            <button onClick={() => handleLeerInforme(file.id)}>Leer Informe</button>
-                            </>
                           )}
                           
                         </div>
-                      </div>
+                      </button>
                     ))
                   ) : (
                     <p>No se encontraron informes.</p>
