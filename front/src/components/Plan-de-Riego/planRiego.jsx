@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import iconoEliminar from "../../assets/icon-eliminar.png";
-/* import iconoEditar from "../../assets/icon-editar.png"; */
+import Auth from '../Auth-Admin/Auth-Admin';
 import './planRiego.css'
 
 const PlanesDeRiego = ({ onPlanSelect }) => {
+  const [userRol, setUserRol] = useState(null);
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -120,21 +121,24 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
       <h2>Planes de Riego</h2>
       <div>
         <div className="irrigation-plan">
-          <button
-            onClick={() => {
-              setShowForm(true);
-              setSelectedPlan(null);
-              setFormData({
-                titulo: "",
-                inicio: "",
-                fin: "",
-                idInforme: 0,
-              });
-            }}
-            className="botonCrearPlanRiego"
-          >
-            Crear Plan de Riego
-          </button>
+        <Auth setUserRol={setUserRol} />
+          {userRol === 'admin' && (
+            <button
+              onClick={() => {
+                setShowForm(true);
+                setSelectedPlan(null);
+                setFormData({
+                  titulo: "",
+                  inicio: "",
+                  fin: "",
+                  idInforme: 0,
+                });
+              }}
+              className="botonCrearPlanRiego"
+            >
+              Crear Plan de Riego
+            </button>
+          )}
           {showForm && (
             <div className="formulario-editar-evento">
               <h2>
@@ -188,28 +192,21 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
               >
                 <span className="botonPlanRiegoLi">{plan.titulo}</span>
                 <div className="botonesEliminarActualizar">
-                  {/*<button
-                    className="botonEditar"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePlanSelect(plan);
-                    }}
-                  >
-                    <img src={iconoEditar} alt="Editar" className="Editar" />
-                  </button>*/}
-                  <button
-                    className="botonEliminar"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deletePlan(plan.id);
-                    }}
-                  >
-                    <img
-                      src={iconoEliminar}
-                      alt="Eliminar"
-                      className="Eliminar"
-                    />
-                  </button>
+                {userRol === 'admin' && (
+                    <button
+                      className="botonEliminar"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deletePlan(plan.id);
+                      }}
+                    >
+                      <img
+                        src={iconoEliminar}
+                        alt="Eliminar"
+                        className="Eliminar"
+                      />
+                    </button>
+                )}
                 </div>
               </li>
             ))}

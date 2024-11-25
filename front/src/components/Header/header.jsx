@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+  import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import iconoVolver from "../../assets/icon-volver.png";
@@ -7,9 +7,11 @@ import iconoEditar from "../../assets/icon-editar.png";
 import iconoBuscar from "../../assets/icon-buscar.png";
 import descargarIcon from "../../assets/icon-download.png";
 import Menu from "../Menu-Desplegable/menuDesplegable";
+import Auth from '../Auth-Admin/Auth-Admin';
 import "./header.css";
 
 function Header() {
+  const [userRol, setUserRol] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const isInformePage = location.pathname === "/informe";
@@ -212,15 +214,24 @@ function Header() {
                       <div key={file.id} className="uploaded-file-item">
                         <span>{file.titulo}</span>
                         <div className="botonesEliminarActualizar">
-                          <button onClick={() => handleUpdateFile(file.id)} className="botonEditar">
-                            <img src={iconoEditar} alt="Actualizar" className="Editar" />
-                          </button>
-                          <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
-                            <img src={iconoEliminar} alt="Eliminar" className="Eliminar" />
-                          </button>
-                          <button onClick={() => handleDownload(file.id)} className="botonEliminar">
-                            <img src={descargarIcon} alt="Descargar" className="Descargar" />
-                          </button>
+                        <Auth setUserRol={setUserRol} />
+                          {userRol === 'admin' ? (
+                            <>
+                              <button onClick={() => handleUpdateFile(file.id)} className="botonEditar">
+                                <img src={iconoEditar} alt="Actualizar" className="Editar" />
+                              </button>
+                              <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
+                                <img src={iconoEliminar} alt="Eliminar" className="Eliminar" />
+                              </button>
+                              <button onClick={() => handleDownload(file.id)} className="botonEliminar">
+                                <img src={descargarIcon} alt="Descargar" className="Descargar" />
+                              </button>
+                            </>
+                          ) : (
+                            <button onClick={() => handleDownload(file.id)} className="botonEliminar">
+                              <img src={descargarIcon} alt="Descargar" className="Descargar" />
+                            </button>
+                          )}
                         </div>
                       </div>
                     ))

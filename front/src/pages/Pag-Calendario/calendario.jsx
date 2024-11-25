@@ -7,8 +7,10 @@ import PlanesDeRiego from "../../components/Plan-de-Riego/planRiego";
 import "react-calendar/dist/Calendar.css";
 import "./calendario.css";
 import { es } from 'date-fns/locale';
+import Auth from '../../components/Auth-Admin/Auth-Admin';
 
 const Calendario = () => {
+  const [userRol, setUserRol] = useState(null);
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -146,6 +148,7 @@ const Calendario = () => {
             onClickDay={handleDateSelect}
             tileContent={renderTileContent}
           />
+          <Auth setUserRol={setUserRol} /> 
           {showModal && (
             <div className="modal-overlay">
               <div className="modal-content">
@@ -164,12 +167,25 @@ const Calendario = () => {
                     <p>No hay eventos para esta fecha.</p>
                   )}
 
-                  <button className="boton" onClick={() => setShowForm(true)}>
-                    Agregar Evento
-                  </button>
-                  <button className="boton" onClick={() => setShowModal(false)} style={{marginLeft: "10px", marginTop: "15px"}}>
-                    Cerrar
-                  </button>
+                  {userRol === 'admin' && (
+                    <>
+                      
+                    </>
+                  )}
+                  {userRol === 'admin' ? (
+                    <>
+                      <button className="boton" onClick={() => setShowForm(true)}>
+                        Agregar Evento
+                      </button>
+                      <button className="boton" onClick={() => setShowModal(false)} style={{marginLeft: "10px", marginTop: "15px"}}>
+                        Cerrar
+                      </button>
+                    </>
+                  ) : (
+                    <button className="boton" onClick={() => setShowModal(false)} style={{marginLeft: "10px", marginTop: "15px"}}>
+                      Cerrar
+                    </button>
+                  )}
 
                   {showForm && (
                     <form className="formulario-editar-evento">
