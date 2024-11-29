@@ -16,7 +16,7 @@ function Footer() {
             info@ovi.com
           </p>
             Tel: +123 456 789
-        </div>
+        </p>
       </div>
 
       <img src="/Logo-Ovi.png" alt="Logo" className="logo"/>
