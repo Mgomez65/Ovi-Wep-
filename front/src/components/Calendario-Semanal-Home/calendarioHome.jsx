@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './calendarioHome.css';
 
 const Calendario = ({ hideHeader }) => {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
+  const [plans, setPlans] = useState([]);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchPlans = async () => {
       try {
         const token = localStorage.getItem("token");
 
@@ -14,32 +16,59 @@ const Calendario = ({ hideHeader }) => {
           throw new Error("Token JWT no encontrado");
         }
 
-        const response = await fetch('http://localhost:3000/calendario/getCalendario', {
-          method: 'GET',
+        // Obtener todos los planes
+        const response = await axios.get('http://localhost:3000/calendario/getPlanDeRiego', {
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          credentials: 'include',
         });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        const formattedEvents = data.map(event => ({
-          id: event._id,
-          title: event.titulo,
-          start: new Date(event.inicio),
-          end: new Date(event.fin),
-          color: event.color || '#000000',
-        }));
-        setEvents(formattedEvents);
+
+        setPlans(response.data); // Guardamos los planes
+        fetchEvents(response.data); // Llamamos a fetchEvents con los planes
       } catch (error) {
-        console.error('Error al obtener eventos:', error);
+        console.error('Error al obtener los planes:', error);
       }
     };
 
-    fetchEvents();
+    const fetchEvents = async (plans) => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          throw new Error("Token JWT no encontrado");
+        }
+
+        // Realizamos una solicitud para cada plan
+        const eventsPromises = plans.map(async (plan) => {
+          const response = await axios.post(
+            `http://localhost:3000/calendario/getPlanDia`,
+            { idPlan: plan.id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          return response.data.map(event => ({
+            id: event.id,
+            title: event.titulo,
+            start: new Date(event.fechaDia),
+            color: event.color || '#000000',
+          }));
+        });
+
+        // Esperamos a que todas las promesas se resuelvan
+        const allEvents = await Promise.all(eventsPromises);
+        
+        // Aplanamos el array de eventos
+        setEvents(allEvents.flat());
+      } catch (error) {
+        console.error('Error al obtener los eventos:', error);
+      }
+    };
+
+    fetchPlans();
   }, []);
 
   const startOfWeek = (date) => {

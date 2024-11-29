@@ -28,6 +28,7 @@ const Register = () => {
         const response = await axios.get("http://localhost:3000/api/users", {
           withCredentials: true,
         });
+        console.log(response);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);

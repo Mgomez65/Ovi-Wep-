@@ -20,15 +20,26 @@ CREATE TABLE `Informe` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `titulo` VARCHAR(191) NOT NULL,
     `contenido` VARCHAR(191) NOT NULL,
-    `fecha_inicio` DATETIME(3) NOT NULL,
-    `fecha_final` DATETIME(3) NOT NULL,
+    `fecha_inicio` VARCHAR(191) NOT NULL,
+    `fecha_final` VARCHAR(191) NOT NULL,
 
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ImagenesInforme` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `url` VARCHAR(191) NOT NULL,
+    `idInforme` INTEGER NOT NULL,
+
+    UNIQUE INDEX `ImagenesInforme_idInforme_key`(`idInforme`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `PlanDeRiego` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `titulo` VARCHAR(191) NOT NULL,
     `inicio` DATETIME(3) NOT NULL,
     `fin` DATETIME(3) NOT NULL,
     `idInforme` INTEGER NOT NULL,
@@ -47,6 +58,9 @@ CREATE TABLE `DiaPlan` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `ImagenesInforme` ADD CONSTRAINT `ImagenesInforme_idInforme_fkey` FOREIGN KEY (`idInforme`) REFERENCES `Informe`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `PlanDeRiego` ADD CONSTRAINT `PlanDeRiego_idInforme_fkey` FOREIGN KEY (`idInforme`) REFERENCES `Informe`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

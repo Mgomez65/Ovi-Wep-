@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import imagenInicio from "../../assets/Inicio/viejito-Viñedo-compu.png";
+import imagenInicio from "../../assets/Inicio/Viejito-Viñedo-compu.png";
 import imagenMedio from "../../assets/Inicio/persona-con-celular-en-viñedo.jpg";
 import Beneficios from "../../assets/Inicio/Esquema.png"
 import "./inicio.css";

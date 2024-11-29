@@ -33,21 +33,25 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const data = req.body;
+        console.log(data)
         const respuesta = await servisioUsuario.getuserId("Email", data.Email);
+       console.log(respuesta)
         if (!respuesta) {
             return res.status(404).json({mesnsage:'No se ha encontrado un usuario con este email'});
         }   
+
         const passwordMatch = await bcryptjs.compare(data.password, respuesta.Password);
+
         if (!passwordMatch) {
             return res.status(401).send('Contraseña incorrecta');
         }
-        const inforacion = {
+        const usuario = {
             id: respuesta.id,
             Email: respuesta.Email,
             Num_empleado: respuesta.Num_empleado,
-            Rol: respuesta.Rol,
+            Rol: respuesta.rol,
         }
-        const token = jwt.sign(inforacion, process.env.SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({usuario}, process.env.SECRET_KEY, { expiresIn: '1h' });
         const expirationDate = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
         res.cookie("Acceso_token",token,{
             expires:expirationDate ,

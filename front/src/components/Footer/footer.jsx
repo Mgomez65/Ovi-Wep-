@@ -15,8 +15,8 @@ function Footer() {
           <p className="footer-correo">
             info@ovi.com
           </p>
-          Tel: +123 456 789
-        </p>
+            Tel: +123 456 789
+        </div>
       </div>
 
       <img src="/Logo-Ovi.png" alt="Logo" className="logo"/>

@@ -7,9 +7,11 @@ import iconoEditar from "../../assets/icon-editar.png";
 import iconoBuscar from "../../assets/icon-buscar.png";
 import descargarIcon from "../../assets/icon-download.png";
 import Menu from "../Menu-Desplegable/menuDesplegable";
+import Auth from "../Auth-Admin/Auth-Admin";
 import "./header.css";
 
 function Header() {
+  const [userRol, setUserRol] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const isInformePage = location.pathname === "/informe";
@@ -20,6 +22,8 @@ function Header() {
   const [filteredFiles, setFilteredFiles] = useState([]);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [fileToDelete, setFileToDelete] = useState(null);
+
+  const [isReadOnly, setIsReadOnly] = useState(true);
 
   const toggleSearchMenu = (event) => {
     event.preventDefault();
@@ -70,20 +74,14 @@ function Header() {
     }
   };
 
+  //solo lectura del informe
+  const handleLeerInforme = (fileId) => {
+    navigate("/informe", { state: { fileId } });
+  };
+
   useEffect(() => {
     fetchFiles();
   }, []);
-
-  /* useEffect(() => {
-    if (searchTerm === "") {
-      setFilteredFiles(uploadedFiles);
-    } else {
-      const filtered = uploadedFiles.filter((file) =>
-        file.titulo.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredFiles(filtered);
-    }
-  }, [searchTerm, uploadedFiles]); */
 
   const showDeleteConfirmation = (fileId) => {
     setFileToDelete(fileId);
@@ -197,32 +195,72 @@ function Header() {
                   </button>
                 </div>
 
-                <div className="CrearInforme">
-                  <button
-                    onClick={handleCreateReport}
-                    className="botonCrearInforme"
-                  >
-                    Crear Informe
-                  </button>
-                </div>
+                <Auth setUserRol={setUserRol} />
+                {userRol === "admin" && (
+                  <div className="CrearInforme">
+                    <button
+                      onClick={handleCreateReport}
+                      className="botonCrearInforme"
+                    >
+                      Crear Informe
+                    </button>
+                  </div>
+                )}
 
                 <div className="uploaded-files-container">
                   {filteredFiles && filteredFiles.length > 0 ? (
                     filteredFiles.map((file, index) => (
-                      <div key={file.id} className="uploaded-file-item">
-                        <span>{file.titulo}</span>
+                      <button onClick={() => handleLeerInforme(file.id)} key={file.id} className="uploaded-file-item">
+                        <span className="tituloSpan">{file.titulo}</span>
                         <div className="botonesEliminarActualizar">
-                          <button onClick={() => handleUpdateFile(file.id)} className="botonEditar">
-                            <img src={iconoEditar} alt="Actualizar" className="Editar" />
-                          </button>
-                          <button onClick={() => showDeleteConfirmation(file.id)} className="botonEliminar">
-                            <img src={iconoEliminar} alt="Eliminar" className="Eliminar" />
-                          </button>
-                          <button onClick={() => handleDownload(file.id)} className="botonEliminar">
-                            <img src={descargarIcon} alt="Descargar" className="Descargar" />
-                          </button>
+                          {userRol === "admin" ? (
+                            <>
+                              <button
+                                onClick={() => handleUpdateFile(file.id)}
+                                className="botonEditar"
+                              >
+                                <img
+                                  src={iconoEditar}
+                                  alt="Actualizar"
+                                  className="Editar"
+                                />
+                              </button>
+                              <button
+                                onClick={() => showDeleteConfirmation(file.id)}
+                                className="botonEliminar"
+                              >
+                                <img
+                                  src={iconoEliminar}
+                                  alt="Eliminar"
+                                  className="Eliminar"
+                                />
+                              </button>
+                              <button
+                                onClick={() => handleDownload(file.id)}
+                                className="botonEliminar"
+                              >
+                                <img
+                                  src={descargarIcon}
+                                  alt="Descargar"
+                                  className="Descargar"
+                                />
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              onClick={() => handleDownload(file.id)}
+                              className="botonEliminar"
+                            >
+                              <img
+                                src={descargarIcon}
+                                alt="Descargar"
+                                className="Descargar"
+                              />
+                            </button>
+                          )}
+                          
                         </div>
-                      </div>
+                      </button>
                     ))
                   ) : (
                     <p>No se encontraron informes.</p>

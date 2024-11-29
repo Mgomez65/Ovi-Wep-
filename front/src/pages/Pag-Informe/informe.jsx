@@ -6,8 +6,10 @@ import Footer from "../../components/Footer/footer";
 import ConfirmacionTemporal from "../../components/Notificacion/notificacionTemporal";
 import "./informe.css";
 import Calendario from "../../components/calendario-mensual-informe/calendarioInforme";
+import Auth from '../../components/Auth-Admin/Auth-Admin';
 
 const Informe = () => {
+  const [userRol, setUserRol] = useState(null);
   const [titulo, setTitulo] = useState("");
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFinal, setFechaFinal] = useState("");
@@ -26,6 +28,31 @@ const Informe = () => {
   const fileId = location.state?.fileId;
 
   useEffect(() => {
+    const fetchInforme = async () => {
+      if (fileId) {
+        try {
+          const response = await fetch(`http://localhost:3000/informe/user/${fileId}`);
+          if (!response.ok) {
+            throw new Error("Error al obtener el informe");
+          }
+          const data = await response.json();
+          setDatos(data);
+          setTitulo(data.titulo || "");
+          setFechaInicio(data.fecha_inicio || "");
+          setFechaFinal(data.fecha_final || "");
+          setContenido(data.contenido || "");
+          setSelectedInforme(data);
+          setExistingFiles(data.imagenes || []);
+        } catch (error) {
+          console.error("Error al cargar el informe:", error);
+        }
+      }
+    };
+
+    fetchInforme();
+  }, [fileId]);
+
+  /* useEffect(() => {
     setShowConfirmacion(false);
     const fetchInforme = async () => {
       if (fileId) {
@@ -63,7 +90,7 @@ const Informe = () => {
     };
 
     fetchInforme();
-  }, [fileId]);
+  }, [fileId]); */
 
   const handleFileUpdate = async (event) => {
     event.preventDefault();
@@ -301,15 +328,18 @@ const Informe = () => {
             </div>
           </div>
 
-          <div className="divBotonSubir">
-            <button type="submit" disabled={uploading} className="botonSubir">
-              {uploading
-                ? "Subiendo..."
-                : selectedInforme
-                ? "Guardar Informe"
-                : "Crear Informe"}
-            </button>
-          </div>
+          <Auth setUserRol={setUserRol} />
+          {userRol === 'admin' && (
+            <div className="divBotonSubir">
+              <button type="submit" disabled={uploading} className="botonSubir">
+                {uploading
+                  ? "Subiendo..."
+                  : selectedInforme
+                  ? "Guardar Informe"
+                  : "Crear Informe"}
+              </button>
+            </div>
+          )};
         </form>
       </div>
       <Footer />
