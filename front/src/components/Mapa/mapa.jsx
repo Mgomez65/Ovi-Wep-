@@ -4,7 +4,7 @@ import './mapa.css';
 const Mapa = () => {
     const [humidity1, setHumidity1] = useState(null);
     const [humidity2, setHumidity2] = useState(null);
-    const [humidity3, setHumidity3] = useState(59);
+    const [humidity3, setHumidity3] = useState(27);
 
     useEffect(() => {
         const fetchHumidityData = async () => {
@@ -12,9 +12,9 @@ const Mapa = () => {
                 const response = await fetch('http://localhost:3001/api/humedad-actual');
                 const data = await response.json();
                 setHumidity1(data.humedad1 !== "No disponible" ? data.humedad1 : null); 
-                /* setHumidity2(data.humedad2 !== "No disponible" ? data.humedad2 : null);  */
+                setHumidity2(data.humedad2 !== "No disponible" ? data.humedad2 : null); 
                 /* setHumidity1(77); */
-                setHumidity2(75); 
+                /* setHumidity2(75);  */
             } catch (error) {
                 console.error('Error al obtener los datos de humedad:', error);
             }

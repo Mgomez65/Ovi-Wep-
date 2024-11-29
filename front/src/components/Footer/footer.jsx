@@ -10,13 +10,13 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="seccionFooter">
-        <div>
+        <p>
           <p className="tituloContacto">Contacto:</p>
           <p className="footer-correo">
             info@ovi.com
           </p>
-            Tel: +123 456 789
-        </div>
+          Tel: +123 456 789
+        </p>
       </div>
 
       <img src="/Logo-Ovi.png" alt="Logo" className="logo"/>

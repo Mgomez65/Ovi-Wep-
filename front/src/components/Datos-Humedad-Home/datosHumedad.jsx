@@ -25,9 +25,9 @@ const Termometro = () => {
       const data = await response.json();
 
       const hum1 = data.humedad1 !== "No disponible" ? parseInt(data.humedad1) : null;
-      /* const hum2 = data.humedad2 !== "No disponible" ? parseInt(data.humedad2) : null; */
+      const hum2 = data.humedad2 !== "No disponible" ? parseInt(data.humedad2) : null;
       /* const hum3 = data.humedad3 !== "No disponible" ? parseInt(data.humedad3) : null; */
-      const hum2 = 75;
+      /* const hum2 = 75; */
       const hum3 = 59;
 
       // Calcular el promedio de los valores disponibles
