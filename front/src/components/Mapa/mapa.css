@@ -106,3 +106,27 @@
     font-weight: bold;
     color: white;
 }
+
+@media screen and (max-width: 768px) {
+    .vineyard-map {
+        flex-direction: column;
+        gap: 0;
+    }
+    .info {
+        width: auto;
+    }
+    .info h2 {
+        text-align: center;
+    }
+    .map {
+        width: auto;
+        margin: auto 15px;
+    }
+    .area {
+        padding: 5px;
+    }
+    .thermometer1 {
+        width: auto;
+        margin: auto 10px;
+    }
+}

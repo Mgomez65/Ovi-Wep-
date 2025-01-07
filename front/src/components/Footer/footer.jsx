@@ -10,13 +10,13 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="seccionFooter">
-        <p>
-          <p className="tituloContacto">Contacto:</p>
-          <p className="footer-correo">
-            info@ovi.com
-          </p>
-            Tel: +123 456 789
-        </p>
+        <span>
+          <p className="contacto">Contacto:</p>
+          <span className="contacto">
+            <p className="footer-correo">info@ovi.com</p>
+            <p>Tel: +123 456 789</p>
+          </span>
+        </span>
       </div>
 
       <img src="/Logo-Ovi.png" alt="Logo" className="logo"/>
@@ -29,10 +29,6 @@ function Footer() {
             <Link onClick={() => openInNewTab('/terminos-y-condiciones')} className="footer-link">Términos y Condiciones</Link>
             <Link onClick={() => openInNewTab('/politicas-de-privacidad')} className="footer-link">Política de Privacidad</Link>
           </nav>
-        </div>
-
-        <div className="footer-section">
-          <p>© 2024 Ovi S.A.S. Todos los derechos reservados.</p>
         </div>
       </div>
       

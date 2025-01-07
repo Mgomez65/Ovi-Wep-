@@ -1,9 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-body {
-  font-family: Roboto;
-}
-
 /* Estilo para el contenedor del calendario */
 .calendario-container {
     position: relative;
@@ -44,12 +38,11 @@ span {
 /* Estilo para los días del calendario */
 .react-calendar .react-calendar__month-view__days__day {
     background-color: #272e3a3a;
-    /* color: #fff !important; */
     color: #fff;
-    border: 1px solid #161726 !important;
+    border: 1px solid #161726;
     border-radius: 4px;
-    width: 50px !important;
-    height: 150px !important;
+    width: 50px;
+    height: 150px;
     display: flex;
     align-items: start;
     justify-content: right;
@@ -533,4 +526,40 @@ span {
 /* Efecto hover para el botón */
 .boton:hover {
     background-color: #161726; /* Color de fondo en hover */
+}
+
+@media screen and (max-width: 768px) {
+    .Container{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 0;
+        margin: 10px;
+    }
+
+    .planesRiegoContainer{
+        width: 100%;
+        margin: 0;
+    }
+
+    .calendarioContainer{
+        width: 100%;
+    }
+
+    .react-calendar {
+        width: 100%;
+        height: auto;
+        background-color: #374151;
+        border-radius: 5px;
+        color: #fff;
+        padding: 10px;
+        overflow: hidden;
+        margin: 0;
+        border: none;
+    }
+
+    .react-calendar .react-calendar__month-view__days__day {
+        width: 100%;
+        height: auto;
+    }
 }

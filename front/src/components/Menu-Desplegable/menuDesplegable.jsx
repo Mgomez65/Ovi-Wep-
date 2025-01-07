@@ -11,7 +11,7 @@ function MenuDesplegable() {
     const menuRef = useRef(null);
     const navigate = useNavigate();
 
-    /* useEffect(() => {
+    useEffect(() => {
         const fetchUserRol = async () => {
             try {
                 const response = await axios.get("http://localhost:3000/api/users", {
@@ -24,7 +24,7 @@ function MenuDesplegable() {
         };
 
         fetchUserRol();
-    }, []); */
+    }, []);
 
     const alternarMenu = () => {
         setEstaAbierto(!estaAbierto);

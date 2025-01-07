@@ -74,7 +74,6 @@ function Header() {
     }
   };
 
-  //solo lectura del informe
   const handleLeerInforme = (fileId) => {
     navigate("/informe", { state: { fileId } });
   };

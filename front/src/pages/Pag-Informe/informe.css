@@ -212,3 +212,87 @@ input[type="file"] {
 .uploaded-files-container {
     color: black;
 }
+
+@media screen and (max-width: 768px) {
+    .form-container {
+        width: 100%;
+    }
+
+    .containerTituloFechas {
+        width: auto;
+        text-align: left;
+        padding: 10px;
+        text-indent: 0;
+        margin: 10px;
+    }
+    .containerTituloFechas h2 {
+        text-indent: 10px;
+    }
+    .containerTituloFechas input {
+        width: 90%;
+    }
+    .Fechas {
+        display: block;
+    }
+    .Fechas input {
+        width: 90%;
+    }
+
+    .containerDescripcion {
+        width: auto;
+        text-align: left;
+        padding: 10px;
+        text-indent: 0;
+        margin: 10px;
+    }
+
+    .containerDescripcion h2 {
+        text-indent: 10px;
+    }
+
+    .inputDescripcion {
+        width: 94%;
+        height: auto;
+    }
+
+    .containerUwu {
+        display: block;
+        width: auto;
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .containerCalendario {
+        width: auto;
+        text-align: left;
+        text-indent: 0;
+        margin: 10px;
+    }
+
+    .containerImagenes {
+        width: auto;
+        text-align: left;
+        padding: 10px;
+        text-indent: 0;
+        margin: 10px;
+    }
+
+    .containerImagenes h2, .containerCalendario h2 {
+        text-indent: 10px;
+    }
+
+    .calendario9 {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .botonSubir {
+        width: 30%;
+    }
+
+    .custom-file-upload {
+        width: 60%;
+    }
+}

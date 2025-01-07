@@ -1,14 +1,4 @@
-/* useEffect(() => {
-        const fetchData = () => {
-            setTimeout(() => {
-                const simulatedHumidity = 64;
-                setHumidity(simulatedHumidity);
-            }, 1000);
-        };
-        fetchData();
-    }, []); */
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./datosHumedad.css";
 
 const Termometro = () => {
@@ -30,7 +20,6 @@ const Termometro = () => {
       /* const hum2 = 75; */
       const hum3 = 59;
 
-      // Calcular el promedio de los valores disponibles
       const humidityValues = [hum1, hum2, hum3].filter((val) => val !== null);
       const averageHumidity = 
         humidityValues.length > 0 

@@ -25,10 +25,10 @@ const Mapa = () => {
     }, []);
 
     const getColorByHumidity = (humidity) => {
-        if (humidity === null) return '#ccc'; // Color gris si no hay datos
-        if (humidity < 30) return '#ff0000';  // Rojo claro para baja humedad
-        if (humidity < 60) return '#ffff00';  // Amarillo claro para humedad media
-        return '#00ff00'; // Verde claro para alta humedad
+        if (humidity === null) return '#ccc';
+        if (humidity < 30) return '#ff0000';
+        if (humidity < 60) return '#ffff00';
+        return '#00ff00';
     };
 
     return (

@@ -52,46 +52,6 @@ const Informe = () => {
     fetchInforme();
   }, [fileId]);
 
-  /* useEffect(() => {
-    setShowConfirmacion(false);
-    const fetchInforme = async () => {
-      if (fileId) {
-        try {
-          const response = await fetch(
-            `http://localhost:3000/informe/user/${fileId}`
-          );
-          if (!response.ok) {
-            const errorResponse = await response.json();
-            throw new Error("Error al obtener el informe");
-          }
-          const data = await response.json();
-          setDatos(data);
-          console.log(data)
-          setTitulo(data.titulo || "");
-          setFechaInicio(
-            data.fecha_inicio
-              ? new Date(data.fecha_inicio).toISOString().split("T")[0]
-              : ""
-          );
-          setFechaFinal(
-            data.fecha_final
-              ? new Date(data.fecha_final).toISOString().split("T")[0]
-              : ""
-          );
-          setContenido(data.contenido || "");
-          setSelectedInforme(data);
-          setExistingFiles(data.imagenes || []);
-        } catch (error) {
-          console.error("Error al obtener el informe:", error);
-          setShowConfirmacion(true);
-          setMensajeConfirmacion("Error al cargar los datos del informe");
-        }
-      }
-    };
-
-    fetchInforme();
-  }, [fileId]); */
-
   const handleFileUpdate = async (event) => {
     event.preventDefault();
 
@@ -255,7 +215,7 @@ const Informe = () => {
 
           <div className="containerUwu">
             <div className="containerCalendario">
-              <h2>Plan de Riego  {datos && datos.planDeRiego && datos.planDeRiego.titulo}</h2>
+              <h2>Plan de Riego</h2>
               <Calendario  eventos={datos && datos.planDeRiego ? datos.planDeRiego.diaPlan : []} />
             </div>
             <div className="containerImagenes">
@@ -305,10 +265,10 @@ const Informe = () => {
                       Eliminar
                     </button>
                   </div>
-                  
+
                 </div>
               )}
-              {/* Carrusel para mostrar las imágenes del informe guardado */} 
+              {/* Carrusel para mostrar las imágenes del informe guardado */}
               {datos.imagenInforme?.url ? ( // Usa el encadenamiento opcional aquí
                 <div className="carrusel-container">
                     <h2>Imágenes del Informe</h2>
@@ -339,7 +299,7 @@ const Informe = () => {
                   : "Crear Informe"}
               </button>
             </div>
-          )};
+          )}
         </form>
       </div>
       <Footer />

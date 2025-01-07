@@ -1,7 +1,7 @@
-/* .container{
-    @apply ma
-} */
-
+.containerInicio{
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
 .containerNavbar{
     justify-content: center;
     background-color: #374151;
@@ -10,33 +10,27 @@
     width: 100%;
     z-index: 1000;
 }
-
 .containerNavbar p{
     display: inline-block;
     padding: 5px;
     margin-right: 10px;
 }
-
 .containerNavbar a{
     text-decoration: none;
     color: white;
 }
-
 .login{
     cursor: pointer;
     color: darkcyan;
 }
-
 .containerImagenInicio {
     position: relative;
     width: 100%;
 }
-
 .imagenInicio {
     width: 100%;
     height: auto;
 }
-
 .containerImagenInicio p {
     position: absolute;
     top: 20%;
@@ -48,7 +42,6 @@
     text-align: center;
     border-radius: 2px;
 }
-
 .containerVideo {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -58,38 +51,30 @@
     padding-left: 4.5%;
     padding-right: 4.5%;
 }
-
 .infoVideo{
     padding: 20px;
     border-right: 2px solid;
     color: black;
 }
-
 .infoVideo h2{
     font-size: 26px;
 }
-
 .infoVideo p{
     font-size: 16px;
 }
-
 .videoInformatico {
     padding: 20px;
     text-align: center;
 }
-
 .video{
     height: 200px;
 }
-
 .imagenMedio{
     width: 100%;
 }
-
 .containerBeneficios{
     text-align: center;
 }
-
 .containerEsquema{
     display: flex;
     flex-direction: row;
@@ -99,18 +84,15 @@
     justify-content: center;
     gap: 8px;
 }
-
 .textYellow{
     color: white;
     background-color: darkcyan;
     padding: 3px;
     border-radius: 2px;
 }
-
 .textWhith{
     color: black;
 }
-
 .containerFormularioConsulta{
     background-color: #374151;
     color: white;
@@ -118,7 +100,6 @@
     padding-left: 4.5%;
     padding-right: 4.5%;
 }
-
 .containerFormularioConsulta label{
     display: block;
     font-size: 15px;
@@ -126,7 +107,6 @@
     text-align: left;
     padding-left: 40px;
 }
-
 .containerFormularioConsulta input{
     width: 90%;
     background-color: white;
@@ -137,9 +117,8 @@
     outline: none;
     margin-bottom: 15px;
 }
-
 .containerFormularioConsulta button{
-    width: 10%;
+    width: 20%;
     padding: 10px;
     background-color: white;
     color: black;
@@ -150,22 +129,79 @@
     font-size: 13px;
     margin-bottom: 15px;
 }
-
 .containerFormularioConsulta button:hover {
     background-color: #222933;
 }
-
 .containerDivision{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
-
-
 .comentarioFormConsulta input{
     text-align: left;
     width: 95%;
 }
-
 .containerTituloForm{
     padding-top: 25px;
+}
+@media screen and (max-width: 768px){
+    .containerInicio{
+        padding: 0;
+        position: relative;
+        top: 60px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+    .containerNavbar {
+        text-align: center;
+        z-index: 1000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+    }
+    .imagenInicio{
+        width: 100%;
+    }
+    .containerVideo{
+        grid-template-columns: 1fr;
+        padding: 0;
+    }
+    .infoVideo{
+        border-right: none;
+        padding-bottom: 0;
+    }
+    .videoInformatico video{
+        width: 100%;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    .containerBeneficios img{
+        padding: 20px;
+        width: 90%;
+    }
+    .containerFormularioConsulta{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .containerFormularioConsulta h3{
+        width: 90%;
+        position: relative;
+        left: 5%;
+        text-align: left;
+    }
+    .containerFormularioConsulta label{
+        padding-left: 5%;
+    }
+    .containerFormularioConsulta button{
+        width: 20%;
+    }
+    .containerDivision{
+        grid-template-columns: 1fr;
+    }
+    .comentarioFormConsulta input{
+        text-align: left;
+        width: 90%;
+    }
 }

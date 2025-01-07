@@ -9,7 +9,7 @@ import Inicio from "./pages/Pag-Index/inicio";
 import AboutOVI from "./pages/Informacion-de-Ovi/Sobre-Nosotros/about";
 import TermsConditions from "./pages/Informacion-de-Ovi/Terminos-y-Condiciones/terminosCondiciones";
 import PrivacyPolicy from "./pages/Informacion-de-Ovi/Politicas-de-Privacidad/politicas";
-
+import "./App.css";
 
 const App = () => {
   return (

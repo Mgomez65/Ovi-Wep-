@@ -1,4 +1,3 @@
-import React from "react";
 import Clima from "../../components/Clima-Home/datosClimaticos";
 import Calendario from "../../components/Calendario-Semanal-Home/calendarioHome";
 import Header from "../../components/Header/header";
@@ -10,7 +9,7 @@ import "./home.css";
 
 const Home = () => {
   return (
-    <div>
+    <div className="home">
       <Header />
       <main className="main">
         <div className="contenedorClimaCalendario">
@@ -18,7 +17,7 @@ const Home = () => {
             <Clima className="clima" />
           </div>
           <Link to="/calendario" className="calendario">
-            <Calendario className="CalendarioHome" />
+            <Calendario />
           </Link>
         </div>
         <div className="datosHumedad">

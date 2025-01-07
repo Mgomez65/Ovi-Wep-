@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
@@ -16,7 +16,6 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
   
   const onSubmit = async (data) => {
@@ -75,7 +74,7 @@ const Login = () => {
           />
           {errors.password && <span>{errors.password.message}</span>}
 
-          <button type="submit">Iniciar sesión</button>
+          <button type="submit" className="BotonCancelar">Iniciar sesión</button>
           <button
             type="submit"
             onClick={handleCancelClick}
@@ -84,7 +83,9 @@ const Login = () => {
             Cancelar
           </button>
         </form>
-        <img src={imagen} alt="Imagen" className="imagen" />
+        <div className="imagen">
+          <img src={imagen} alt="Imagen" />
+        </div>
       </div>
     </>
   );

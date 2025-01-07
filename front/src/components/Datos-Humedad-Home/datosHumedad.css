@@ -1,5 +1,5 @@
 .thermometer {
-  width: 800px;
+  width: 55rem;
   height: 30px;
   background: #000000;
   border-radius: 20px;
@@ -19,9 +19,18 @@
 
 .thermometer-label {
   position: absolute;
+  font-weight: bold;
+  color: white;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-weight: bold;
-  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .thermometer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100vw - 55px);
+  }
 }

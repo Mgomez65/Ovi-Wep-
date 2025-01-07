@@ -6,6 +6,8 @@ body {
     /* background-color: #161726; */
     background-color: #fff7ed ;
     font-family: Roboto;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .contenedorClimaCalendario {
@@ -18,24 +20,20 @@ body {
     padding-right: 4.5%;
 }
 
-.clima, .CalendarioHome {
+.clima {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
-    background-color: #374151; 
+    background-color: #374151;
 }
 
 .clima {
     height: 300px;
 }
 
-.CalendarioHome {
-    height: 300px;
-}
-
 .calendario {
     text-decoration: none;
+    color: black !important;
 }
 
 .datosHumedad{
@@ -77,3 +75,37 @@ body {
     margin-bottom: 15px;
 }
 
+@media screen and (max-width: 768px) {
+    .home{
+        padding: 0;
+        margin: auto;
+    }
+    .contenedorClimaCalendario {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: auto;
+    }
+    .clima {
+        height: auto;
+    }
+    .datosHumedad{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .tituloHumedad {
+        padding-left: 0;
+        padding-top: 10px;
+        padding-bottom: 0;
+        margin: 0;
+    }
+    .termometro {
+        padding-right: 0;
+        padding-top: 0;
+        padding-bottom: 10px;
+        margin: 0;
+    }
+    
+}

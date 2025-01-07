@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -40,7 +40,7 @@ const Inicio = () => {
   } = useForm();
 
   return (
-    <>
+    <main className="containerInicio">
       <div className="containerNavbar">
         <p>
           <a href="#TituloInfo">¿Qué es Ovi?</a>
@@ -63,16 +63,7 @@ const Inicio = () => {
           </p>
         </section>
         <section className="videoInformatico">
-        <video src="/Ovi-Video-Inicio.mp4" controls autoplay muted className="video"></video>
-          {/* <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/aucE2EoyoCw?autoplay=1&mute=1"
-            title="Video de YouTube"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe> */}
+          <video src="/Ovi-Video-Inicio.mp4" controls muted className="video"></video>
         </section>
       </div>
       <div className="containerImagenMedio">
@@ -94,10 +85,11 @@ const Inicio = () => {
           <div className="containerDivision">
             <div>
               <label htmlFor="nombre">Nombre:</label>
-              <input 
-                id="nombre" 
-                type="text" 
+              <input
+                id="nombre"
+                type="text"
                 name="user_name"
+                placeholder='Tu nombre...'
               />
               {errors.nombre && <span>El nombre es obligatorio</span>}
             </div>
@@ -107,6 +99,7 @@ const Inicio = () => {
               <input
                 id="provincia"
                 name="message"
+                placeholder='Tu provincia...'
               />
               {errors.provincia && <span>LA provincia es obligatoria</span>}
             </div>
@@ -116,6 +109,7 @@ const Inicio = () => {
               <input
                 id="empresa"
                 name="message"
+                placeholder='Tu empresa...'
               />
               {errors.empresa && <span>LA empresa es obligatoria</span>}
             </div>
@@ -125,15 +119,17 @@ const Inicio = () => {
               <input
                 id="telefono"
                 name="message"
+                placeholder='Tu telefono...'
               />
               {errors.telefono && <span>El telefono es obligatorio</span>}
             </div>
 
             <div>
               <label htmlFor="cargo">Cargo:</label>
-              <input 
-                id="cargo" 
-                name="message" 
+              <input
+                id="cargo"
+                name="message"
+                placeholder='Tu cargo...'
               />
               {errors.cargo && <span>El cargo es obligatorio</span>}
             </div>
@@ -144,6 +140,7 @@ const Inicio = () => {
                 id="correo"
                 type="email"
                 name="user_email"
+                placeholder='Tu correo...'
               />
               {errors.correo && <span>El correo es obligatorio</span>}
             </div>
@@ -151,14 +148,14 @@ const Inicio = () => {
 
           <div className="comentarioFormConsulta">
             <label htmlFor="comentario">Comentario:</label>
-            <input id="comentario" name="message" />
+            <input id="comentario" name="message" placeholder='Tu mensaje...'/>
             {errors.comentario}
           </div>
 
           <button type="submit" value="Send">Enviar</button>
         </form>
       </div>
-    </>
+    </main>
   );
 };
 

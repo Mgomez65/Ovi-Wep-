@@ -1,9 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-body {
-    font-family: Roboto;
-}
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -62,13 +56,13 @@ body {
     position: relative;
     display: inline-block;
 }
-  
+
 .search-input {
     padding: 10px;
     border: 1px solid #ccc;
     width: 96% !important;
 }
-  
+
 .search-button {
     position: absolute;
     top: 0;
@@ -77,11 +71,10 @@ body {
     background-color: transparent !important;
     cursor: pointer;
 }
-  
+
 .search-button img {
     height: 25px;
 }
-  
 
 .searchMenu input {
     width: 95%;
@@ -110,7 +103,7 @@ body {
 .tituloSpan{
     font-size: 15px;
 }
-  
+
 .botonEditar, .botonEliminar {
     background-color: transparent !important;
     border: none;
@@ -155,7 +148,7 @@ body {
     align-items: center;
     z-index: 1000;
 }
-  
+
 .modal {
     background-color: #161726;
     padding: 20px;
@@ -164,23 +157,23 @@ body {
     width: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-  
+
 .modal h2 {
     margin-bottom: 15px;
 }
-  
+
 .modal-buttons {
     display: flex;
     justify-content: space-between;
 }
-  
+
 .modal-buttons button {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
 }
-  
+
 .modal-buttons button:first-child {
     background-color: red;
     color: white;
@@ -190,7 +183,7 @@ body {
     background-color: darkred;
     color: white;
 }
-  
+
 .modal-buttons button:last-child {
     background-color: #374151;
     color: white;
@@ -199,4 +192,60 @@ body {
 .modal-buttons button:last-child:hover{
     background-color: #272e3a;
     color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .tituloHeader {
+        font-size: 20px;
+    }
+
+    .botonInforme {
+        font-size: 15px;
+    }
+
+    .Menu {
+        padding-top: 0px;
+    }
+
+    .searchMenu {
+        width: 50%;
+        height: auto;
+        top: 64px;
+    }
+
+    .search-input {
+        width: 90%;
+    }
+
+    .uploaded-file-item {
+        padding: 5px;
+    }
+
+    .tituloSpan{
+        font-size: 10px;
+    }
+
+    .botonEditar, .botonEliminar {
+        padding: 1px;
+    }
+
+    .Eliminar{
+        height: 20px;
+    }
+
+    .Descargar{
+        height: 20px;
+    }
+
+    .Editar{
+        height: 20px;
+    }
+
+    .CrearInforme{
+        font-size: 15px;
+    }
+
+    .botonCrearInforme{
+        padding: 3px;
+    }
 }

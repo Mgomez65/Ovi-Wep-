@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './calendarioHome.css';
 
@@ -16,15 +16,14 @@ const Calendario = ({ hideHeader }) => {
           throw new Error("Token JWT no encontrado");
         }
 
-        // Obtener todos los planes
         const response = await axios.get('http://localhost:3000/calendario/getPlanDeRiego', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        setPlans(response.data); // Guardamos los planes
-        fetchEvents(response.data); // Llamamos a fetchEvents con los planes
+        setPlans(response.data);
+        fetchEvents(response.data);
       } catch (error) {
         console.error('Error al obtener los planes:', error);
       }
@@ -38,7 +37,6 @@ const Calendario = ({ hideHeader }) => {
           throw new Error("Token JWT no encontrado");
         }
 
-        // Realizamos una solicitud para cada plan
         const eventsPromises = plans.map(async (plan) => {
           const response = await axios.post(
             `http://localhost:3000/calendario/getPlanDia`,
@@ -57,11 +55,7 @@ const Calendario = ({ hideHeader }) => {
             color: event.color || '#000000',
           }));
         });
-
-        // Esperamos a que todas las promesas se resuelvan
         const allEvents = await Promise.all(eventsPromises);
-        
-        // Aplanamos el array de eventos
         setEvents(allEvents.flat());
       } catch (error) {
         console.error('Error al obtener los eventos:', error);
