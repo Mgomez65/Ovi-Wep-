@@ -84,7 +84,7 @@ const Calendario = () => {
         idPlan: selectedPlan,
         fechaDia: date.toISOString().split("T")[0],
       };
-  
+
       if (eventData.id) {
         await axios.put(
           `http://localhost:3000/calendario/actualizarEvento/${eventData.id}`,
@@ -96,7 +96,7 @@ const Calendario = () => {
           eventToSend
         );
       }
-  
+
       fetchEvents(selectedPlan);
       setEventData({
         title: "",
@@ -148,13 +148,12 @@ const Calendario = () => {
             onClickDay={handleDateSelect}
             tileContent={renderTileContent}
           />
-          <Auth setUserRol={setUserRol} /> 
+          <Auth setUserRol={setUserRol} />
           {showModal && (
             <div className="modal-overlay">
               <div className="modal-content">
                 <div className="modal-header">
                   <h2>Eventos en {date.toDateString()}</h2>
-                  
                 </div>
                 <div className="modal-body">
                   {filteredEvents.length > 0 ? (
@@ -169,7 +168,7 @@ const Calendario = () => {
 
                   {userRol === 'admin' && (
                     <>
-                      
+
                     </>
                   )}
                   {userRol === 'admin' ? (
