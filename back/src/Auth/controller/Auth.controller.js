@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 exports.register = async (req, res) => {
     try {
         const data = req.body;   
-        
         if (!data.Password) {
             return res.status(400).json({ message: 'La contraseña es requerida' });
         }
@@ -33,9 +32,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const data = req.body;
-        console.log(data)
         const respuesta = await servisioUsuario.getuserId("Email", data.Email);
-       console.log(respuesta)
         if (!respuesta) {
             return res.status(404).json({mesnsage:'No se ha encontrado un usuario con este email'});
         }   

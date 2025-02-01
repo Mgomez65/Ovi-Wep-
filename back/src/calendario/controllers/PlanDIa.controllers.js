@@ -30,13 +30,14 @@ exports.getPlanDia = async (req, res) => {
 
 exports.CreateDiaPlan = async (req, res) => {
     try {
-        const data = req.body;
+        let data = req.body;
+        const idPlan = req.params.id;
         const fechaDia = new Date(data.fechaDia);
-        console.log(data)
-     
-        fechaDia.setDate(fechaDia.getDate() + 1);
+        //fechaDia.setDate(fechaDia.getDate() + 1);
         data.fechaDia = fechaDia.toISOString();
-        console.log(data)
+       
+        data = {idPlan, ...data}
+       
         const  calendario = await servicioPlan.createDiaPlan(data)
         
         if (!calendario) {
@@ -64,3 +65,25 @@ exports.DeletePlanDia = async (req, res) => {
         res.status(500).json({ error: "Error del servidor." });
     }
 };
+
+exports.allPlanDIa = async (req, res) => {
+    try {
+        const fecha = new Date();
+        const fechahoy = fecha.toISOString().split('T')[0];
+
+        // Llamar al servicio para obtener los planes del día
+        const respuesta = await servicioPlan.allPlanDia(fechahoy);
+        if (respuesta.length === 0) {
+            return res.status(404).send('No hay eventos para la fecha');
+        }
+        res.status(200).json(respuesta);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Error del servidor" });
+    }
+    
+
+
+
+
+}

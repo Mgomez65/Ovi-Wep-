@@ -9,15 +9,13 @@ exports.getSelectUSer = async (columna, valor) => {
         });
         return resultado.length > 0; 
     } catch (error) {
-        console.log(error);
         return null; 
     }
 };
 
 
 exports.createUser = async (datos,passHash)=>{
-    try {
-        console.log("enntre: ,datos")       
+    try {     
         const nuevoUsuario = await prisma.usuario.create({
             data: {
                 Nombre: datos.Nombre,
@@ -32,7 +30,6 @@ exports.createUser = async (datos,passHash)=>{
         });
         return nuevoUsuario
     }catch (error) {
-        console.error("Error al consultar el usuario:", error);
         throw error;
     }}
 

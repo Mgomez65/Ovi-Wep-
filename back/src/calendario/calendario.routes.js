@@ -7,23 +7,14 @@ const middlewares = require("../middlewares/autenticado.middlewares")
 //mostrar
 router.get('/getPlanDeRiego',controllers.getPlanRiego) //anda
 router.post('/getPlanDIa',controllersDia.getPlanDia) //anda 
-
-
 router.get('/getPlan/:id',controllers.getPlanRiegoID)//Anda
 router.post('/getPlanDiaID',controllersDia.getPlanDiaID)//Anda
-
-
-
 router.post('/createCalendario',controllers.createPlanRiego)//Anda
-router.post('/createDiaPlan',controllersDia. CreateDiaPlan)//anda
-
-
+router.post('/createDiaPlan/:id',controllersDia. CreateDiaPlan)//anda
 router.delete('/deleteCalendario/:id',controllers.DeleteCalendario)
 router.delete('/deletePlanDia/:id',controllersDia.DeletePlanDia)
-
-
 router.put('/actualizarCalendario/:id',controllers.UpdataCalendarioPut)
 
-
+router.get('/allplanDia',controllersDia.allPlanDIa)
 
 module.exports = router;

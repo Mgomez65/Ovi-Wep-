@@ -26,20 +26,20 @@ model Usuario {
 }
 
 model Informe {
-  id             Int      @id @default(autoincrement()) 
+  id             Int               @id @default(autoincrement())
   titulo         String
   contenido      String
   fecha_inicio   String
-  fecha_final String 
-  planDeRiego PlanDeRiego?
-  imagenInforme ImagenesInforme?
+  fecha_final    String
+  planDeRiego    PlanDeRiego?
+  imagenInforme  ImagenesInforme[] // Relación uno a muchos
 }
-model ImagenesInforme{
-  id Int      @id @default(autoincrement())
-  url String   
-  informe Informe @relation(fields:[idInforme],references:[id])
-  idInforme Int @unique
 
+model ImagenesInforme {
+  id        Int      @id @default(autoincrement())
+  url       String
+  informe   Informe  @relation(fields: [idInforme], references: [id])
+  idInforme Int
 }
 
 model PlanDeRiego {

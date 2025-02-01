@@ -32,26 +32,22 @@ exports.getInformeId = async (req, res) => {
         if (!informe) {
             return res.status(404).send('Informe no encontrado');
         }
-        res.status(200).json(informe)
+        res.status(200).json({ informe,message: "Informe encontrado con éxito." });
     } catch (error) {
         console.log(error)
     }
 }
 // controller/informe.controller.js
-
 exports.createIforme = async (req, res) => {
     try {
         const data = req.body;
-        console.log(data)
         data.fecha_inicio = formateoFecha(data.fecha_inicio)
         data.fecha_final = formateoFecha(data.fecha_final)
-
-
-        // Si hay una imagen, agrega la URL al objeto de datos
-        if (req.file) {
-            data.imagen_url = path.basename(req.file.path); // Guarda solo el nombre del archivo
+      
+        // Procesar las imágenes
+        if (req.files && req.files.length > 0) {
+            data.imagen_urls = req.files.map(file => path.basename(file.path)); // Guardar solo los nombres de los archivos
         }
-
         const informe = await serciosInforme.createIforme(data);
         if (!informe) {
             return res.status(500).send('Error interno del servidor');
@@ -59,8 +55,10 @@ exports.createIforme = async (req, res) => {
         res.status(200).json({ mensaje: "Informe creado exitosamente" });
     } catch (error) {
         console.log(error);
+        res.status(500).send('Error al crear el informe');
     }
 };
+
 
 
 exports.deleteInforme = async (req, res) => {
@@ -82,6 +80,10 @@ exports.updateInforme = async (req, res) => {
         const data = req.body
         data.fecha_inicio = formateoFecha(data.fecha_inicio)
         data.fecha_final = formateoFecha(data.fecha_final)
+     
+        if (req.file) {
+            data.imagen_url = path.basename(req.file.path); 
+        }
         const informe = await serciosInforme.updateInforme(informeId, data)
         if (!informe) {
             return res.status(404).send('Informe no encontrado');

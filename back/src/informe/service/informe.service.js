@@ -1,7 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
-
 exports.getInforme = async () => {
     try {
         return await prisma.informe.findMany({
@@ -15,7 +13,6 @@ exports.getInforme = async () => {
         throw error;
     }
 }
-
 exports.getInformeId = async (idInforme) => {
     try {
         return await prisma.informe.findFirst({
@@ -36,27 +33,23 @@ exports.getInformeId = async (idInforme) => {
 }
 exports.createIforme = async (valores) => {
     try {
-        console.log(valores);
-
-
-        // Crear el informe en la base de datos
         const nuevoInforme = await prisma.informe.create({
             data: {
                 titulo: valores.titulo,
                 contenido: valores.contenido,
                 fecha_inicio: valores.fecha_inicio,
-                fecha_final: valores.fecha_final,
+                fecha_final: valores.fecha_inicio,
             }
         });
-
-        // Si deseas guardar la imagen en otra tabla, puedes hacerlo aquí
-        if (valores.imagen_url) {
-            await prisma.ImagenesInforme.create({
-                data: {
-                    url: valores.imagen_url,
-                    idInforme: nuevoInforme.id, // Asegúrate de que esto coincida con la relación
-                }
-            });
+        if (valores.imagen_urls) {
+            for (const imagen of valores.imagen_urls) {
+                await prisma.imagenesInforme.create({
+                    data: {
+                        url: imagen,
+                        idInforme: nuevoInforme.id,
+                    }
+                });
+            }
         }
 
         return nuevoInforme;
@@ -115,6 +108,7 @@ exports.deleteInforme = async (idInforme) => {
 
 exports.updateInforme = async (idInforme, valor) => {
     try {
+        console.log(valor); 
         const informeUpdate = await prisma.informe.update({
             where: {
                 ["id"]: idInforme,
@@ -125,6 +119,14 @@ exports.updateInforme = async (idInforme, valor) => {
                 fecha_final: valor.fecha_final,
             }
         });
+        if (valor.imagen_url) {
+            await prisma.ImagenesInforme.create({
+                data: {
+                    url: valor.imagen_url,
+                    idInforme: nuevoInforme.id, // Asegúrate de que esto coincida con la relación
+                }
+            });
+        }
 
         return informeUpdate
     } catch (error) {

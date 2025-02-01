@@ -30,13 +30,12 @@ exports.getPlanDia = async (data)=>{
 }
 exports.createDiaPlan = async (data)=>{
     try {
-        console.log(data)
         const NuevoCalendario =await prisma.DiaPlan.create({
             data: {
                 fechaDia: new Date(data.fechaDia).toISOString(),
                 titulo: data.titulo,
                 color: data.color,
-                idPlan:data.idPlan
+                idPlan:Number(data.idPlan)
             },
         });
         return NuevoCalendario;    
@@ -57,3 +56,19 @@ exports.deletePlanDIa = async (id) => {
         throw error;
     }
 };
+exports.allPlanDia = async (data) => {
+    const minuto0 = new Date(data);
+    minuto0.setHours(0, 0, 0, 0);
+
+    const minuto12 = new Date(data);
+    minuto12.setHours(23, 59, 59, 999); 
+
+    return prisma.DiaPlan.findMany({
+        where: {
+            fechaDia: {
+                gte: minuto0,  
+                lte: minuto12     
+            }
+        }
+    });
+}

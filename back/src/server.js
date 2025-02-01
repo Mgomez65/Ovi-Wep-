@@ -8,7 +8,7 @@ const app = express()
 const nodemailer = require('nodemailer');
 
 
-app.use(express.urlencoded({extends:false}))
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
