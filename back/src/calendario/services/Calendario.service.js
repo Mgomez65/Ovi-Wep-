@@ -68,7 +68,7 @@ exports.deletePlanDeRiego = async (id) => {
 
 exports.updateCalendario = async (calendarioId, datos) => {
     try {
-        const calendarioUpdate = await prisma.calendario.update({
+        const calendarioUpdate = await prisma.planDeRiego.update({
             where: {
                 id: calendarioId,
             },

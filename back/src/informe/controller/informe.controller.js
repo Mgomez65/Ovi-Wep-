@@ -44,9 +44,8 @@ exports.createIforme = async (req, res) => {
         data.fecha_inicio = formateoFecha(data.fecha_inicio)
         data.fecha_final = formateoFecha(data.fecha_final)
       
-        // Procesar las imágenes
         if (req.files && req.files.length > 0) {
-            data.imagen_urls = req.files.map(file => path.basename(file.path)); // Guardar solo los nombres de los archivos
+            data.imagen_urls = req.files.map(file => path.basename(file.path)); 
         }
         const informe = await serciosInforme.createIforme(data);
         if (!informe) {
@@ -96,6 +95,7 @@ exports.updateInforme = async (req, res) => {
 
 exports.searchInforme = async (req, res) => {
     const data = req.body.searchTerm
+   
     const informes = await serciosInforme.searchInforme(data)
     console.log(informes)
     if (!informes) {
