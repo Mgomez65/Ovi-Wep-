@@ -31,37 +31,42 @@ exports.register = async (req, res) => {
 };
 exports.login = async (req, res) => {
     try {
-        const data = req.body;
-        const respuesta = await servisioUsuario.getuserId("Email", data.Email);
-        if (!respuesta) {
-            return res.status(404).json({mesnsage:'No se ha encontrado un usuario con este email'});
-        }   
-
-        const passwordMatch = await bcryptjs.compare(data.password, respuesta.Password);
-
-        if (!passwordMatch) {
-            return res.status(401).send('Contraseña incorrecta');
+        const { Email, password } = req.body;
+      
+        if (!Email || !password) {
+            return res.status(400).json({ message: 'El email y la contraseña son requeridos' });
         }
+        
+        const respuesta = await servisioUsuario.getuserId("Email", Email);
+        if (!respuesta) {
+            return res.status(404).json({ message: 'No se encontró un usuario con este email' });
+        }   
+        const passwordMatch = await bcryptjs.compare(password, respuesta.Password);
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Contraseña incorrecta' });
+        }
+
         const usuario = {
-            id: respuesta.id,
             Email: respuesta.Email,
             Num_empleado: respuesta.Num_empleado,
             Rol: respuesta.rol,
-        }
-        const token = jwt.sign({usuario}, process.env.SECRET_KEY, { expiresIn: '1h' });
-        const expirationDate = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
-        res.cookie("Acceso_token",token,{
-            expires:expirationDate ,
+        };
+
+        const token = jwt.sign({ usuario }, process.env.SECRET_KEY, { expiresIn: '1h' });
+
+        res.cookie("Acceso_token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-        })
+        });
+
         return res.status(200).json({
             message: 'Inicio de sesión exitoso',
-            token: token
+            token
         });
+
     } catch (error) {
         console.error('Error en el inicio de sesión:', error);
-        return res.status(500).send('Error interno del servidor');
+        return res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
 

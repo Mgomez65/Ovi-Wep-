@@ -17,7 +17,7 @@ app.use(cookieParse())
 
 app.use(cors({
     origin: 'http://localhost:5173', 
-    crcalendarioedentials: true
+    credentials: true 
 }));
 
 

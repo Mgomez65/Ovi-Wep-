@@ -82,9 +82,19 @@ exports.allPlanDIa = async (req, res) => {
         console.log(error);
         res.status(500).json({ error: "Error del servidor" });
     }
-    
-
-
-
-
+}
+exports.UpdataPlanDiaPut = async (req, res) => {
+    try {
+        let data = req.body;
+      
+        const id = parseInt(req.params.id);
+        const calendario = await servicioPlan.UpdataPlanDiaPut(id, data);
+        if (!calendario) {
+            return res.status(404).json({ message: "Calendario no encontrado." });
+        }
+        res.status(200).json(calendario);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Error del servidor." });
+    }
 }

@@ -18,4 +18,5 @@ router.get('/getPlanDIa',controllersDia.getPlanDia) //anda
 router.delete('/deletePlanDia/:id',controllersDia.DeletePlanDia)
 router.post('/createDiaPlan/:id',controllersDia. CreateDiaPlan)//anda
 router.get('/getPlanDiaID',controllersDia.getPlanDiaID)//Anda
+router.put('/actualizarPlanDia/:id',controllersDia.UpdataPlanDiaPut)
 module.exports = router;

@@ -72,3 +72,21 @@ exports.allPlanDia = async (data) => {
         }
     });
 }
+exports.UpdataPlanDiaPut = async (id,data) => {
+    try {
+        return prisma.DiaPlan.update({
+            where: {
+                id: id
+            },
+            data: {
+                fechaDia: new Date(data.fechaDia).toISOString(),
+                titulo: data.titulo,
+                color: data.color,
+                idPlan:Number(data.idPlan)
+            }
+        });
+    } catch (error) {
+        console.error("Error al actualizar el calendario:", error);
+        throw error;
+    }
+}
