@@ -31,9 +31,9 @@ const Informe = () => {
     const fetchInforme = async () => {
       if (fileId) {
         try {
-          const response = await fetch(`http://localhost:3000/informe/user/${fileId}`);
+          const response = await fetch(`http://localhost:3000/informe/${fileId}`);
           if (!response.ok) {
-            throw new Error("Error al obtener el informe");
+            throw new Error("Error al obtener el informe");s
           }
           const data = await response.json();
           setDatos(data);

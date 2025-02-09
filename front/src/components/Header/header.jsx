@@ -58,7 +58,7 @@ function Header() {
 
   const fetchFiles = async () => {
     try {
-      const response = await fetch("http://localhost:3000/informe/users", {
+      const response = await fetch("http://localhost:3000/informe/", {
         method: "GET",
         credentials: "include",
       });
