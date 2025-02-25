@@ -33,7 +33,7 @@ const Informe = () => {
         try {
           const response = await fetch(`http://localhost:3000/informe/${fileId}`);
           if (!response.ok) {
-            throw new Error("Error al obtener el informe");s
+            throw new Error("Error al obtener el informe");
           }
           const data = await response.json();
           setDatos(data);

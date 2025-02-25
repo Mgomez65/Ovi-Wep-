@@ -5,15 +5,13 @@ exports.getCalendarioId = async (id)=>{
     try {
         return prisma.PlanDeRiego.findUnique({
         where:{
-            "id": id,}       
+            "id": id,}
         })
     }catch (error) {
         console.error("Error al consultar el calendario:", error);
         throw error;
     }
 };
-
-
 
 exports.getCalendarios = async ()=>{
     try {
@@ -23,9 +21,6 @@ exports.getCalendarios = async ()=>{
         throw error;
     }
 }
-
-
-
 
 exports.createPlanDeRiego = async (data)=>{
     try {
@@ -37,14 +32,12 @@ exports.createPlanDeRiego = async (data)=>{
                 titulo: data.titulo
             },
         });
-        return NuevoCalendario;    
+        return NuevoCalendario;
     } catch (error) {
         console.error("Error al consultar el usuario:", error);
         throw error;
     }
 }
-
-
 
 exports.deletePlanDeRiego = async (id) => {
     try {
@@ -56,15 +49,12 @@ exports.deletePlanDeRiego = async (id) => {
             where: {
                 id: id,
             },
-    })      
+    })
     } catch (error) {
         console.error("Error al eliminar el calendario:", error);
         throw error;
     }
 };
-
-
-
 
 exports.updateCalendario = async (calendarioId, datos) => {
     try {
@@ -78,7 +68,6 @@ exports.updateCalendario = async (calendarioId, datos) => {
                 color: datos.color,
             }
         });
-        
         return calendarioUpdate
     } catch (error) {
         console.error("Error al actualizar el calendario:", error);

@@ -52,12 +52,10 @@ function MenuDesplegable() {
         });
         if (response.ok) {
             navigate('/');
-    
         } else {
             alert('Error al cerrar sesión');
         }
     }
-
 
     useEffect(() => {
         document.addEventListener('mousedown', cerrarMenuSiClicFuera);

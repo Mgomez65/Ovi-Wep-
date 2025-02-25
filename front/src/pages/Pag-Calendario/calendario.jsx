@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
 import Header from "../../components/Header/header";
@@ -24,26 +24,16 @@ const Calendario = () => {
   });
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [formType, setFormType] = useState(null); // Nuevo estado para manejar el tipo de formulario (crear o actualizar)
 
-  const fetchEvents = async (planId) => {
-    if (planId) {
-      try {
-        const response = await axios.post(
-          `http://localhost:3000/calendario/getPlanDia`,
-          { idPlan: planId }
-        );
-        const formattedEvents = response.data.map((event) => ({
-          id: event.id,
-          title: event.titulo,
-          start: new Date(event.fechaDia),
-          end: new Date(event.fechaDia),
-          color: event.color || "#000",
-        }));
-        setEvents(formattedEvents);
-      } catch (error) {
-        console.error("Error al obtener los eventos:", error);
-      }
-    }
+  const getAuthToken = () => {
+    return localStorage.getItem('authToken');
+  };
+
+  const axiosConfig = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
   };
 
   useEffect(() => {
@@ -52,17 +42,42 @@ const Calendario = () => {
     }
   }, [selectedPlan]);
 
+  const fetchEvents = async (idPlan) => {
+    if (idPlan) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/calendario/getPlanDia?idPlan=${idPlan}`,
+          axiosConfig
+        );
+        const formattedEvents = response.data.map((event) => {
+          const eventDate = new Date(event.fechaDia);
+          return {
+            id: event.id,
+            title: event.titulo,
+            start: new Date(eventDate.getTime() - eventDate.getTimezoneOffset() * 60000),
+            end: new Date(eventDate.getTime() - eventDate.getTimezoneOffset() * 60000),
+            color: event.color || "#000",
+          };
+        });
+        setEvents(formattedEvents);
+      } catch (error) {
+        console.error("Error al obtener los eventos:", error);
+      }
+    }
+  };
+
   const handleDateSelect = (selectedDate) => {
-    setDate(selectedDate);
+    const adjustedDate = new Date(selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000);
+    setDate(adjustedDate);
     const eventsOnSelectedDate = events.filter(
-      (event) => event.start.toDateString() === selectedDate.toDateString()
+      (event) => event.start.toDateString() === adjustedDate.toDateString()
     );
     setFilteredEvents(eventsOnSelectedDate);
     setShowModal(true);
     setEventData({
       ...eventData,
-      start: selectedDate.toISOString().split("T")[0],
-      end: selectedDate.toISOString().split("T")[0],
+      start: adjustedDate.toISOString().split("T")[0],
+      end: adjustedDate.toISOString().split("T")[0],
     });
   };
 
@@ -74,29 +89,78 @@ const Calendario = () => {
       color: event.color,
       id: event.id,
     });
+    setFormType('update'); // Establecer que se está actualizando un evento
+    setShowForm(true); // Mostrar el formulario
   };
 
-  const createOrUpdateEvent = async () => {
+  const handleAddEventClick = () => {
+    setEventData({
+      title: "",
+      start: date.toISOString().split("T")[0],
+      end: date.toISOString().split("T")[0],
+      color: "#FFFFFF",
+      id: null,
+    });
+    setShowForm(true); // Muestra el formulario vacío
+  };
+
+  const createEvent = async () => {
     try {
       const eventToSend = {
         titulo: eventData.title,
         color: eventData.color,
-        idPlan: selectedPlan,
         fechaDia: date.toISOString().split("T")[0],
       };
+      await axios.post(
+        `http://localhost:3000/calendario/createDiaPlan/${selectedPlan}`,
+        eventToSend,
+        axiosConfig
+      );
+      fetchEvents(selectedPlan);
+      resetEventData();
+      setShowForm(false); // Cerrar el formulario después de crear
+    } catch (error) {
+      console.error("Error al crear el evento:", error);
+    }
+  };
 
-      if (eventData.id) {
-        await axios.put(
-          `http://localhost:3000/calendario/actualizarEvento/${eventData.id}`,
-          eventToSend
-        );
-      } else {
-        await axios.post(
-          "http://localhost:3000/calendario/createDiaPlan",
-          eventToSend
-        );
-      }
+  const updateEvent = async () => {
+    try {
+      if (!eventData.id) return;
+      const eventToSend = {
+        titulo: eventData.title,
+        color: eventData.color,
+        fechaDia: date.toISOString().split("T")[0],
+      };
+      await axios.put(
+        `http://localhost:3000/calendario/actualizarPlanDia/${eventData.id}`,
+        eventToSend,
+        axiosConfig
+      );
+      fetchEvents(selectedPlan);
+      resetEventData();
+      setShowForm(false); // Cerrar el formulario después de actualizar
+    } catch (error) {
+      console.error("Error al actualizar el evento:", error);
+    }
+  };
 
+  const resetEventData = () => {
+    setEventData({
+      title: "",
+      start: "",
+      end: "",
+      color: "#FFFFFF",
+      id: null,
+    });
+  };
+
+  const deleteEvent = async (id) => {
+    try {
+      await axios.delete(
+        `http://localhost:3000/calendario/deletePlanDia/${id}`,
+        axiosConfig
+      );
       fetchEvents(selectedPlan);
       setEventData({
         title: "",
@@ -106,7 +170,7 @@ const Calendario = () => {
         id: null,
       });
     } catch (error) {
-      console.error("Error al guardar el evento:", error);
+      console.error("Error al eliminar el evento:", error);
     }
   };
 
@@ -116,8 +180,12 @@ const Calendario = () => {
 
   const renderTileContent = ({ date, view }) => {
     if (view === "month") {
+      const adjustedDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
       const eventsOnThisDay = events.filter(
-        (event) => event.start.toDateString() === date.toDateString()
+        (event) => {
+          const eventDate = new Date(event.start.getTime() - event.start.getTimezoneOffset() * 60000);
+          return eventDate.toDateString() === adjustedDate.toDateString();
+        }
       );
       return (
         <div>
@@ -158,8 +226,27 @@ const Calendario = () => {
                 <div className="modal-body">
                   {filteredEvents.length > 0 ? (
                     filteredEvents.map((event) => (
-                      <div key={event.id} onClick={() => handleEventClick(event)}>
-                        <span style={{'backgroundColor': event.color, 'fontSize': '18px', 'padding': '5px', 'borderRadius': '3px'}}>{event.title}</span>
+                      <div key={event.id} className="event-item">
+                        <span
+                          style={{ backgroundColor: event.color, fontSize: '18px', padding: '5px', borderRadius: '3px' }}
+                        >
+                          {event.title}
+                        </span>
+
+                        {userRol === 'admin' && (
+                          <div className="event-actions">
+                            <button className="boton" onClick={() => handleEventClick(event)}>
+                              Actualizar
+                            </button>
+                            <button
+                              className="boton"
+                              onClick={() => deleteEvent(event.id)}
+                              style={{ backgroundColor: "red", marginLeft: "10px", marginTop: "15px" }}
+                            >
+                              Eliminar
+                            </button>
+                          </div>
+                        )}
                       </div>
                     ))
                   ) : (
@@ -168,25 +255,21 @@ const Calendario = () => {
 
                   {userRol === 'admin' && (
                     <>
-
-                    </>
-                  )}
-                  {userRol === 'admin' ? (
-                    <>
-                      <button className="boton" onClick={() => setShowForm(true)}>
+                      <button className="boton" onClick={handleAddEventClick}>
                         Agregar Evento
                       </button>
-                      <button className="boton" onClick={() => setShowModal(false)} style={{marginLeft: "10px", marginTop: "15px"}}>
+                      <button
+                        className="boton"
+                        onClick={() => setShowModal(false)}
+                        style={{ marginLeft: "10px", marginTop: "15px" }}
+                      >
                         Cerrar
                       </button>
                     </>
-                  ) : (
-                    <button className="boton" onClick={() => setShowModal(false)} style={{marginLeft: "10px", marginTop: "15px"}}>
-                      Cerrar
-                    </button>
                   )}
 
-                  {showForm && (
+                  {/* formulario de actalizar evento */}
+                  {showForm && formType === 'update' && (
                     <form className="formulario-editar-evento">
                       <label>Título:</label>
                       <input
@@ -196,7 +279,7 @@ const Calendario = () => {
                         className="form-titulo"
                         value={eventData.title}
                         onChange={handleInputChange}
-                        style={{'width': '100%'}}
+                        style={{ width: '100%' }}
                       />
                       <label>Color:</label>
                       <div className="color-picker-wrapper">
@@ -207,7 +290,38 @@ const Calendario = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <button type="button" className="boton" onClick={createOrUpdateEvent}>
+                      <button type="button" className="boton" onClick={updateEvent}>
+                        Guardar Evento
+                      </button>
+                      <button type="button" className="boton" onClick={() => setShowForm(false)}>
+                        Cerrar Formulario
+                      </button>
+                    </form>
+                  )}
+
+                  {/* formulario de crear evento */}
+                  {showForm && formType === 'create' && (
+                    <form className="formulario-editar-evento">
+                      <label>Título:</label>
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="Título"
+                        className="form-titulo"
+                        value={eventData.title}
+                        onChange={handleInputChange}
+                        style={{ width: '100%' }}
+                      />
+                      <label>Color:</label>
+                      <div className="color-picker-wrapper">
+                        <input
+                          type="color"
+                          name="color"
+                          value={eventData.color}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <button type="button" className="boton" onClick={createEvent}>
                         Guardar Evento
                       </button>
                       <button type="button" className="boton" onClick={() => setShowForm(false)}>

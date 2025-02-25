@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import iconoEliminar from "../../assets/icon-eliminar.png";
 import Auth from '../Auth-Admin/Auth-Admin';
-import './planRiego.css'
+import './planRiego.css';
 
 const PlanesDeRiego = ({ onPlanSelect }) => {
   const [userRol, setUserRol] = useState(null);
   const [plans, setPlans] = useState([]);
+  const [informesDisponibles, setInformesDisponibles] = useState([]); // Agregar estado para los informes
+  const [selectedInforme, setSelectedInforme] = useState(" "); // Para guardar el informe seleccionado
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -27,13 +29,33 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
     }
   };
 
+  const fetchInformes = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/informe/search",
+        { searchTerm: "" }
+      );
+      // Filtrar los informes para que solo se muestren los que no tienen un plan asignado
+      const informesFiltrados = response.data.filter(informe => 
+        !plans.some(plan => plan.idInforme === informe.id)
+      );
+      setInformesDisponibles(informesFiltrados);
+    } catch (error) {
+      console.error("Error al obtener los informes:", error);
+    }
+  };
+
   useEffect(() => {
     fetchPlans();
-  }, []);
+    fetchInformes(); // Llamar a fetchInformes para obtener los informes
+  }, [plans]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (name === 'idInforme' && value) {
+      setSelectedInforme(value);  // Asegúrate de que selectedInforme tenga un valor válido
+    }
   };
 
   const createPlan = async () => {
@@ -42,7 +64,7 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
         titulo: formData.titulo,
         inicio: new Date(formData.inicio),
         fin: new Date(formData.fin),
-        idInforme: formData.idInforme,
+        idInforme: selectedInforme, // Usar el informe seleccionado
       };
 
       await axios.post(
@@ -63,7 +85,7 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
         titulo: formData.titulo,
         inicio: new Date(formData.inicio),
         fin: new Date(formData.fin),
-        idInforme: formData.idInforme,
+        idInforme: selectedInforme, // Usar el informe seleccionado
       };
 
       await axios.put(
@@ -108,13 +130,14 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
       fin: "",
       idInforme: 0,
     });
+    setSelectedInforme("");
     setSelectedPlan(null);
   };
 
   const handleShowEvents = (plan) => {
     handlePlanSelect(plan);
     onPlanSelect(plan.id);
-};
+  };
 
   return (
     <div className="planesRiegoContainer">
@@ -165,13 +188,21 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
                 value={formData.fin}
                 onChange={handleInputChange}
               />
-              <input
-                type="number"
+
+              {/* Mostrar la lista de informes disponibles */}
+              <select
                 name="idInforme"
-                placeholder="ID Informe"
-                value={formData.idInforme}
-                onChange={handleInputChange}
-              />
+                onChange={(e) => setSelectedInforme(e.target.value)}
+                value={selectedInforme || ""} // Asegúrate de que sea una cadena vacía o "" en lugar de null
+              >
+                <option value="">Selecciona un informe</option>
+                {informesDisponibles.map((informe) => (
+                  <option key={informe.id} value={informe.id}>
+                    {informe.titulo}
+                  </option>
+                ))}
+              </select>
+
               <button
                 onClick={selectedPlan ? updatePlan : createPlan}
                 className="boton"
@@ -185,11 +216,8 @@ const PlanesDeRiego = ({ onPlanSelect }) => {
           )}
           <ul className="planRiegoUL">
             {plans.map((plan) => (
-              <div onClick={() => handlePlanSelect(plan)}  className="botonPlanRiegoLi">
-                <li
-                  key={plan.id}
-                  className="PlanRiegoLI"
-                >
+              <div key={plan.id} onClick={() => handlePlanSelect(plan)} className="botonPlanRiegoLi">
+                <li className="PlanRiegoLI">
                   <span>{plan.titulo}</span>
                   <div className="botonesEliminarActualizar">
                   {userRol === 'admin' && (

@@ -149,13 +149,11 @@ exports.searchInforme = async (termino) => {
                     {
                         fecha_final: {
                             contains: termino,
-                            
                         },
                     },
                     {
                         fecha_inicio:{
                             contains:termino,
-                            
                         }
                     },
                 ],

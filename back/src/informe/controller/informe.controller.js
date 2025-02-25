@@ -25,7 +25,6 @@ exports.getInforme = async (req, res) => {
 }
 exports.getInformeId = async (req, res) => {
     try {
-        
         const informeId = parseInt(req.params.id,10)
         console.log(informeId)
         const informe = await serciosInforme.getInformeId(informeId)
@@ -95,9 +94,7 @@ exports.updateInforme = async (req, res) => {
 
 exports.searchInforme = async (req, res) => {
     const data = req.body.searchTerm
-   
     const informes = await serciosInforme.searchInforme(data)
-    console.log(informes)
     if (!informes) {
         return res.status(404).send('No hay informes disponibles');
     }

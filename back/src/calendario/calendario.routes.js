@@ -14,7 +14,7 @@ router.put('/actualizarCalendario/:id',controllers.UpdataCalendarioPut)
 
 //calendarioDia
 router.get('/allplanDia',controllersDia.allPlanDIa)
-router.get('/getPlanDIa',controllersDia.getPlanDia) //anda 
+router.get('/getPlanDIa',controllersDia.getPlanDia) //anda
 router.delete('/deletePlanDia/:id',controllersDia.DeletePlanDia)
 router.post('/createDiaPlan/:id',controllersDia. CreateDiaPlan)//anda
 router.get('/getPlanDiaID',controllersDia.getPlanDiaID)//Anda

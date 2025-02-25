@@ -1,4 +1,3 @@
-
 const servicioPlan = require("../services/Calendario.service")
 
 exports.getPlanRiegoID = async (req, res) => {
@@ -26,8 +25,6 @@ exports.getPlanDiaID = async (req, res) => {
     }
 }
 
-
-
 exports.getPlanRiego = async (req, res) => {
     try {
         let calendario = req.body
@@ -42,18 +39,13 @@ exports.getPlanRiego = async (req, res) => {
     }
 }
 
-
-
-
-
-
 exports.createPlanRiego = async (req, res) => {
     try {
         const data = req.body
         const  calendario = await servicioPlan.createPlanDeRiego(data)
         if (!calendario) {
-            return res.status(500).send('Error interno del servidor');  
-        } 
+            return res.status(500).send('Error interno del servidor');
+        }
         res.status(200).json(calendario);
     } catch (error) {
         console.log(error)
@@ -62,17 +54,13 @@ exports.createPlanRiego = async (req, res) => {
 
 }
 
-
-
-
-
 exports.DeleteCalendario = async (req, res) => {
     try {
         const calendarioId = parseInt(req.params.id);
-        const resultado = await servicioPlan.deletePlanDeRiego(calendarioId);  
+        const resultado = await servicioPlan.deletePlanDeRiego(calendarioId);
         if (!resultado) {
             return res.status(404).json({ message: "Calendario no encontrado." });
-        } 
+        }
         res.status(200).json({ message: "Calendario eliminado con éxito." });
     } catch (error) {
         console.log(error);
@@ -83,17 +71,14 @@ exports.DeleteCalendario = async (req, res) => {
 exports.UpdataCalendarioPut = async (req, res) => {
     try {
         const calendarioId = parseInt(req.params.id);
-        const datos = req.body  
+        const datos = req.body
         const respuesta = await servicioPlan.updateCalendario(calendarioId,datos)
         if(!respuesta) {
             return res.status(404).json({ message: "Calendario no encontrado." });
-        } 
+        }
         res.status(200).json({ message: "Calendario actualizado exitosamente." });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Error del servidor." });
     }
 }
-
-
-

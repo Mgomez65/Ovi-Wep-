@@ -8,7 +8,7 @@ exports.getPlanDiaID = async (data)=>{
         where:{
             "idPlan": data.idPlan,
             "fechaDia":data.fechaDia
-        }       
+        }
         })
     }catch (error) {
         console.error("Error al consultar el calendario:", error);
@@ -20,7 +20,7 @@ exports.getPlanDia = async (data)=>{
     try {
         return prisma.DiaPlan.findMany({
             where:{
-                "idPlan": data
+                "idPlan": Number(data)
             }
     })
     } catch (error) {
@@ -38,7 +38,7 @@ exports.createDiaPlan = async (data)=>{
                 idPlan:Number(data.idPlan)
             },
         });
-        return NuevoCalendario;    
+        return NuevoCalendario;
     } catch (error) {
         console.error("Error al consultar el usuario:", error);
         throw error;
@@ -50,7 +50,7 @@ exports.deletePlanDIa = async (id) => {
             where: {
                 id: id,
             },
-    })      
+    })
     } catch (error) {
         console.error("Error al eliminar el calendario:", error);
         throw error;
@@ -61,13 +61,13 @@ exports.allPlanDia = async (data) => {
     minuto0.setHours(0, 0, 0, 0);
 
     const minuto12 = new Date(data);
-    minuto12.setHours(23, 59, 59, 999); 
+    minuto12.setHours(23, 59, 59, 999);
 
     return prisma.DiaPlan.findMany({
         where: {
             fechaDia: {
-                gte: minuto0,  
-                lte: minuto12     
+                gte: minuto0,
+                lte: minuto12
             }
         }
     });
@@ -81,8 +81,7 @@ exports.UpdataPlanDiaPut = async (id,data) => {
             data: {
                 fechaDia: new Date(data.fechaDia).toISOString(),
                 titulo: data.titulo,
-                color: data.color,
-                idPlan:Number(data.idPlan)
+                color: data.color
             }
         });
     } catch (error) {
