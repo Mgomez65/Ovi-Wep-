@@ -42,7 +42,7 @@ const Weather = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [shouldReload, setShouldReload] = useState(false); // Estado para controlar el refresco
   /* const apiKey = "c5dd700cd5ba4428a3967e62c1bbca6a"; //cuenta de Walter, 50 diaria */
-  const apiKey = "c5dd700cd5ba4428a3967e62c1bbca6a"; //cuenta de Walter, 1500 diaria hasta el 24 de octubre de 2024
+  const apiKey = "49d5eaee34b44368a4dbc0185300b386"; //nueva de 1500 hasta el 19/03/2025
   const url = `https://api.weatherbit.io/v2.0/current?city=Mendoza&key=${apiKey}&lang=es`;
 
   useEffect(() => {
