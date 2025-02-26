@@ -9,9 +9,11 @@ import Inicio from "./pages/Pag-Index/inicio";
 import AboutOVI from "./pages/Informacion-de-Ovi/Sobre-Nosotros/about";
 import TermsConditions from "./pages/Informacion-de-Ovi/Terminos-y-Condiciones/terminosCondiciones";
 import PrivacyPolicy from "./pages/Informacion-de-Ovi/Politicas-de-Privacidad/politicas";
+import Estadisticas from "./pages/Estadisticas/estadisticas";
 import "./App.css";
 
 const App = () => {
+
   return (
     <>
       <Router>
@@ -25,6 +27,7 @@ const App = () => {
           <Route path="/about" element={<AboutOVI />} />
           <Route path="/terminos-y-condiciones" element={<TermsConditions />} />
           <Route path="/politicas-de-privacidad" element={<PrivacyPolicy />} />
+          <Route path="/estadisticas" element={<Estadisticas />} />
         </Routes>
       </Router>
     </>

@@ -77,10 +77,14 @@ function MenuDesplegable() {
                     {userRol === 'admin' ? (
                         <>
                             <li><Link to="/register">Agregar usuario</Link></li>
+                            <li><Link to="/estadisticas">Estadisticas</Link></li>
                             <li><Link onClick={cerraSecion}>Cerrar Sesión</Link></li>
                         </>
                     ) : (
-                        <li><Link onClick={cerraSecion}>Cerrar Sesión</Link></li>
+                        <>
+                            <li><Link to="/estadisticas">Estadisticas</Link></li>
+                            <li><Link onClick={cerraSecion}>Cerrar Sesión</Link></li>
+                        </>
                     )}
                 </ul>
             )}
