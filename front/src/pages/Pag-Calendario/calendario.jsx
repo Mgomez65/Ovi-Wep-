@@ -101,6 +101,7 @@ const Calendario = () => {
       color: "#FFFFFF",
       id: null,
     });
+    setFormType('create'); // Establecer que se está creando un evento
     setShowForm(true); // Muestra el formulario vacío
   };
 
