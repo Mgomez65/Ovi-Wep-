@@ -134,8 +134,8 @@ exports.downloadPDF = async (req, res) => {
         doc.fontSize(20).text(informe.titulo, { align: 'center' });
         doc.moveDown();
 
-        doc.fontSize(12).text(`Fecha de inicio: ${informe.fecha_inicio.toDateString()}`, { align: 'left' });
-        doc.fontSize(12).text(`Fecha final: ${informe.fecha_final.toDateString()}`, { align: 'left' });
+        doc.fontSize(12).text(`Fecha de inicio: ${new Date(informe.fecha_inicio).toDateString()}`, { align: 'left' });
+        doc.fontSize(12).text(`Fecha final: ${new Date(informe.fecha_final).toDateString()}`, { align: 'left' });
         doc.moveDown();
         doc.text(informe.contenido, { align: 'left' });
 

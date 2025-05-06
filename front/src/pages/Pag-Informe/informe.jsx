@@ -36,11 +36,13 @@ const Informe = () => {
             throw new Error("Error al obtener el informe");
           }
           const data = await response.json();
+          const informe = data.informe;
+          console.log(data);
           setDatos(data);
-          setTitulo(data.titulo || "");
-          setFechaInicio(data.fecha_inicio || "");
-          setFechaFinal(data.fecha_final || "");
-          setContenido(data.contenido || "");
+          setTitulo(informe.titulo || "");
+          setFechaInicio(informe.fecha_inicio || "");
+          setFechaFinal(informe.fecha_final || "");
+          setContenido(informe.contenido || "");
           setSelectedInforme(data);
           setExistingFiles(data.imagenes || []);
         } catch (error) {

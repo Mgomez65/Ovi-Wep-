@@ -76,12 +76,14 @@ function MenuDesplegable() {
                     <Auth setUserRol={setUserRol} />
                     {userRol === 'admin' ? (
                         <>
+                            <li><Link to="/informe">Informe</Link></li>
                             <li><Link to="/register">Agregar usuario</Link></li>
                             <li><Link to="/estadisticas">Estadisticas</Link></li>
                             <li><Link onClick={cerraSecion}>Cerrar Sesión</Link></li>
                         </>
                     ) : (
                         <>
+                            <li><Link to="/informe">Informe</Link></li>
                             <li><Link to="/estadisticas">Estadisticas</Link></li>
                             <li><Link onClick={cerraSecion}>Cerrar Sesión</Link></li>
                         </>
