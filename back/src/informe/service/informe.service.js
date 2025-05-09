@@ -86,11 +86,13 @@ exports.deleteInforme = async (idInforme) => {
             });
         }
 
-        if (informe.imagenInforme) {
+        if (informe.imagenInforme && informe.imagenInforme.id) {
             console.log('Eliminando ImagenInforme con ID:', informe.imagenInforme.id);
             await prisma.imagenesInforme.delete({
                 where: { id: informe.imagenInforme.id }
             });
+        } else {
+            console.log('No hay imagen relacionada o el ID de la imagen es undefined. Se omite la eliminación de imagen.');
         }
 
         await prisma.informe.delete({
