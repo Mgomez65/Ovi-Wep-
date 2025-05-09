@@ -36,8 +36,8 @@ const Informe = () => {
             throw new Error("Error al obtener el informe");
           }
           const data = await response.json();
+
           const informe = data.informe;
-          console.log(data);
           setDatos(data);
           setTitulo(informe.titulo || "");
           setFechaInicio(informe.fecha_inicio || "");
@@ -218,7 +218,7 @@ const Informe = () => {
           <div className="containerUwu">
             <div className="containerCalendario">
               <h2>Plan de Riego</h2>
-              <Calendario  eventos={datos && datos.planDeRiego ? datos.planDeRiego.diaPlan : []} />
+              <Calendario eventos={datos?.informe?.planDeRiego?.diaPlan || []} />
             </div>
             <div className="containerImagenes">
               <h2>Imágenes relacionadas</h2>
