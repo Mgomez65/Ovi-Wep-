@@ -38,7 +38,7 @@ exports.createIforme = async (valores) => {
                 titulo: valores.titulo,
                 contenido: valores.contenido,
                 fecha_inicio: valores.fecha_inicio,
-                fecha_final: valores.fecha_inicio,
+                fecha_final: valores.fecha_final,
             }
         });
         if (valores.imagen_urls) {
