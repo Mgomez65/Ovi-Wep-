@@ -112,7 +112,7 @@ const Informe = () => {
     formData.append("fecha_final", fechaFinal);
     formData.append("contenido", contenido);
     selectedFiles.forEach((file) => {
-        formData.append("imagen", file);
+        formData.append("imagenes", file);
     });
     setUploading(true);
     try {
@@ -142,24 +142,9 @@ const Informe = () => {
     setCurrentIndex(0);
   };
 
-  const handleDeleteImage = () => {
+  const handleDeleteImage = (index) => {
     setSelectedFiles((prev) =>
-      prev.filter((_, index) => index !== currentIndex)
-    );
-    setCurrentIndex((prev) =>
-      prev === 0 ? 0 : prev - 1
-    );
-  };
-
-  const handleNextImage = () => {
-    setCurrentIndex((prev) =>
-      prev === selectedFiles.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const handlePrevImage = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? selectedFiles.length - 1 : prev - 1
+      prev.filter((_, inx) => inx !== index) // Elimina la primera imagen (por ejemplo)
     );
   };
 
@@ -249,46 +234,56 @@ const Informe = () => {
                 </div>
               </div>
 
-              {/* Mostrar el carrusel si hay imágenes seleccionadas */}
+              {/* Muestra las imágenes seleccionadas como lista */}
               {selectedFiles.length > 0 && (
-                <div className="carousel-container">
-                  <div className="carousel">
-                    <button onClick={handlePrevImage} className="botonCarrucel">Anterior</button>
-                    <button onClick={handleNextImage} className="botonCarrucel">Siguiente</button>
-                    <img
-                      src={URL.createObjectURL(selectedFiles[currentIndex])}
-                      alt={`Imagen ${currentIndex + 1}`}
-                      className="image-preview"
-                    />
-                  </div>
-
-                  <div className="botonEliminarContainer">
-                    <button onClick={handleDeleteImage} className="remove-button">
-                      Eliminar
-                    </button>
-                  </div>
-
+                <div>
+                  <h3>Imágenes seleccionadas:</h3>
+                  <ul>
+                    {selectedFiles.map((file, index) => (
+                      <li key={index}>
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={`Imagen ${index + 1}`}
+                          style={{ width: '150px', height: 'auto', marginBottom: '10px' }}
+                        />
+                        <button onClick={() => handleDeleteImage(index)}>Eliminar</button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
-              {/* Carrusel para mostrar las imágenes del informe guardado */}
-              {datos.imagenInforme?.url ? ( // Usa el encadenamiento opcional aquí
-                <div className="carrusel-container">
-                    <h2>Imágenes del Informe</h2>
-                    <div className="carrusel">
+
+              {/* Imágenes del informe guardado */}
+              {Array.isArray(datos.informe?.imagenInforme) && datos.informe.imagenInforme.length > 0 ? (
+                <div className="imagenes-del-informe">
+                  <h2>Imágenes del Informe</h2>
+                  <ul>
+                    {datos.informe.imagenInforme.map((img, index) => (
+                      <li key={index}>
                         <img
-                            src={`/img/${datos.imagenInforme.url}`} // Se eliminó el encadenamiento opcional aquí ya que ya hemos comprobado que existe
-                            alt={`Imagen del informe con descripción: ${datos.imagenInforme.descripcion || 'sin descripción'}`} // Añadir una descripción más completa
-                            style={{ width: '400px', height: 'auto' }}
+                          src={`/imgIfome/${img.url}`}
+                          alt={`Imagen ${index + 1}`}
+                          style={{ width: '150px', height: 'auto', marginBottom: '10px'}}
                         />
-                    </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ) : (
                 <div className="no-imagen">
-                    <p></p> {/* Mensaje si no hay imágenes */}
+                  <p>No hay imágenes disponibles</p>
                 </div>
               )}
             </div>
           </div>
+
+          {showConfirmacion && (
+            <ConfirmacionTemporal 
+              mensaje={mensajeConfirmacion} 
+              onClose={() => setShowConfirmacion(false)} 
+              shouldReload={mensajeConfirmacion === "Informe creado exitosamente"} 
+            />
+          )}
 
           <Auth setUserRol={setUserRol} />
           {userRol === 'admin' && (
