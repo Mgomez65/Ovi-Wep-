@@ -32,7 +32,6 @@ CREATE TABLE `ImagenesInforme` (
     `url` VARCHAR(191) NOT NULL,
     `idInforme` INTEGER NOT NULL,
 
-    UNIQUE INDEX `ImagenesInforme_idInforme_key`(`idInforme`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

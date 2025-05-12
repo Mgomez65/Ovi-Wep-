@@ -38,7 +38,7 @@ model Informe {
 model ImagenesInforme {
   id        Int      @id @default(autoincrement())
   url       String
-  informe   Informe  @relation(fields: [idInforme], references: [id])
+  informe   Informe  @relation(fields: [idInforme], references: [id], onDelete: Cascade)
   idInforme Int
 }
 
