@@ -206,7 +206,7 @@ const Informe = () => {
               <Calendario eventos={datos?.informe?.planDeRiego?.diaPlan || []} />
             </div>
             <div className="containerImagenes">
-              <h2>Imágenes relacionadas</h2>
+              <h2>Imágenes</h2>
               {existingFiles.length > 0 && (
                 <div>
                   <h3>Archivos existentes:</h3>
@@ -217,27 +217,28 @@ const Informe = () => {
                   </ul>
                 </div>
               )}
-              <div className="upload-container">
-                <div className="botonesForm">
-                  <label htmlFor="fileInput" className="custom-file-upload">
-                    Seleccionar Imágenes
-                  </label>
-                  <input
-                    type="file"
-                    id="fileInput"
-                    name="files"
-                    accept="image/*"
-                    multiple
-                    onChange={handleFileChange}
-                    style={{ display: "none" }}
-                  />
+              {!selectedInforme && (
+                <div className="upload-container">
+                  <div className="botonesForm">
+                    <label htmlFor="fileInput" className="custom-file-upload">
+                      Seleccionar Imágenes
+                    </label>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      name="files"
+                      accept="image/*"
+                      multiple
+                      onChange={handleFileChange}
+                      style={{ display: "none" }}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Muestra las imágenes seleccionadas como lista */}
               {selectedFiles.length > 0 && (
                 <div>
-                  <h3>Imágenes seleccionadas:</h3>
                   <ul>
                     {selectedFiles.map((file, index) => (
                       <li key={index}>
@@ -256,7 +257,6 @@ const Informe = () => {
               {/* Imágenes del informe guardado */}
               {Array.isArray(datos.informe?.imagenInforme) && datos.informe.imagenInforme.length > 0 ? (
                 <div className="imagenes-del-informe">
-                  <h2>Imágenes del Informe</h2>
                   <ul>
                     {datos.informe.imagenInforme.map((img, index) => (
                       <li key={index}>
@@ -271,17 +271,16 @@ const Informe = () => {
                 </div>
               ) : (
                 <div className="no-imagen">
-                  <p>No hay imágenes disponibles</p>
                 </div>
               )}
             </div>
           </div>
 
           {showConfirmacion && (
-            <ConfirmacionTemporal 
-              mensaje={mensajeConfirmacion} 
-              onClose={() => setShowConfirmacion(false)} 
-              shouldReload={mensajeConfirmacion === "Informe creado exitosamente"} 
+            <ConfirmacionTemporal
+              mensaje={mensajeConfirmacion}
+              onClose={() => setShowConfirmacion(false)}
+              shouldReload={mensajeConfirmacion === "Informe creado exitosamente"}
             />
           )}
 
