@@ -4,7 +4,7 @@ import './mapa.css';
 const Mapa = () => {
     const [humidity1, setHumidity1] = useState(null);
     const [humidity2, setHumidity2] = useState(null);
-    const [humidity3, setHumidity3] = useState(27);
+    const [humidity3, setHumidity3] = useState(34);
 
     useEffect(() => {
         const fetchHumidityData = async () => {

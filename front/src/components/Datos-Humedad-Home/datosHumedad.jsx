@@ -18,7 +18,7 @@ const Termometro = () => {
       const hum2 = data.humedad2 !== "No disponible" ? parseInt(data.humedad2) : null;
       /* const hum3 = data.humedad3 !== "No disponible" ? parseInt(data.humedad3) : null; */
       /* const hum2 = 75; */
-      const hum3 = 59;
+      const hum3 = 34;
 
       const humidityValues = [hum1, hum2, hum3].filter((val) => val !== null);
       const averageHumidity = 
