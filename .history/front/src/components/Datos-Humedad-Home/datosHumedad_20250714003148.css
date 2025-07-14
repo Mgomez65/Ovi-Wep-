@@ -1,0 +1,41 @@
+.thermometer {
+  width: 100%; /* Cambiado a 100% para ser responsivo dentro de su contenedor padre */
+  max-width: 55rem; /* Mantiene un ancho máximo para pantallas grandes */
+  height: 30px;
+  background: #000000;
+  border-radius: 20px;
+  position: relative;
+  margin: 20px auto; /* Centra el termómetro horizontalmente dentro de su contenedor */
+  box-sizing: border-box; /* Asegura que el padding/border se incluyan en el ancho */
+  overflow: hidden; /* Asegura que el relleno no se salga de los bordes redondeados */
+}
+
+.thermometer-fill {
+  background: #ff5733; /* Color distintivo para la barra de llenado */
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 0; /* Se controla dinámicamente con JS */
+  border-radius: 20px;
+  transition: width 0.5s ease;
+}
+
+.thermometer-label {
+  position: absolute;
+  font-weight: bold;
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap; /* Evita que el texto se rompa */
+  z-index: 1; /* Asegura que el texto esté por encima de la barra de llenado */
+}
+
+@media screen and (max-width: 768px) {
+  .thermometer {
+    /* En móvil, el contenedor padre (.termometro en home.css) ya lo centra. */
+    /* width: calc(100vw - 55px);  Esta regla puede ser demasiado específica y causar problemas. */
+    /* Mejor dejar el width: 100% y que el contenedor padre lo restrinja si es necesario. */
+    margin: 10px auto; /* Ajusta el margen para móvil */
+  }
+}

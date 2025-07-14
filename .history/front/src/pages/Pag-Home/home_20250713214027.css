@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #333;
+  background-color: #fff7ed;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  width: 100%;
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Contenedor clima y calendario */
+.contenedorClimaCalendario {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 10px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 900px;
+  background-color: #374151;
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+}
+
+.clima-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #374151;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.calendario-link {
+  text-decoration: none;
+  color: white;
+  display: block;
+  background-color: #374151;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+/* Sección humedad */
+.datosHumedad {
+  display: flex;
+  flex-direction: column;
+  background-color: #374151;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 900px;
+  color: white;
+}
+
+.tituloHumedad {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: white;
+}
+
+/* Contenedor del mapa */
+.mapa-container {
+  background-color: #374151;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 900px;
+  color: white;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .contenedorClimaCalendario {
+    grid-template-columns: 1fr;
+  }
+  
+  body {
+    font-size: 13px;
+  }
+  
+  .contenedorClimaCalendario,
+  .datosHumedad,
+  .mapa-container {
+    padding: 10px;
+    width: 98%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding: 5px;
+  }
+  
+  .contenedorClimaCalendario,
+  .datosHumedad,
+  .mapa-container {
+    padding: 8px;
+  }
+}

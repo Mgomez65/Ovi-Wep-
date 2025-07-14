@@ -1,0 +1,258 @@
+.header {
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos a los extremos */
+    align-items: center;
+    padding: 10px 20px; /* Padding uniforme para el header */
+    background-color: #374151;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box; /* Muy importante */
+    min-width: 0; /* Permite que el header se encoja si es necesario */
+    /*outline: 2px solid red; /* OUTLINE DE DEPURACIÓN */
+}
+
+.tituloHeader {
+    font-size: 30px;
+    text-align: left;
+    flex-shrink: 1; /* Permite que el título se encoja si no hay espacio */
+    min-width: 0; /* Permite que el texto se trunque si es muy largo */
+    margin: 0; /* Elimina márgenes predeterminados */
+    padding-left: 0; /* El padding ya lo tiene el padre */
+}
+
+.Volver {
+    width: 40px;
+    padding-right: 15px; /* Añadido padding a la derecha para separar del título */
+    padding-top: 3px;
+    flex-shrink: 0; /* Evita que el botón de volver se encoja */
+}
+
+.botonInforme {
+    text-align: right;
+    margin-left: auto; /* Empuja este elemento y los siguientes a la derecha */
+    margin-right: 15px;
+    text-decoration: none;
+    color: #fff;
+    padding-right: 10px;
+    border-right: 3px solid rgba(255, 255, 255, 0.192);
+    font-size: 20px;
+    padding-top: 3px;
+    flex-shrink: 0;
+    white-space: nowrap; /* Evita que el texto se rompa */
+}
+
+.botonInforme:hover {
+    color: cadetblue;
+}
+
+.Menu {
+    text-align: right;
+    padding-top: 3px;
+    flex-shrink: 0;
+}
+
+.searchMenu {
+    height: 87%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    background-color: #374151;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    box-sizing: border-box; /* Importante para el padding */
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%); /* Oculto por defecto */
+    z-index: 1000;
+}
+
+.searchMenu.visible {
+    transform: translateX(0); /* Mostrar */
+}
+
+.search-bar {
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.search-bar input {
+    flex-grow: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.search-bar button {
+    background-color: #272e3a;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.file-list {
+    flex-grow: 1;
+    overflow-y: auto; /* Scroll si hay muchos archivos */
+    padding-right: 5px; /* Para que el scrollbar no se superponga */
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #272e3a;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white;
+    word-break: break-word; /* Para que el texto largo se rompa */
+    min-height: 40px; /* Altura mínima para cada item */
+}
+
+.file-item span {
+    flex-grow: 1;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.file-actions {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0; /* Evita que los botones se encojan */
+}
+
+.file-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex; /* Para centrar el icono */
+    align-items: center;
+    justify-content: center;
+}
+
+.Descargar, .Eliminar, .Editar, .Buscar {
+    width: 20px;
+    height: 20px;
+}
+
+/* Modal de confirmación */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal {
+    background-color: #374151;
+    color: white;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+    margin-bottom: 15px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-buttons button:first-child {
+    background-color: red;
+    color: white;
+}
+
+.modal-buttons button:first-child:hover {
+    background-color: darkred;
+    color: white;
+}
+
+.modal-buttons button:last-child {
+    background-color: #374151;
+    color: white;
+}
+
+.modal-buttons button:last-child:hover{
+    background-color: #272e3a;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .tituloHeader {
+        font-size: 20px;
+    }
+
+    .botonInforme {
+        font-size: 15px;
+        margin-right: 10px; /* Ajuste para móvil */
+    }
+
+    .Volver {
+        width: 30px; /* Más pequeño en móvil */
+        padding-right: 10px;
+    }
+
+    .searchMenu {
+        width: 80%; /* Más ancho en móvil */
+        top: 0; /* Empieza desde arriba */
+        height: 100%; /* Ocupa toda la altura */
+    }
+
+    .file-item {
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+        justify-content: center; /* Centra los elementos */
+        text-align: center;
+    }
+
+    .file-item span {
+        width: 100%; /* Ocupa todo el ancho */
+        margin-bottom: 5px; /* Espacio entre nombre y botones */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header {
+        padding: 5px 10px; /* Padding más pequeño */
+    }
+
+    .tituloHeader {
+        font-size: 18px;
+    }
+
+    .botonInforme {
+        font-size: 14px;
+        padding-right: 5px;
+        border-right: none; /* Quitar borde si se hace muy pequeño */
+        margin-right: 5px;
+    }
+
+    .Volver {
+        width: 25px;
+        padding-right: 5px;
+    }
+}

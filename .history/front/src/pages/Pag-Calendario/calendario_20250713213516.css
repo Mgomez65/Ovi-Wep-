@@ -1,0 +1,871 @@
+/* Estilo para el contenedor del calendario */
+.calendario-container {
+    position: relative;
+    /* background-color: #161726; */
+    background-color: #fff7ed;
+    border-radius: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    overflow: auto;
+    color: #fff !important;
+
+    /* AÑADIDO PARA LAYOUT PRINCIPAL: Apila el Header, el Contenido y el Footer */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+}
+
+span {
+    color: #fff !important;
+}
+
+/* Estilo para el calendario */
+.react-calendar {
+    width: 100%; /* El calendario ocupará el 100% del ancho de su contenedor */
+    max-width: 800px; /* Añadido: Limita el ancho máximo del calendario para que no sea "muy grande" */
+    height: auto;
+    background-color: #374151;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px;
+    overflow: hidden;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.react-calendar, .react-calendar *, .react-calendar *:before, .react-calendar *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    /* color: #fff !important; */
+}
+
+/* Estilo para los días del calendario */
+.react-calendar .react-calendar__month-view__days__day {
+    background-color: #272e3a3a;
+    color: #fff;
+    border: 1px solid #161726;
+    border-radius: 4px;
+    width: 50px;
+    height: 100px;
+    display: flex;
+    align-items: start;
+    justify-content: right;
+    margin: 0px;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative; /* CRÍTICO: Necesario para posicionar los event-marker */
+    overflow: hidden; /* Ocultar cualquier contenido que se desborde */
+}
+
+/* Estilo para los días seleccionados */
+.react-calendar__tile--active {
+    background-color: #374151;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* Estilo para el día actual */
+.react-calendar__tile--now {
+    background-color: #161726;
+    color: #fff;
+}
+
+.react-calendar__month-view__days {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Estilo para los días fuera del mes actual */
+.react-calendar__tile--neighboringMonth {
+    background-color: #272e3a3a;
+    color: #fff;
+}
+
+/* Estilo para el encabezado del mes */
+.react-calendar__navigation__label {
+    color: #fff;
+    font-size: 1.5em;
+}
+
+/* Estilo para los botones de navegación */
+.react-calendar__navigation button {
+    background-color: #272e3a3a;
+    color: #fff;
+    border: 1px solid #272e3a3a;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.react-calendar__navigation button:hover {
+    background-color: #374151;
+}
+
+.react-calendar__navigation button:focus {
+    background-color: #374151;
+}
+
+/* Estilo para el área de selección del día */
+.react-calendar__tile:focus {
+    outline: 5px auto #374151;
+}
+
+/* Estilo para los eventos en el calendario */
+.react-calendar__tile--event {
+    background-color: #161726;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* Estilo para el encabezado del calendario */
+.calendario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+/* Estilo para el título del calendario */
+.tituloCalendario {
+    color: #000;
+    font-size: 2em;
+    margin: 0;
+    text-align: center;
+    padding: 10px;
+    padding-left: 10%;
+}
+
+/* Estilo para el botón de agregar evento */
+.botonAgregarEvento {
+    background-color: #374151;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+}
+
+.botonAgregarEvento:hover {
+    background-color: #3741519a;
+}
+
+.botonAgregarEvento:focus {
+    outline: none;
+    background-color: #3741519a;
+}
+
+/* Formulario de agregar evento */
+
+/* Estilo general para el formulario */
+.formulario-agregar-evento {
+    /* Eliminado position: fixed y transform para que se comporte dentro del modal */
+    background-color: #374151;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    /* Añadido para que se centre dentro del modal-body si es necesario */
+    margin: 20px auto;
+}
+
+/* Contenedor para el título y el botón */
+.formulario-agregar-evento .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Estilo para el título del formulario */
+.formulario-agregar-evento h2 {
+    color: #fff;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+/* Estilo para el botón de agregar evento */
+.formulario-agregar-evento .header button[type="button"] {
+    background-color: #272e3a3a;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+}
+
+.formulario-agregar-evento .header button[type="button"]:hover {
+    background-color: #272e3a3a;
+}
+
+/* Estilo para los campos del formulario */
+.formulario-agregar-evento input,
+.formulario-agregar-evento textarea,
+.formulario-agregar-evento select {
+    width: 100%; /* Cambiado de 90% a 100% */
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #272e3a3a;
+    background-color: #272e3a3a;
+    color: #fff;
+    font-size: 0.9em;
+}
+
+/* Estilo para el botón de enviar */
+.formulario-agregar-evento .boton {
+    background-color: #272e3a3a;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.formulario-agregar-evento .boton:hover {
+    background-color: #1617268e;
+}
+
+.color-picker-wrapper {
+    display: flex; /* Usar flexbox para alinear los botones de color */
+    gap: 5px; /* Espacio entre los botones de color */
+    margin-bottom: 10px;
+    justify-content: center; /* Centrar los botones de color */
+}
+
+/* Estilos para las opciones de color */
+.color-option {
+    width: 30px; /* Tamaño de los botones de color */
+    height: 30px;
+    border-radius: 50%; /* Hacerlos circulares */
+    border: 2px solid transparent; /* Borde transparente por defecto */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff; /* Color del checkmark */
+    font-weight: bold;
+    transition: border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.color-option.selected {
+    border-color: #00fff2; /* Borde azul claro para el seleccionado */
+    transform: scale(1.1); /* Ligeramente más grande al seleccionar */
+}
+
+
+.form-titulo {
+    display: block;
+    margin: 10px 0;
+    background-color: #dfdfdf;
+    text-decoration: none;
+    border: none;
+    width: 95%;
+    padding: 5px;
+}
+
+.color-picker-wrapper input[type="color"] {
+    border: none;
+    width: 200px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #272e3a;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    /* Añadido para que el texto sea visible */
+    color: #fff;
+    padding: 15px;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.192);
+}
+
+.modal-header h2 {
+    /* Añadido para que el texto sea visible */
+    color: #fff;
+}
+
+.botonAgregar,
+.botonActualizar,
+.botonCerrar {
+    background-color: #374151;
+    color: #fff;
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.botonCerrar{
+    width: 30%;
+}
+
+.botonAgregar{
+    margin-bottom: 3px;
+}
+
+.eventId {
+    background-color: #374151;
+    color: #fff;
+    border-radius: 4px; /* Corregido de 4:px a 4px */
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+.botonEliminar,
+.botonEditar {
+    background-color: #374151;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+.modal-body {
+    padding: 20px;
+    /* Añadido para organizar los elementos del modal */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.botonCerrar:hover,
+.botonAgregar:hover {
+    background-color: #272e3a;
+}
+
+.botonActualizar:hover {
+    background-color: #272e3a;
+}
+
+/* Formulario editar evento */
+
+.formulario-editar-evento {
+    /* Eliminado position: fixed y transform para que se comporte dentro del modal */
+    background-color: #374151;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    /* Añadido para que se centre dentro del modal-body si es necesario */
+    margin: 20px auto;
+}
+
+/* Contenedor para el título y el botón */
+.formulario-editar-evento .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Estilo para el título del formulario */
+.formulario-editar-evento h2 {
+    color: #fff;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+/* Estilo para el botón de editar evento */
+.formulario-editar-evento .header button[type="button"] {
+    background-color: #272e3a3a;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+}
+
+.formulario-editar-evento .header button[type="button"]:hover {
+    background-color: #272e3a3a;
+}
+
+/* Estilo para los campos del formulario */
+.formulario-editar-evento input,
+.formulario-editar-evento textarea,
+.formulario-editar-evento select {
+    width: 100%; /* Cambiado de 90% a 100% */
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #272e3a3a;
+    background-color: #272e3a3a;
+    color: #fff;
+    font-size: 0.9em;
+}
+
+/* Estilo para el botón de enviar */
+.formulario-editar-evento .boton {
+    background-color: #272e3a3a;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.formulario-editar-evento .boton:hover {
+    background-color: #1617268e;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: #00fff2 !important;
+}
+
+.event-container {
+    display: flex; 
+    flex-direction: column;
+}
+
+
+.event-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 25px;
+    flex-grow: 1;
+}
+
+.event-list li {
+    list-style: none; /* Asegurar que no haya viñetas */
+    padding: 0; /* Eliminar padding por defecto */
+    margin-top: 25px;
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    padding: 8px;
+    padding-left: 10px !important;
+    color: #fff !important; /* Cambiado a blanco para visibilidad */
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #272e3a; /* Fondo para los items de la lista de eventos */
+    border-radius: 5px;
+}
+
+.botonesEliminarActualizar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.Eliminar, .Editar {
+    height: 25px;
+}
+
+/* --- REGLAS DE LAYOUT PRINCIPAL (MODIFICADAS) --- */
+.Container{
+    display: flex; /* Habilita flexbox para las columnas */
+    flex-direction: row; /* Columnas en fila */
+    gap: 20px; /* Espacio entre columnas */
+    padding-top: 20px;
+    margin-left: 4.5%;
+    margin-right: 4.5%;
+    flex-grow: 1; /* Permite que ocupe el espacio disponible */
+    align-items: flex-start; /* Alinea los elementos al inicio (arriba) */
+}
+
+.planesRiegoContainer{
+    border-radius: 5px;
+    width: 25%; /* Ancho de la columna izquierda */
+    background-color: #374151;
+    margin-bottom: 20px;
+    /* Añadido para el contenido interno y visual */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.planesRiegoContainer h2{
+    margin-left: 5%;
+    color: #fff !important; /* Asegurar color de texto */
+    text-align: center; /* Centrar el título de la sección */
+}
+
+.calendarioContainer{
+    width: 75%; /* Ancho de la columna derecha */
+    /* Añadido para el contenido interno y visual */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #374151; /* Fondo del calendario */
+    display: flex; /* Añadido para centrar el calendario dentro */
+    justify-content: center; /* Centra horizontalmente el calendario */
+}
+
+/* --- ESTILOS PARA LOS NUEVOS ELEMENTOS DE GESTIÓN DE PLANES --- */
+/* NOTA: La clase .plan-de-riego-creation ya no es el contenedor principal,
+   sino que los estilos se aplican directamente a .planesRiegoContainer.
+   Mantengo esta sección por si la usas en algún div interno. */
+/*.plan-de-riego-creation {
+    /* Si esta clase se usa en un div interno, puedes poner estilos aquí.
+       De lo contrario, esta sección puede estar vacía o eliminarse. */
+
+
+.plan-de-riego-creation .no-plan-message,
+.plan-de-riego-creation .current-plan-info {
+    background-color: #272e3a;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9em;
+}
+
+.plan-de-riego-creation .boton-toggle-plan-form,
+.plan-de-riego-creation .create-plan-form .boton,
+.plan-de-riego-creation .create-plan-form .boton-cancelar {
+    background-color: #374151;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.plan-de-riego-creation .boton-toggle-plan-form:hover,
+.plan-de-riego-creation .create-plan-form .boton:hover {
+    background-color: #161726;
+}
+
+.plan-de-riego-creation .create-plan-form .boton-cancelar {
+    background-color: #e74c3c; /* Rojo para cancelar */
+}
+.plan-de-riego-creation .create-plan-form .boton-cancelar:hover {
+    background-color: #c0392b;
+}
+
+.plan-de-riego-creation .create-plan-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background-color: #272e3a; /* Fondo para el formulario de creación de plan */
+    border-radius: 8px;
+}
+
+.plan-de-riego-creation .create-plan-form h3 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.plan-de-riego-creation .create-plan-form input[type="text"],
+.plan-de-riego-creation .create-plan-form input[type="date"] {
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #161726; /* Borde más oscuro */
+    background-color: #161726; /* Fondo oscuro */
+    color: #fff;
+    font-size: 0.9em;
+}
+
+.plan-de-riego-creation .create-plan-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.plan-de-riego-creation .existing-plans ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Regla para todos los ítems de la lista de planes (seleccionados y no seleccionados) */
+.plan-de-riego-creation .existing-plans .plan-item {
+    background-color: #272e3a;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    cursor: pointer !important; /* Mover aquí para mayor especificidad */
+    user-select: none; /* Evitar la selección de texto */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.plan-de-riego-creation .existing-plans .plan-item:hover {
+    background-color: #374151;
+}
+
+/* Estilos para el plan de riego seleccionado */
+.selected-plan-item {
+    background-color: #374151; /* Fondo para el seleccionado */
+    color: #00fff2 !important; /* Color de texto para el seleccionado */
+    font-weight: bold;
+    border: 1px solid #00fff2; /* Borde para el seleccionado */
+}
+
+.plan-de-riego-creation .current-plan-indicator {
+    font-size: 0.8em;
+    color: #00fff2;
+    margin-left: 10px;
+}
+
+/* Estilos para los botones de actualizar y eliminar dentro del modal */
+.modal-body .boton-actualizar {
+    background-color: #374151; /* Color de tus botones existentes */
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+}
+.modal-body .boton-actualizar:hover {
+    background-color: #161726; /* Hover de tus botones existentes */
+}
+
+.modal-body .boton-eliminar {
+    background-color: red; /* Rojo para eliminar */
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+.modal-body .boton-eliminar:hover {
+    background-color: darkred;
+}
+
+.modal-body .boton-agregar-evento {
+    background-color: #374151; /* Color de tus botones existentes */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+.modal-body .boton-agregar-evento:hover {
+    background-color: #161726;
+}
+
+.modal-body .event-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    padding: 8px;
+    padding-left: 10px !important;
+    color: #fff !important;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #272e3a; /* Fondo para los items de la lista de eventos */
+    border-radius: 5px;
+}
+
+.modal-body .event-actions {
+    display: flex;
+    gap: 5px; /* Espacio entre los botones de acción */
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-button:hover {
+    color: #e74c3c;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+
+/* Media Queries para responsividad */
+@media screen and (max-width: 768px) {
+    .Container {
+        flex-direction: column; /* Apilar verticalmente en pantallas pequeñas */
+        gap: 10px;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .planesRiegoContainer,
+    .calendarioContainer {
+        width: 100%;
+        flex: none;
+        margin: 0;
+    }
+
+    .react-calendar {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .react-calendar .react-calendar__month-view__days__day {
+        width: 100%;
+        height: auto;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+}
+/* Estilos para los marcadores de eventos en el calendario */
+.event-marker-container {
+    position: absolute;
+    bottom: 5px; /* Posicionar en la parte inferior del día */
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column; /* Apilar verticalmente los marcadores */
+    justify-content: flex-end; /* Alinear al final */
+    align-items: center; /* Centrar horizontalmente */
+    width: 100%; /* Ocupar todo el ancho del día */
+    padding: 0 5px;
+    box-sizing: border-box;
+    z-index: 1;
+    gap: 3px; /* Espacio entre los marcadores */
+}
+
+.event-marker {
+    width: 90%; /* Ocupa casi todo el ancho del día */
+    height: auto; /* Altura auto para que el contenido determine la altura */
+    min-height: 1.2em; /* Altura mínima para el marcador */
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 2px 5px; /* Añadido padding para el texto */
+}
+
+.event-title {
+    font-size: 0.7em;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Sombra de texto para mejorar contraste */
+}
+
+/* Estilos para los botones de planes de riego */
+.plan-item-button {
+    background-color: #272e3a; /* Color base para todos los botones de plan */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 5px; /* Espacio entre botones */
+    width: 100%; /* Ocupar todo el ancho disponible */
+    text-align: left; /* Alinear texto a la izquierda */
+    display: flex; /* Para alinear el indicador de activo */
+    justify-content: space-between; /* Espacio entre título y (Activo) */
+    align-items: center;
+}
+
+.plan-item-button:hover {
+    background-color: #374151; /* Color de hover */
+}
+
+.plan-item-button.selected-plan-item {
+    background-color: #374151; /* Fondo para el seleccionado */
+    color: #00fff2 !important; /* Color de texto para el seleccionado */
+    font-weight: bold;
+    border: 1px solid #00fff2; /* Borde para el seleccionado */
+}
+
+.plan-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Espacio entre los botones de planes */
+}

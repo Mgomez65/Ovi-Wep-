@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    color: white;
+    /* background-color: #161726; */
+    background-color: #fff7ed ;
+    font-family: Roboto;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.contenedorClimaCalendario {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 20px;
+    padding-bottom: 0;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
+
+.clima {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #374151;
+}
+
+.clima {
+    height: 300px;
+}
+
+.calendario {
+    text-decoration: none;
+    color: black !important;
+}
+
+.datosHumedad{
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    border-radius: 5px;
+    background-color: #374151;
+    height: 100px;
+    margin-left: 4.5%;
+    margin-right: 4.5%;
+    margin-top: 15px;
+}
+
+.termometro{
+    order: 2;
+    padding-right: 4%;
+}
+
+.tituloHumedad{
+    order: 1;
+    padding-left: 4%;
+}
+
+.mapa{
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #374151;
+    height: auto;
+    margin-left: 4.5%;
+    margin-right: 4.5%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .home{
+        padding: 0;
+        margin: auto;
+    }
+    .contenedorClimaCalendario {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: auto;
+    }
+    .clima {
+        height: auto;
+    }
+    .datosHumedad{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .tituloHumedad {
+        padding-left: 0;
+        padding-top: 10px;
+        padding-bottom: 0;
+        margin: 0;
+    }
+    .termometro {
+        padding-right: 0;
+        padding-top: 0;
+        padding-bottom: 10px;
+        margin: 0;
+    }
+}

@@ -1,0 +1,124 @@
+/* Estilos existentes (mantener) */
+.weather-container {
+    background-color: #374151;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.weather-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.temperature-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.temperature {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.icon {
+    font-size: 2em;
+}
+
+.weather-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.weather-item {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.loading-container {
+    padding: 20px;
+    font-size: 1.1em;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 10px;
+}
+
+/* Nuevos estilos para el pronóstico de 5 días */
+.forecast-title {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.daily-forecast-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: 10px;
+}
+
+.daily-forecast-item {
+    background-color: #272e3a;
+    padding: 10px;
+    border-radius: 5px;
+    flex: 1; /* Permite que los elementos se estiren */
+    min-width: 120px; /* Ancho mínimo para cada día */
+    max-width: 18%; /* Ajusta el ancho para que quepan 5 en una fila */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.forecast-date {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.forecast-icon {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+.forecast-temp {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.forecast-description {
+    font-size: 0.8em;
+    color: #ccc;
+}
+
+/* Media Query para responsividad en pantallas más pequeñas */
+@media (max-width: 768px) {
+    .daily-forecast-item {
+        max-width: 45%; /* 2 columnas en pantallas medianas */
+    }
+}
+
+@media (max-width: 480px) {
+    .daily-forecast-item {
+        max-width: 90%; /* 1 columna en pantallas muy pequeñas */
+    }
+}

@@ -1,0 +1,251 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px;
+    background-color: #374151;
+}
+
+.tituloHeader {
+    font-size: 25px;
+    padding-left: 40px;
+    text-align: left;
+}
+
+.Volver {
+    width: 25px;
+    padding-left: 15px;
+    padding-top: 3px;
+}
+
+.botonInforme {
+    text-align: right;
+    margin-right: 15px;
+    text-decoration: none;
+    color: #fff;
+    padding-right: 10px;
+    border-right: 3px solid rgba(255, 255, 255, 0.192);
+    font-size: 18px;
+    padding-top: 3px;
+}
+
+.botonInforme:hover {
+    color: cadetblue;
+}
+
+.Menu {
+    text-align: right;
+    padding-top: 1px;
+}
+
+.searchMenu {
+    height: 87%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    background-color: #161726;
+    border: 0px solid black;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 96% !important;
+}
+
+.search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background-color: transparent !important;
+    cursor: pointer;
+}
+
+.search-button img {
+    height: 25px;
+}
+
+.searchMenu input {
+    width: 95%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.searchMenu button {
+    border: none;
+    background-color: #374151;
+    color: white;
+    cursor: pointer;
+}
+
+.uploaded-file-item {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #374151;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tituloSpan{
+    font-size: 15px;
+}
+
+.botonEditar, .botonEliminar {
+    background-color: transparent !important;
+    border: none;
+    padding: 2px !important;
+}
+
+.Eliminar{
+    height: 25px;
+}
+
+.Descargar{
+    height: 25px;
+}
+
+.Editar{
+    height: 25px;
+}
+
+.CrearInforme{
+    text-align: center;
+}
+
+.botonCrearInforme{
+    width: 100%;
+    padding: 5px;
+}
+
+.botonCrearInforme:hover{
+    background-color: #272e3a;
+}
+
+/* Cartel de confirmacion */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: #161726;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+    margin-bottom: 15px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-buttons button:first-child {
+    background-color: red;
+    color: white;
+}
+
+.modal-buttons button:first-child:hover {
+    background-color: darkred;
+    color: white;
+}
+
+.modal-buttons button:last-child {
+    background-color: #374151;
+    color: white;
+}
+
+.modal-buttons button:last-child:hover{
+    background-color: #272e3a;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .tituloHeader {
+        font-size: 20px;
+    }
+
+    .botonInforme {
+        font-size: 15px;
+    }
+
+    .Menu {
+        padding-top: 0px;
+    }
+
+    .searchMenu {
+        width: 50%;
+        height: auto;
+        top: 64px;
+    }
+
+    .search-input {
+        width: 90%;
+    }
+
+    .uploaded-file-item {
+        padding: 5px;
+    }
+
+    .tituloSpan{
+        font-size: 10px;
+    }
+
+    .botonEditar, .botonEliminar {
+        padding: 1px;
+    }
+
+    .Eliminar{
+        height: 20px;
+    }
+
+    .Descargar{
+        height: 20px;
+    }
+
+    .Editar{
+        height: 20px;
+    }
+
+    .CrearInforme{
+        font-size: 15px;
+    }
+
+    .botonCrearInforme{
+        padding: 3px;
+    }
+}

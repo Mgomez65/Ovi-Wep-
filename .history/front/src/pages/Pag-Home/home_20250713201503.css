@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    color: white;
+    background-color: #fff7ed;
+    font-family: Roboto;
+    box-sizing: border-box;
+    overflow-x: hidden; /* Asegura que no haya scroll horizontal */
+    width: 100vw; /* Asegura que el body no se desborde */
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    width: 100%; /* Asegura que el contenedor home ocupe el 100% */
+    box-sizing: border-box;
+}
+
+.main-content { /* Nuevo selector para el main */
+    flex-grow: 1; /* Permite que el contenido principal ocupe el espacio restante */
+    padding: 10px; /* Reducido el padding general */
+    width: 100%; /* Asegura que el main ocupe el 100% del ancho disponible */
+    max-width: 100vw; /* Asegura que no desborde el viewport */
+    box-sizing: border-box; /* Incluye padding y borde en el width */
+    overflow: hidden; /* Oculta cualquier contenido que se desborde dentro del main */
+}
+
+.contenedorClimaCalendario {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Mantiene la proporción en desktop */
+    gap: 15px; /* Reducido el espacio entre columnas */
+    padding: 10px; /* Reducido el padding */
+    padding-bottom: 0;
+    margin: 0 auto; /* Centra el contenedor */
+    max-width: 1200px; /* Límite de ancho para pantallas muy grandes */
+    width: calc(100% - 20px); /* Ajusta el ancho para considerar el padding */
+    box-sizing: border-box;
+}
+
+.clima-container { /* Nuevo contenedor para Clima */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #374151;
+    border-radius: 5px;
+    height: auto; /* Altura automática para el contenido */
+    padding: 10px; /* Padding interno */
+    box-sizing: border-box;
+    width: 100%; /* Asegura que ocupe el 100% de su columna en el grid */
+}
+
+.calendario-link { /* Nuevo selector para el Link del Calendario */
+    text-decoration: none;
+    color: black !important;
+    display: block; /* Para que el Link ocupe todo el espacio */
+    background-color: #374151; /* Fondo para el calendario en home */
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%; /* Asegura que ocupe el 100% de su columna en el grid */
+}
+
+.datosHumedad{
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    border-radius: 5px;
+    background-color: #374151;
+    height: auto; /* Altura automática */
+    min-height: 80px; /* Altura mínima */
+    margin: 15px auto; /* Centra y añade margen vertical */
+    padding: 10px 20px; /* Padding interno */
+    max-width: 1200px; /* Límite de ancho */
+    width: calc(100% - 40px); /* Ajusta el ancho para considerar el padding */
+    box-sizing: border-box;
+}
+
+.termometro{
+    order: 2;
+    padding-right: 0; /* Eliminado padding-right */
+}
+
+.tituloHumedad{
+    order: 1;
+    padding-left: 0; /* Eliminado padding-left */
+    font-size: 1.1em; /* Ajuste de fuente */
+    text-align: left;
+}
+
+.mapa-container{ /* Nuevo contenedor para Mapa */
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #374151;
+    height: auto;
+    margin: 15px auto; /* Centra y añade margen vertical */
+    padding: 10px;
+    max-width: 1200px; /* Límite de ancho */
+    width: calc(100% - 20px); /* Ajusta el ancho para considerar el padding */
+    box-sizing: border-box;
+}
+
+/* Media Queries para responsividad */
+@media screen and (max-width: 768px) {
+    .main-content {
+        padding: 5px; /* Reducido aún más el padding en móviles */
+    }
+
+    .contenedorClimaCalendario {
+        display: flex; /* Apila los elementos verticalmente */
+        flex-direction: column;
+        gap: 10px; /* Espacio reducido */
+        padding: 5px;
+        width: calc(100% - 10px); /* Ajusta el ancho para considerar el padding */
+    }
+    
+    .clima-container, .calendario-link {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        margin: 0;
+        padding: 10px; /* Padding interno */
+    }
+
+    .datosHumedad {
+        flex-direction: column; /* Apila título y termómetro */
+        height: auto;
+        padding: 10px;
+        margin: 10px auto;
+        width: calc(100% - 20px); /* Ajusta el ancho para considerar el padding */
+    }
+    .tituloHumedad {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .termometro {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .mapa-container {
+        margin: 10px auto;
+        padding: 10px;
+        width: calc(100% - 20px); /* Ajusta el ancho para considerar el padding */
+    }
+}
+
+/* Ajustes adicionales para pantallas muy pequeñas */
+@media screen and (max-width: 480px) {
+    .main-content {
+        padding: 5px;
+    }
+    .contenedorClimaCalendario, .datosHumedad, .mapa-container {
+        padding: 5px;
+        margin: 5px auto;
+        width: calc(100% - 10px); /* Ajusta el ancho para considerar el padding */
+    }
+    .tituloHumedad {
+        font-size: 1em;
+    }
+}
+
+/* CORRECCIÓN para centrar y evitar desbordes */
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evita scroll horizontal */
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center; /* Centra todo el contenido */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1200px; /* Límite de ancho */
+  box-sizing: border-box;
+  padding: 10px;
+  overflow-x: hidden; /* Previene desbordes */
+}
+
+.contenedorClimaCalendario,
+.datosHumedad,
+.mapa-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Mismo ajuste para componentes hijos */
+.clima-container,
+.calendario-link,
+.termometro,
+.tituloHumedad {
+  box-sizing: border-box;
+}
+
+/* Agregado para mayor control visual */
+img, canvas, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Para asegurar que no haya desplazamiento lateral por error de tamaño */
+* {
+  box-sizing: border-box;
+}
+
+/* Media query para ajustes responsivos adicionales */
+@media (max-width: 768px) {
+  .contenedorClimaCalendario,
+  .datosHumedad,
+  .mapa-container {
+    width: 100%;
+    padding: 10px;
+  }
+}

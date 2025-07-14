@@ -1,0 +1,157 @@
+.footer {
+  padding: 10px 20px; /* Padding uniforme para el footer */
+  background-color: #374151;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  /*outline: 2px solid green; /* OUTLINE DE DEPURACIÓN */
+}
+
+.seccionFooter {
+  padding-right: 2%;
+  font-size: 60px;
+  text-align: right;
+  order: 3;
+  width: auto;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.containerSeccion2{
+  order: 1;
+  padding-left: 2%;
+  width: auto;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.footer-section {
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+nav {
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  justify-content: left;
+  padding-left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap; /* Permite que los enlaces se envuelvan */
+}
+
+.footer-link {
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none !important;
+  white-space: nowrap; /* Evita que el texto del enlace se rompa */
+}
+
+.footer-link:hover {
+  color: cadetblue;
+}
+
+.footer-correo {
+  margin: 0 15px;
+  text-decoration: none;
+  display: inline;
+  border-right: 1px solid white;
+  padding-right: 20px;
+  white-space: nowrap;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.contacto {
+  font-size: 14px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.logo{
+  padding-right: 2%;
+  font-size: 60px;
+  text-align: right;
+  order: 2;
+  width: 140px;
+  flex-shrink: 0;
+}
+
+@media screen and (max-width: 769px) {
+  .footer {
+    flex-direction: column;
+    padding: 0;
+    padding-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .seccionFooter {
+    text-align: center;
+    padding-right: 0;
+    font-size: 1em;
+    width: 100%;
+  }
+
+  .containerSeccion2{
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  nav {
+    justify-content: center; /* Centra los enlaces en pantallas pequeñas */
+    padding: 5px;
+  }
+
+  .footer-link {
+    margin: 5px 0; /* Espacio vertical entre enlaces */
+  }
+
+  .contacto {
+    flex-direction: column; /* Apila el contacto en móviles */
+    align-items: center;
+  }
+
+  .footer-correo {
+    margin: 5px 0;
+    border-right: none;
+    padding-right: 0;
+  }
+  .logo {
+    padding-right: 0;
+    margin-top: 10px;
+    width: 100px; /* Ajusta el tamaño del logo en móviles */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer {
+    padding-top: 5px;
+  }
+
+  .seccionFooter {
+    font-size: 0.9em;
+  }
+
+  .footer-link {
+    font-size: 0.9em;
+  }
+
+  .contacto {
+    font-size: 12px;
+  }
+}

@@ -1,57 +1,59 @@
 #include <LiquidCrystal.h>
 
-// Configuración de pines para el LCD Keypad Shield
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
-
-// Pin donde se conecta el sensor HW-80 (A1 en tu caso)
 const int sensorPin = A1;
+const int relayPin = 11;
 
-// Variables para temporización
 unsigned long lastTime = 0;
-unsigned long samplingInterval = 10000;  // 10 segundos
+unsigned long samplingInterval = 30000; // 30 seg (Nota: tu backend espera cada 20s, aquí es 30s)
+bool bombaEncendida = false;
+unsigned long tiempoEncendido = 0;
 
 void setup() {
   lcd.begin(16, 2);
   lcd.print("Iniciando...");
 
   pinMode(sensorPin, INPUT);
-  Serial.begin(9600);  // Iniciar la comunicación serial
+  pinMode(relayPin, OUTPUT);
+  digitalWrite(relayPin, HIGH);   // Apagado (activo-bajo)
+
+  Serial.begin(9600);
 }
 
 void loop() {
-  if (millis() - lastTime >= samplingInterval) {
-    lastTime = millis();
+  unsigned long ahora = millis();
 
-    // Leer el valor del sensor
+  // Si la bomba está encendida y pasaron 10 segundos, apagarla
+  if (bombaEncendida && (ahora - tiempoEncendido >= 10000)) {
+    digitalWrite(relayPin, HIGH);
+    bombaEncendida = false;
+    // Serial.println("Bomba apagada después de 10 segundos"); // ELIMINADO: No enviar este mensaje al serial
+  }
+
+  // Leer humedad cada 30 seg (samplingInterval)
+  if (ahora - lastTime >= samplingInterval) {
+    lastTime = ahora;
+
     int sensorValue = analogRead(sensorPin);
-
-    // Ajustar el rango de los valores leídos al rango de 0 a 100% de humedad
-    float humedad = map(sensorValue, 950, 250, 0, 100);
-
-    // Limitar el valor de humedad al rango 0-100%
+    float humedad = map(sensorValue, 1020, 230, 0, 100);
     humedad = constrain(humedad, 0, 100);
 
-    // Limpiar el LCD
     lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Humedad:");
+    lcd.setCursor(0, 1);
+    lcd.print(humedad);
+    lcd.print(" %");
 
-    // Mostrar el mensaje si la humedad es menor al 10%
-    if (humedad < 10) {
-      lcd.setCursor(0, 0);
-      lcd.print("Humedad baja!");
-      lcd.setCursor(0, 1);
-      lcd.print(humedad);
-      lcd.print(" %");
-    } else {
-      // Mostrar el valor de humedad si es mayor o igual a 10%
-      lcd.setCursor(0, 0);
-      lcd.print("Humedad:");
-      lcd.setCursor(0, 1);
-      lcd.print(humedad);
-      lcd.print(" %");
+    // SOLAMENTE enviamos el valor numérico de la humedad al puerto serial
+    Serial.println(humedad);
+
+    // Activar bomba si humedad < 10%
+    if (humedad < 10 && !bombaEncendida) {
+      digitalWrite(relayPin, LOW); // Encender bomba
+      bombaEncendida = true;
+      tiempoEncendido = ahora;
+      // Serial.println("Bomba encendida"); // ELIMINADO: No enviar este mensaje al serial
     }
-
-    // Enviar el valor de humedad por Serial
-    Serial.println(humedad);  // Esto envía el valor de la humedad por el puerto serial
   }
 }
-

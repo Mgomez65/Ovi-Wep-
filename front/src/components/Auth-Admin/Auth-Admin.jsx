@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { set } from 'react-hook-form';
 
 function Auth({ setUserRol }) {
     const [loading, setLoading] = useState(true); // Estado de carga
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserRol = async () => {
@@ -15,9 +19,14 @@ function Auth({ setUserRol }) {
 
             } catch (error) {
                 if (error.response && error.response.status === 404) {
-                    setUserRol('user');
+                    console.log("No autenticado, redirigiendo a login");
+                    setUserRol(null);
+                    navigate("/login");
+                } else if (error.response && error.response.status === 403) {
+                    setUserRol('usuario');
                 } else {
-                    setUserRol('user');
+                    console.error("Error al verificar el rol del usuario:", error);
+                    setUserRol('usuario');
                 }
             } finally {
                 setLoading(false);
@@ -25,7 +34,10 @@ function Auth({ setUserRol }) {
         };
 
         fetchUserRol();
-    }, [setUserRol]);
+    }, [setUserRol, navigate]);
+    if (loading) {
+        return <div>Loading...</div>; // Puedes mostrar un spinner o mensaje de carga
+    }
 
     return null;
 }

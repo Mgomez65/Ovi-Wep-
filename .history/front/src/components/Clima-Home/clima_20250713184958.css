@@ -1,0 +1,183 @@
+/* Estilos existentes (mantener) */
+.weather-container {
+    background-color: #374151;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.weather-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.temperature-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.temperature {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.icon {
+    font-size: 2em;
+}
+
+.weather-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.weather-item {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.loading-container {
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.error-message {
+    color: #ff6b6b;
+    margin-top: 10px;
+}
+
+/* Estilos para el modal del pronóstico */
+.forecast-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.forecast-modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.forecast-modal-content {
+    background-color: #374151;
+    color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    position: relative; /* Para posicionar el botón de ocultar */
+}
+
+.hide-forecast-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.hide-forecast-button:hover {
+    background-color: #777;
+}
+
+/* Estilos para el pronóstico de 5 días */
+.forecast-title {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.daily-forecast-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: 10px;
+}
+
+.daily-forecast-item {
+    background-color: #272e3a;
+    padding: 10px;
+    border-radius: 5px;
+    flex: 1; /* Permite que los elementos se estiren */
+    min-width: 120px; /* Ancho mínimo para cada día */
+    max-width: 18%; /* Ajusta el ancho para que quepan 5 en una fila */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.forecast-date {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.forecast-icon {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.forecast-temp {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.forecast-description {
+    font-size: 0.8em;
+    color: #bbb;
+}
+
+/* Media Queries para responsividad del modal */
+@media (max-width: 768px) {
+    .daily-forecast-item {
+        max-width: 45%; /* Dos columnas en tabletas */
+    }
+}
+
+@media (max-width: 480px) {
+    .daily-forecast-item {
+        max-width: 90%; /* Una columna en móviles */
+    }
+    .forecast-modal-content {
+        padding: 15px;
+    }
+    .hide-forecast-button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+}

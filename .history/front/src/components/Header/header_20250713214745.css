@@ -1,0 +1,256 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: #374151;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 1000;
+}
+
+.tituloHeader {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.Volver {
+  width: 30px;
+  padding-right: 8px;
+}
+
+.botonInforme {
+  font-size: 0.9rem;
+  margin-right: 10px;
+  padding-right: 8px;
+}
+
+
+.botonInforme:hover {
+    color: cadetblue;
+}
+
+.Menu {
+    text-align: right;
+    padding-top: 3px;
+    flex-shrink: 0;
+}
+
+/* Estilos para el menú de búsqueda */
+.searchMenu {
+    height: 87%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    background-color: #374151;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    z-index: 999;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #272e3a;
+    color: white;
+}
+
+.search-input::placeholder {
+    color: #ccc;
+}
+
+.file-list {
+    max-height: calc(100% - 60px); /* Ajusta según la altura del input y padding */
+    overflow-y: auto; /* Permite desplazamiento si hay muchos archivos */
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #555;
+    color: white;
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.file-actions img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Estilos para el modal de confirmación */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+    margin-bottom: 15px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-buttons button:first-child {
+    background-color: red;
+    color: white;
+}
+
+.modal-buttons button:first-child:hover {
+    background-color: darkred;
+    color: white;
+}
+
+.modal-buttons button:last-child {
+    background-color: #374151;
+    color: white;
+}
+
+.modal-buttons button:last-child:hover{
+    background-color: #272e3a;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .tituloHeader {
+        font-size: 20px;
+    }
+
+    .botonInforme {
+        font-size: 15px;
+    }
+
+    .Volver {
+        width: 30px;
+        padding-right: 10px;
+    }
+
+    .searchMenu {
+        width: 40%;
+        top: 8%;
+        padding: 10px;
+    }
+
+    .search-input {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+
+    .file-item {
+        font-size: 0.9em;
+        padding: 8px 0;
+    }
+
+    .file-actions img {
+        width: 18px;
+        height: 18px;
+    }
+    .modal {
+        width: 280px;
+        padding: 15px;
+    }
+    .modal-buttons button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header {
+        padding: 5px 10px;
+    }
+    .tituloHeader {
+        font-size: 18px;
+        flex-grow: 1; /* Permite que el título ocupe más espacio */
+        text-align: center;
+    }
+    .Volver {
+        padding-right: 5px;
+    }
+    .botonInforme {
+        font-size: 14px;
+        margin-right: 5px;
+        border-right: none; /* Elimina la línea divisoria */
+        padding-right: 5px;
+    }
+    .Menu {
+        margin-left: 5px;
+    }
+    .searchMenu {
+        width: 60%;
+        top: 7%;
+        padding: 8px;
+    }
+    .search-input {
+        padding: 6px;
+        font-size: 0.8em;
+    }
+    .file-item {
+        font-size: 0.8em;
+        padding: 6px 0;
+    }
+    .file-actions img {
+        width: 16px;
+        height: 16px;
+    }
+    .modal {
+        width: 250px;
+        padding: 10px;
+    }
+    .modal h2 {
+        font-size: 1.2em;
+    }
+    .modal p {
+        font-size: 0.9em;
+    }
+    .modal-buttons button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+}

@@ -43,30 +43,103 @@ body {
   cursor: pointer;
 }
 
-/* Estilo para los gráficos */
-.recharts-wrapper {
-  margin-top: 20px;
+/* Estilos para los radio buttons de tipo de dato */
+.radio-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
 }
 
-/* Tabla */
+.radio-buttons-container label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.radio-buttons-container input[type="radio"] {
+    margin-right: 5px;
+    cursor: pointer;
+    accent-color: #8884d8; /* Color de acento para el radio button */
+}
+
+/* Contenedor de comparación */
+.comparison-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.comparison-container label {
+  color: #fff;
+}
+
+/* Selector de tipo de gráfico */
+.chart-type-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.chart-type-selector label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.chart-type-selector input[type="radio"] {
+    margin-right: 5px;
+    cursor: pointer;
+    accent-color: #8884d8;
+}
+
+/* Tabla de datos */
 table {
-  text-align: center;
   width: 100%;
-  margin-top: 10px;
   border-collapse: collapse;
-  color: #f9f9f9;
+  margin-top: 20px;
+  background-color: #272e3a; /* Fondo de la tabla */
+  color: #f9f9f9; /* Color de texto de la tabla */
 }
 
 table th,
 table td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #444; /* Borde de las celdas */
+  padding: 10px;
+  text-align: left;
 }
 
 table th {
-  background-color: #161726;
+  background-color: #161726; /* Fondo de los encabezados */
+  font-weight: bold;
+  color: #fff; /* Color de texto de los encabezados */
 }
 
-table td {
-  background-color: #374151;
+table tr:nth-child(even) {
+  background-color: #374151; /* Color de fondo para filas pares */
+}
+
+/* Estilos para ResponsiveContainer */
+.recharts-responsive-container {
+  margin-bottom: 20px;
+}
+
+/* Estilos de Tooltip y Legend de Recharts */
+.recharts-tooltip-wrapper {
+  background-color: #272e3a;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.recharts-legend-wrapper {
+  color: #fff;
+  padding-top: 5px;
+  border-radius: 5px;
 }

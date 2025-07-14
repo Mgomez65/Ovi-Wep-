@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const controllerinforme = require("./controller/informe.controller");
-const upload = require('../middlewares/subirImagenes.middelware');
+const informeController = require('./controller/informe.controller');
 
-
-router.get('/descargar/:idInforme', controllerinforme.downloadPDF);
-router.post("/create", upload, controllerinforme.createIforme);
-router.get("/", controllerinforme.getInforme);
-router.get("/:id", controllerinforme.getInformeId);
-router.delete("/delete/:id", controllerinforme.deleteInforme);
-router.put("/update/:id",controllerinforme.updateInforme);
-router.post("/search", controllerinforme.searchInforme);
+router.get('/', informeController.getInforme);
+router.post('/create', informeController.createIforme);
+router.get('/:id', informeController.getInformeId);
+router.put('/update/:id', informeController.updateInforme);
+router.delete('/delete/:id', informeController.deleteInforme);
+router.get('/search', informeController.searchInforme);
+// NUEVA RUTA: Para descargar informes
+router.get('/descargar/:id', informeController.descargarInforme); // Asegúrate de que el ID se pasa aquí
 
 module.exports = router;

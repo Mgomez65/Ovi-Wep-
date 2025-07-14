@@ -1,0 +1,64 @@
+/* Estructura base */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px 15px;
+}
+
+/* Bloques de contenido */
+.content-block {
+  background-color: #374151;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  color: white;
+}
+
+/* Clima */
+.weather-container {
+  height: auto;
+  min-height: 180px;
+}
+
+/* Termómetros */
+.thermometer-container {
+  width: 100%;
+  padding: 10px 0;
+}
+
+/* Mapa */
+.map-container {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+/* Tipografía */
+.content-title {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.data-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 10px;
+  }
+  
+  .content-block {
+    padding: 12px;
+  }
+  
+  .weather-container {
+    min-height: 160px;
+  }
+}

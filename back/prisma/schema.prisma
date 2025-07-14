@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// back/prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
@@ -13,51 +9,73 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Usuario {
-  Num_empleado             Int      @id @unique
-  Nombre         String
-  Apellido       String
-  Email          String   @unique // Email único
-  CUIL           String  @unique 
-  Dirrecion String 
-  Password  String
-  rol  String
+  Num_empleado  Int     @id @unique
+  Nombre        String
+  Apellido      String
+  Email         String  @unique // Email único
+  CUIL          String  @unique
+  Dirrecion     String
+  Password      String
+  rol           String
 }
 
 model Informe {
-  id             Int               @id @default(autoincrement())
-  titulo         String
-  contenido      String
-  fecha_inicio   String
-  fecha_final    String
-  planDeRiego    PlanDeRiego?
-  imagenInforme  ImagenesInforme[] // Relación uno a muchos
+  id           Int       @id @default(autoincrement())
+  titulo       String    @db.VarChar(255)
+  contenido    String    @db.Text
+  fecha_inicio DateTime  @db.Date
+  fecha_final  DateTime  @db.Date
+
+  imagenes     ImagenesInforme[]
+  planDeRiego  PlanDeRiego? // Un Informe puede tener un PlanDeRiego (relación 1 a 1)
 }
 
 model ImagenesInforme {
-  id        Int      @id @default(autoincrement())
-  url       String
-  informe   Informe  @relation(fields: [idInforme], references: [id], onDelete: Cascade)
+  id        Int     @id @default(autoincrement())
+  url       String  @db.VarChar(255)
+  informe   Informe @relation(fields: [idInforme], references: [id], onDelete: Cascade)
   idInforme Int
+  @@map("imagenesInforme")
 }
 
 model PlanDeRiego {
-  id Int @id @default(autoincrement())
-  titulo String 
-  inicio DateTime
-  fin   DateTime
-  diaPlan DiaPlan[]
-  informe Informe @relation(fields:[idInforme],references:[id])
-  idInforme Int @unique
+  id        Int       @id @default(autoincrement())
+  titulo    String    @db.VarChar(255)
+  inicio    DateTime  @db.Date
+  fin       DateTime  @db.Date
+
+  diaPlan   DiaPlan[]
+
+  // *** ESTO ES LO MÁS IMPORTANTE: idInforme debe ser opcional (Int?) ***
+  informe   Informe?  @relation(fields:[idInforme],references:[id]) // Relación opcional
+  idInforme Int?      @unique // Clave foránea opcional y única
+  
+  @@map("planDeRiego")
 }
 
-
 model DiaPlan{
-  id Int @id @default(autoincrement())
-  fechaDia DateTime 
-  titulo String
-  color String @db.VarChar(7)
-  plan PlanDeRiego @relation(fields:[idPlan], references:[id])
-  idPlan Int 
+  id          Int         @id @default(autoincrement())
+  fechaDia    DateTime    @db.Date
+  titulo      String      @db.VarChar(255)
+  color       String      @db.VarChar(7)
+
+  plan        PlanDeRiego @relation(fields:[idPlan], references:[id])
+  idPlan      Int
+  @@map("diaPlan")
+}
+
+// Asegúrate de que este modelo esté dentro de tu schema.prisma
+model estadisticas_vinedo {
+  id               Int      @id @default(autoincrement())
+  fecha            DateTime @db.Date
+  humedad_med      Decimal? @db.Decimal(5, 2)
+  temperatura_med  Decimal? @db.Decimal(5, 2)
+  temperatura_max  Decimal? @db.Decimal(5, 2)
+  temperatura_min  Decimal? @db.Decimal(5, 2)
+  precipitacion_mm Decimal? @db.Decimal(5, 2)
+  sector           String?  @db.VarChar(50)
+  plantacion       String?  @db.VarChar(50)
+
+  @@map("estadisticas_vinedo") // Asegura que el nombre de la tabla en la DB sea este
 }

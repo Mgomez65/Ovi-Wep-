@@ -1,0 +1,23 @@
+.footer {
+  padding: 10px 3%;
+  background-color: #374151;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

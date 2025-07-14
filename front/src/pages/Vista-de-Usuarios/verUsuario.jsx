@@ -102,9 +102,9 @@ const Register = () => {
         data,
         {
           withCredentials: true, // Para enviar cookies si es necesario
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Incluye el token si es necesario
-          },
+          //headers: {
+            //Authorization: `Bearer ${localStorage.getItem("token")}`, // Incluye el token si es necesario
+          //},
         }
       );
 

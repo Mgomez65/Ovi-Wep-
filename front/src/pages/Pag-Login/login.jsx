@@ -34,11 +34,11 @@ const Login = () => {
       console.log(respuesta, "entre");
   
       if (response.status === 200) {
-        const token = respuesta.token;
+        //const token = respuesta.token;
   
-        if (token) {
-          localStorage.setItem('token', token);
-        }
+        //if (token) {
+          //localStorage.setItem('token', token);
+        //}
 
         navigate("/home");
       } else {

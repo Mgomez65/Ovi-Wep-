@@ -1,0 +1,75 @@
+.calendario-container1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #374151;
+  padding: 17px;
+  border-radius: 5px;
+  pointer-events: visible; /* Asegura que el hover funcione */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  box-sizing: border-box;
+}
+
+.calendario-container1:hover {
+  background-color: #2f3e4e;
+  box-sizing: border-box;
+  transform: scale(1.01);
+  transition: all 0.2s ease;
+}
+
+.calendario1 {
+  width: 100%;
+  max-width: 800px; /* Ancho máximo para el calendario interno */
+}
+
+.week-view {
+  display: flex;
+  justify-content: space-between;
+  height: 22vh; /* Altura relativa al viewport */
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  gap: 5px; /* Pequeño espacio entre los días */
+}
+
+.day-tile {
+  flex: 1; /* Permite que los días se estiren y ocupen el espacio */
+  border: 0px solid #000000;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 0;
+  margin: 1px;
+  border-radius: 5px;
+  background-color: #272e3a3a;
+  text-align: center;
+  color: #fff;
+  display: flex; /* Para centrar el contenido verticalmente */
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.day-tile h3 {
+  margin-bottom: 25px;
+  margin-top: 0; /* Elimina margen superior para mejor alineación */
+}
+
+/* Media Queries para el calendario */
+@media screen and (max-width: 768px) {
+    .week-view {
+        flex-wrap: wrap; /* Permite que los días se envuelvan si hay poco espacio */
+        height: auto; /* Altura automática en móvil */
+        gap: 10px; /* Espacio entre los días envueltos */
+    }
+
+    .day-tile {
+        flex-basis: calc(50% - 5px); /* Dos columnas para tablets (ajusta el 5px según el gap) */
+        margin: 0; /* Eliminar margen si ya el gap lo maneja */
+        padding: 5px; /* Menor padding */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .day-tile {
+        flex-basis: 100%; /* Una columna para móviles muy pequeños */
+    }
+}

@@ -1,24 +1,28 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+
 exports.getInforme = async () => {
     try {
         return await prisma.informe.findMany({
             include: {
                 planDeRiego: true,
-                imagenInforme: true,
+                imagenes: true,
             },
         });
     } catch (error) {
-        console.error("Error al consultar el informe:", error);
+        console.error("Error al consultar los informes:", error);
         throw error;
     }
 }
+
+// *** INICIO DE LA CORRECCIÓN: Log de depuración del ID ***
 exports.getInformeId = async (idInforme) => {
     try {
+        console.log("informe.service.js: ID recibido para getInformeId:", idInforme); // Log del ID
         return await prisma.informe.findFirst({
             where: { id: idInforme },
             include: {
-                imagenInforme: true,
+                imagenes: true,
                 planDeRiego: {
                     include: {
                         diaPlan: true
@@ -27,10 +31,12 @@ exports.getInformeId = async (idInforme) => {
             },
         });
     } catch (error) {
-        console.error("Error al consultar el informe:", error);
+        console.error("Error al consultar el informe por ID en el servicio:", error); // Mensaje más específico
         throw error;
     }
 }
+// *** FIN DE LA CORRECCIÓN ***
+
 exports.createIforme = async (valores) => {
     try {
         const nuevoInforme = await prisma.informe.create({
@@ -41,11 +47,12 @@ exports.createIforme = async (valores) => {
                 fecha_final: valores.fecha_final,
             }
         });
-        if (valores.imagen_urls) {
-            for (const imagen of valores.imagen_urls) {
+
+        if (valores.imagen_urls && Array.isArray(valores.imagen_urls) && valores.imagen_urls.length > 0) {
+            for (const imagenUrl of valores.imagen_urls) {
                 await prisma.imagenesInforme.create({
                     data: {
-                        url: imagen,
+                        url: imagenUrl,
                         idInforme: nuevoInforme.id,
                     }
                 });
@@ -59,20 +66,16 @@ exports.createIforme = async (valores) => {
     }
 };
 
-
 exports.deleteInforme = async (idInforme) => {
     try {
-
         const informe = await prisma.informe.findUnique({
             where: { id: idInforme },
-            include: { planDeRiego: true, imagenInforme: true }
+            include: { planDeRiego: true, imagenes: true }
         });
-
 
         if (!informe) {
             throw new Error('El Informe no existe.');
         }
-
 
         if (informe.planDeRiego) {
             console.log('Eliminando DiaPlan para el PlanDeRiego con ID:', informe.planDeRiego.id);
@@ -80,19 +83,18 @@ exports.deleteInforme = async (idInforme) => {
                 where: { idPlan: informe.planDeRiego.id }
             });
 
-
             await prisma.planDeRiego.delete({
                 where: { id: informe.planDeRiego.id }
             });
         }
 
-        if (informe.imagenInforme && informe.imagenInforme.id) {
-            console.log('Eliminando ImagenInforme con ID:', informe.imagenInforme.id);
-            await prisma.imagenesInforme.delete({
-                where: { id: informe.imagenInforme.id }
+        if (informe.imagenes && Array.isArray(informe.imagenes) && informe.imagenes.length > 0) {
+            console.log(`Eliminando ${informe.imagenes.length} ImagenesInforme para el informe con ID:`, idInforme);
+            await prisma.imagenesInforme.deleteMany({
+                where: { idInforme: idInforme }
             });
         } else {
-            console.log('No hay imagen relacionada o el ID de la imagen es undefined. Se omite la eliminación de imagen.');
+            console.log('No hay imágenes relacionadas con el informe. Se omite la eliminación de imágenes.');
         }
 
         await prisma.informe.delete({
@@ -106,31 +108,34 @@ exports.deleteInforme = async (idInforme) => {
     }
 };
 
-
-
 exports.updateInforme = async (idInforme, valor) => {
     try {
-        console.log(valor); 
+        console.log("Valores recibidos para actualizar informe:", valor);
+
         const informeUpdate = await prisma.informe.update({
             where: {
-                ["id"]: idInforme,
+                id: idInforme,
             },
             data: {
                 titulo: valor.titulo,
                 contenido: valor.contenido,
+                fecha_inicio: valor.fecha_inicio,
                 fecha_final: valor.fecha_final,
             }
         });
-        if (valor.imagen_url) {
-            await prisma.ImagenesInforme.create({
-                data: {
-                    url: valor.imagen_url,
-                    idInforme: nuevoInforme.id, // Asegúrate de que esto coincida con la relación
-                }
-            });
+
+        if (valor.imagen_urls && Array.isArray(valor.imagen_urls) && valor.imagen_urls.length > 0) {
+            for (const imagenUrl of valor.imagen_urls) {
+                await prisma.imagenesInforme.create({
+                    data: {
+                        url: imagenUrl,
+                        idInforme: informeUpdate.id,
+                    }
+                });
+            }
         }
 
-        return informeUpdate
+        return informeUpdate;
     } catch (error) {
         console.error("Error al actualizar el informe:", error);
         throw error;
@@ -145,25 +150,27 @@ exports.searchInforme = async (termino) => {
                     {
                         titulo: {
                             contains: termino,
-                          // Ignora mayúsculas y minúsculas
+                            mode: 'insensitive'
                         },
                     },
                     {
                         fecha_final: {
                             contains: termino,
+                            mode: 'insensitive'
                         },
                     },
                     {
-                        fecha_inicio:{
-                            contains:termino,
-                        }
+                        fecha_inicio: {
+                            contains: termino,
+                            mode: 'insensitive'
+                        },
                     },
                 ],
             },
         });
         return informes;
     } catch (error) {
-        console.error(error); // Manejar el error de forma adecuada
-        throw new Error("Error al buscar informes"); // Lanzar un error amigable
+        console.error("Error al buscar informes:", error);
+        throw new Error("Error al buscar informes");
     }
 }

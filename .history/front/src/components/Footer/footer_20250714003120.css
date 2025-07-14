@@ -1,0 +1,141 @@
+.footer {
+  padding: 10px 20px; /* Padding uniforme para el footer */
+  background-color: #374151;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box; /* Importante */
+  min-width: 0; /* Permite que el footer se encoja */
+  /*outline: 2px solid green; /* OUTLINE DE DEPURACIÓN */
+}
+
+.seccionFooter {
+  padding-right: 2%; /* Espacio a la derecha */
+  font-size: 60px; /* Tamaño del logo de la sección (no el texto) */
+  text-align: right;
+  order: 3; /* Ordena este elemento */
+  width: auto;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.containerSeccion2{
+  order: 1; /* Ordena este elemento */
+  padding-left: 2%; /* Espacio a la izquierda */
+  width: auto;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.footer-section {
+  margin-bottom: 10px;
+  width: 100%; /* Ocupa todo el ancho disponible en su contenedor flex */
+  box-sizing: border-box;
+}
+
+nav {
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  justify-content: left;
+  padding-left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap; /* Permite que los links se envuelvan */
+}
+
+.footer-link {
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none !important;
+  white-space: nowrap; /* Evita que el texto del link se rompa */
+}
+
+.footer-link:hover {
+  color: cadetblue;
+}
+
+.footer-correo {
+  margin: 0 15px;
+  text-decoration: none;
+  display: inline;
+  border-right: 1px solid white;
+  padding-right: 20px;
+  white-space: nowrap; /* Evita que el correo se rompa */
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.contacto {
+  font-size: 14px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Alinea a la derecha dentro de su contenedor */
+  margin: 0;
+  white-space: nowrap; /* Evita que el contacto se rompa */
+}
+
+.logo{
+  padding-right: 2%;
+  font-size: 60px; /* Si es un icono de texto, si es imagen, el width es más importante */
+  text-align: right;
+  order: 2; /* Ordena el logo en el medio */
+  width: 140px; /* Ancho fijo para el logo */
+  flex-shrink: 0; /* Evita que el logo se encoja */
+}
+
+@media screen and (max-width: 769px) {
+  .footer {
+    flex-direction: column; /* Apila los elementos verticalmente */
+    padding: 0;
+    padding-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .seccionFooter {
+    text-align: center;
+    padding-right: 0;
+    font-size: 1em; /* Ajusta el tamaño de la fuente para móvil */
+    width: 100%;
+    order: 2; /* Nuevo orden en móvil */
+  }
+
+  .containerSeccion2{
+    order: 1; /* Nuevo orden en móvil */
+    padding-left: 0;
+    text-align: center; /* Centra los links de navegación */
+    width: 100%;
+  }
+
+  .logo {
+    order: 3; /* Nuevo orden en móvil */
+    padding-right: 0;
+    margin-top: 10px;
+    width: 100px; /* Ajusta el tamaño del logo para móvil */
+    display: block; /* Asegura que la imagen se centre correctamente */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  nav {
+    justify-content: center; /* Centra los links en móvil */
+    gap: 10px; /* Reduce el espacio entre links */
+  }
+
+  .footer-correo {
+    border-right: none; /* Elimina el borde vertical en móvil */
+    padding-right: 0;
+    margin: 0 5px; /* Ajusta el margen */
+  }
+
+  .contacto {
+    justify-content: center; /* Centra el contacto en móvil */
+  }
+}

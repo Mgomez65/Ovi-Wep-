@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
         
     } catch (error) {
         console.error('Error en el registro:', error);
-        return res.status(500).send('Error interno del servidor');
+        return res.status(500).json({ message: 'Error interno del servidor'});
     }
 };
 exports.login = async (req, res) => {
@@ -66,7 +66,7 @@ exports.login = async (req, res) => {
 
     } catch (error) {
         console.error('Error en el inicio de sesión:', error);
-        return res.status(500).json({ message: 'Error interno del servidor' });
+        return res.status(500).json({ message: 'Error interno del servidor al iniciar sesión' });
     }
 };
 
