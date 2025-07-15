@@ -66,6 +66,7 @@ img {
     height: auto; /* Permite que la altura se ajuste al contenido */
     box-sizing: border-box;
     width: 100%; /* Asegura que ocupe todo el ancho de su columna en el grid */
+    margin-top:  1rem;
 }
 
 .calendario-link { /* Cambiado a calendario-link */
@@ -73,6 +74,7 @@ img {
     color: black !important;
     width: 100%; /* Asegura que ocupe todo el ancho de su columna en el grid */
     box-sizing: border-box;
+    margin-top:  1rem;
 }
 
 .datosHumedad {

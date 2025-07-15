@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div className="home">
       <Header />
-      <main className="main-content"> {/* Cambiado a main-content para aplicar estilos más específicos */}
+      <main className="main"> {/* Cambiado a main-content para aplicar estilos más específicos */}
         <div className="contenedorClimaCalendario">
           <div className="clima-container"> {/* Contenedor para el componente Clima */}
             <Clima />
