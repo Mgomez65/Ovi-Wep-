@@ -32,7 +32,9 @@ const Calendario = () => {
   const [newPlanTitle, setNewPlanTitle] = useState("");
   const [newPlanStartDate, setNewPlanStartDate] = useState("");
   const [newPlanEndDate, setNewPlanEndDate] = useState("");
-
+  
+  const [selectedInformeId, setSelectedInformeId] = useState(""); // <
+  const [informesDisponibles, setInformesDisponibles] = useState([]);
   // Colores predefinidos (Amarillo cambiado a Naranja)
   const predefinedColors = {
     red: '#FF0000',
@@ -63,39 +65,39 @@ const Calendario = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        
+
         if (response.data && response.data.length > 0) {
-            setAllPlanes(response.data);
-            if (!selectedPlan) {
-                setSelectedPlan(response.data[0]);
-            }
+          setAllPlanes(response.data);
+          if (!selectedPlan) {
+            setSelectedPlan(response.data[0]);
+          }
         } else {
-            setAllPlanes([]);
-            setSelectedPlan(null);
-            console.info("No hay planes de riego disponibles. Considera crear uno.");
+          setAllPlanes([]);
+          setSelectedPlan(null);
+          console.info("No hay planes de riego disponibles. Considera crear uno.");
         }
       } catch (error) {
         console.error("Error al obtener los planes de riego:", error);
         if (error.response && (error.response.status === 404 || error.response.status === 401 || error.response.status === 403)) {
-            setAllPlanes([]);
-            setSelectedPlan(null);
-            console.info("No se pudieron cargar planes de riego (posiblemente no existen o no autorizado).");
+          setAllPlanes([]);
+          setSelectedPlan(null);
+          console.info("No se pudieron cargar planes de riego (posiblemente no existen o no autorizado).");
         } else {
-            alert("Error al cargar los planes de riego: " + (error.response?.data?.message || error.message));
+          alert("Error al cargar los planes de riego: " + (error.response?.data?.message || error.message));
         }
       }
     };
     if (userRol !== null) {
-        fetchAllPlanesDeRiego();
+      fetchAllPlanesDeRiego();
     }
   }, [userRol, selectedPlan]);
 
   useEffect(() => {
     const fetchEventsForDate = async () => {
       if (!selectedPlan || !selectedPlan.id) {
-          setEvents([]);
-          setFilteredEvents([]);
-          return;
+        setEvents([]);
+        setFilteredEvents([]);
+        return;
       }
 
       try {
@@ -118,11 +120,11 @@ const Calendario = () => {
         });
 
         const fetchedEvents = response.data.map(event => ({
-            ...event,
-            // Al recibir del backend, la fecha ya debería estar en UTC si se guardó así.
-            // new Date() la convertirá a la zona horaria local para mostrarla correctamente.
-            // We will use UTC getters for comparison later.
-            fechaDia: new Date(event.fechaDia)
+          ...event,
+          // Al recibir del backend, la fecha ya debería estar en UTC si se guardó así.
+          // new Date() la convertirá a la zona horaria local para mostrarla correctamente.
+          // We will use UTC getters for comparison later.
+          fechaDia: new Date(event.fechaDia)
         }));
 
         setEvents(fetchedEvents);
@@ -134,12 +136,12 @@ const Calendario = () => {
         ));
       } catch (error) {
         if (error.response && error.response.status === 404) {
-            setEvents([]);
-            setFilteredEvents([]);
-            console.info("No hay eventos para el rango de fechas especificado para este plan (404 Not Found).");
+          setEvents([]);
+          setFilteredEvents([]);
+          console.info("No hay eventos para el rango de fechas especificado para este plan (404 Not Found).");
         } else {
-            console.error("Error al obtener eventos para la fecha:", error);
-            alert("Error al obtener eventos para la fecha: " + (error.response?.data?.message || error.message));
+          console.error("Error al obtener eventos para la fecha:", error);
+          alert("Error al obtener eventos para la fecha: " + (error.response?.data?.message || error.message));
         }
       }
     };
@@ -150,7 +152,7 @@ const Calendario = () => {
     const newSelectedDate = new Date(selectedDate); // This is a local Date object
     setDate(newSelectedDate);
     const eventsOnSelectedDate = events.filter(
-      (event) => 
+      (event) =>
         // Compare UTC components of event.fechaDia with local components of newSelectedDate
         event.fechaDia.getUTCFullYear() === newSelectedDate.getFullYear() &&
         event.fechaDia.getUTCMonth() === newSelectedDate.getMonth() &&
@@ -201,12 +203,12 @@ const Calendario = () => {
 
   const createEvent = async () => {
     if (!selectedPlan || !selectedPlan.id) {
-        alert("Por favor, selecciona o crea un Plan de Riego antes de añadir eventos.");
-        return;
+      alert("Por favor, selecciona o crea un Plan de Riego antes de añadir eventos.");
+      return;
     }
     if (!eventData.title || !eventData.start || !eventData.color) {
-        alert("Por favor, completa todos los campos para el evento.");
-        return;
+      alert("Por favor, completa todos los campos para el evento.");
+      return;
     }
 
     try {
@@ -227,26 +229,26 @@ const Calendario = () => {
         setShowModal(false);
         const currentMonthStart = new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
         const currentMonthEnd = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59, 999));
-        
+
         const updatedEventsResponse = await axiosInstance.get(`/calendario/allplanDia`, {
-            params: {
-                fechaInicio: currentMonthStart.toISOString(),
-                fechaFin: currentMonthEnd.toISOString(),
-                idPlan: selectedPlan.id,
-            },
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+          params: {
+            fechaInicio: currentMonthStart.toISOString(),
+            fechaFin: currentMonthEnd.toISOString(),
+            idPlan: selectedPlan.id,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         const updatedEvents = updatedEventsResponse.data.map(event => ({
-            ...event,
-            fechaDia: new Date(event.fechaDia) // Parse UTC string, will convert to local for display
+          ...event,
+          fechaDia: new Date(event.fechaDia) // Parse UTC string, will convert to local for display
         }));
         setEvents(updatedEvents);
         setFilteredEvents(updatedEvents.filter(event =>
-            event.fechaDia.getUTCFullYear() === date.getFullYear() &&
-            event.fechaDia.getUTCMonth() === date.getMonth() &&
-            event.fechaDia.getUTCDate() === date.getDate()
+          event.fechaDia.getUTCFullYear() === date.getFullYear() &&
+          event.fechaDia.getUTCMonth() === date.getMonth() &&
+          event.fechaDia.getUTCDate() === date.getDate()
         ));
         setShowForm(false);
       }
@@ -259,8 +261,8 @@ const Calendario = () => {
   const updateEvent = async () => {
     if (!eventData.id) return;
     if (!eventData.title || !eventData.start || !eventData.color) {
-        alert("Por favor, completa todos los campos para actualizar el evento.");
-        return;
+      alert("Por favor, completa todos los campos para actualizar el evento.");
+      return;
     }
     try {
       const token = getAuthToken();
@@ -279,26 +281,26 @@ const Calendario = () => {
         setShowModal(false);
         const currentMonthStart = new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
         const currentMonthEnd = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59, 999));
-        
+
         const updatedEventsResponse = await axiosInstance.get(`/calendario/allplanDia`, {
-            params: {
-                fechaInicio: currentMonthStart.toISOString(),
-                fechaFin: currentMonthEnd.toISOString(),
-                idPlan: selectedPlan.id,
-            },
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+          params: {
+            fechaInicio: currentMonthStart.toISOString(),
+            fechaFin: currentMonthEnd.toISOString(),
+            idPlan: selectedPlan.id,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         const updatedEvents = updatedEventsResponse.data.map(event => ({
-            ...event,
-            fechaDia: new Date(event.fechaDia)
+          ...event,
+          fechaDia: new Date(event.fechaDia)
         }));
         setEvents(updatedEvents);
         setFilteredEvents(updatedEvents.filter(event =>
-            event.fechaDia.getUTCFullYear() === date.getFullYear() &&
-            event.fechaDia.getUTCMonth() === date.getMonth() &&
-            event.fechaDia.getUTCDate() === date.getDate()
+          event.fechaDia.getUTCFullYear() === date.getFullYear() &&
+          event.fechaDia.getUTCMonth() === date.getMonth() &&
+          event.fechaDia.getUTCDate() === date.getDate()
         ));
         setShowForm(false);
       }
@@ -324,36 +326,36 @@ const Calendario = () => {
         setShowModal(false);
         const currentMonthStart = new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
         const currentMonthEnd = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1, 0, 23, 59, 59, 999));
-        
+
         try {
-            const updatedEventsResponse = await axiosInstance.get(`/calendario/allplanDia`, {
-                params: {
-                    fechaInicio: currentMonthStart.toISOString(),
-                    fechaFin: currentMonthEnd.toISOString(),
-                    idPlan: selectedPlan.id,
-                },
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            const updatedEvents = updatedEventsResponse.data.map(event => ({
-                ...event,
-                fechaDia: new Date(event.fechaDia)
-            }));
-            setEvents(updatedEvents);
-            setFilteredEvents(updatedEvents.filter(event =>
-                event.fechaDia.getUTCFullYear() === date.getFullYear() &&
-                event.fechaDia.getUTCMonth() === date.getMonth() &&
-                event.fechaDia.getUTCDate() === date.getDate()
-            ));
+          const updatedEventsResponse = await axiosInstance.get(`/calendario/allplanDia`, {
+            params: {
+              fechaInicio: currentMonthStart.toISOString(),
+              fechaFin: currentMonthEnd.toISOString(),
+              idPlan: selectedPlan.id,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const updatedEvents = updatedEventsResponse.data.map(event => ({
+            ...event,
+            fechaDia: new Date(event.fechaDia)
+          }));
+          setEvents(updatedEvents);
+          setFilteredEvents(updatedEvents.filter(event =>
+            event.fechaDia.getUTCFullYear() === date.getFullYear() &&
+            event.fechaDia.getUTCMonth() === date.getMonth() &&
+            event.fechaDia.getUTCDate() === date.getDate()
+          ));
         } catch (reloadError) {
-            if (reloadError.response && reloadError.response.status === 404) {
-                setEvents([]);
-                setFilteredEvents([]);
-                console.info("No hay más eventos para el rango de fechas especificado después de la eliminación (404 Not Found).");
-            } else {
-                console.error("Error al recargar eventos después de eliminar:", reloadError);
-            }
+          if (reloadError.response && reloadError.response.status === 404) {
+            setEvents([]);
+            setFilteredEvents([]);
+            console.info("No hay más eventos para el rango de fechas especificado después de la eliminación (404 Not Found).");
+          } else {
+            console.error("Error al recargar eventos después de eliminar:", reloadError);
+          }
         }
       } else {
         alert("Error al eliminar el evento: " + (response.data.message || "Desconocido"));
@@ -371,40 +373,41 @@ const Calendario = () => {
 
   const handleCreatePlan = async () => {
     if (!newPlanTitle || !newPlanStartDate || !newPlanEndDate) {
-        alert("Por favor, completa todos los campos para el nuevo Plan de Riego.");
-        return;
+      alert("Por favor, completa todos los campos para el nuevo Plan de Riego.");
+      return;
     }
     try {
-        const token = getAuthToken();
-        const response = await axiosInstance.post("/calendario/createCalendario", {
-            titulo: newPlanTitle,
-            inicio: new Date(newPlanStartDate).toISOString(),
-            fin: new Date(newPlanEndDate).toISOString()
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+      const token = getAuthToken();
+      const response = await axiosInstance.post("/calendario/createCalendario", {
+        titulo: newPlanTitle,
+        inicio: new Date(newPlanStartDate).toISOString(),
+        fin: new Date(newPlanEndDate).toISOString(),
+        idInforme: selectedInformeId || null
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        if (response.status === 200) {
-            alert("Plan de Riego creado exitosamente!");
-            setShowCreatePlanForm(false);
-            setNewPlanTitle("");
-            setNewPlanStartDate("");
-            setNewPlanEndDate("");
-            const updatedPlanesResponse = await axiosInstance.get("/calendario/getPlanDeRiego", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setAllPlanes(updatedPlanesResponse.data);
-            if (updatedPlanesResponse.data.length > 0 && !selectedPlan) {
-                setSelectedPlan(updatedPlanesResponse.data[0]);
-            }
-        } else {
-            alert("Error al crear el Plan de Riego: " + (response.data.message || "Desconocido"));
+      if (response.status === 200) {
+        alert("Plan de Riego creado exitosamente!");
+        setShowCreatePlanForm(false);
+        setNewPlanTitle("");
+        setNewPlanStartDate("");
+        setNewPlanEndDate("");
+        const updatedPlanesResponse = await axiosInstance.get("/calendario/getPlanDeRiego", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setAllPlanes(updatedPlanesResponse.data);
+        if (updatedPlanesResponse.data.length > 0 && !selectedPlan) {
+          setSelectedPlan(updatedPlanesResponse.data[0]);
         }
+      } else {
+        alert("Error al crear el Plan de Riego: " + (response.data.message || "Desconocido"));
+      }
     } catch (error) {
-        console.error("Error al crear el Plan de Riego:", error);
-        alert("Error al crear el Plan de Riego: " + (error.response?.data?.message || error.message));
+      console.error("Error al crear el Plan de Riego:", error);
+      alert("Error al crear el Plan de Riego: " + (error.response?.data?.message || error.message));
     }
   };
 
@@ -412,76 +415,131 @@ const Calendario = () => {
     setSelectedPlan(plan);
   };
 
+  useEffect(() => {
+    const fetchInformes = async () => {
+      try {
+        const token = getAuthToken();
+        const response = await axiosInstance.get("http://localhost:3000/informe/lista", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log("informes", response.data);
+
+        if (response.status === 200 && Array.isArray(response.data.informes)) {
+          setInformesDisponibles(response.data.informes);
+        } else {
+          console.warn("No se recibieron informes válidos");
+        }
+      } catch (error) {
+        console.error("Error al cargar los informes:", error);
+        alert("Error al cargar los informes: " + (error.response?.data?.message || error.message));
+      }
+    };
+
+    fetchInformes();
+  }, []);
   return (
     <div className="calendario-container">
       <Header />
       <Auth setUserRol={setUserRol} />
       <div className="Container">
-        
+
         {userRol === 'admin' && (
-            <div className="planesRiegoContainer">
-                <h2>Gestión de Planes de Riego</h2>
-                {!selectedPlan && allPlanes.length === 0 && (
-                    <p className="no-plan-message">No hay Planes de Riego existentes. Por favor, crea uno para empezar a añadir eventos.</p>
-                )}
-                
-                <button onClick={() => setShowCreatePlanForm(!showCreatePlanForm)} className="boton-toggle-plan-form">
-                    {showCreatePlanForm ? "Cerrar Formulario de Plan" : "Crear Nuevo Plan de Riego"}
-                </button>
+          <div className="planesRiegoContainer">
+            <h2>Gestión de Planes de Riego</h2>
 
-                {showCreatePlanForm && (
-                    <div className="create-plan-form">
-                        <h3>Crear Nuevo Plan</h3>
-                        <input
-                            type="text"
-                            placeholder="Título del Plan"
-                            value={newPlanTitle}
-                            onChange={(e) => setNewPlanTitle(e.target.value)}
-                        />
-                        <label>Fecha de Inicio:</label>
-                        <input
-                            type="date"
-                            value={newPlanStartDate}
-                            onChange={(e) => setNewPlanStartDate(e.target.value)}
-                        />
-                        <label>Fecha de Fin:</label>
-                            <input
-                                type="date"
-                                value={newPlanEndDate}
-                                onChange={(e) => setNewPlanEndDate(e.target.value)}
-                            />
-                        <button onClick={handleCreatePlan} className="boton">Guardar Plan de Riego</button>
-                        <button type="button" className="boton-cancelar" onClick={() => setShowCreatePlanForm(false)}>Cancelar</button>
-                    </div>
-                )}
-                
-                {allPlanes.length > 0 && (
-                    <div className="existing-plans">
-                        <h3>Planes de Riego Existentes:</h3>
-                        <div role="group" className="plan-buttons-group">
-                            {allPlanes.map(plan => (
-                                <button
-                                    key={plan.id}
-                                    className={`plan-item-button ${selectedPlan && selectedPlan.id === plan.id ? 'selected-plan-item' : ''}`}
-                                    onClick={() => handlePlanSelection(plan)}
-                                >
-                                    {plan.titulo}
-                                    {selectedPlan && selectedPlan.id === plan.id && <span className="current-plan-indicator">(Activo)</span>}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                )}
+            {!selectedPlan && allPlanes.length === 0 && (
+              <p className="no-plan-message">
+                No hay Planes de Riego existentes. Por favor, crea uno para empezar a añadir eventos.
+              </p>
+            )}
 
-                {selectedPlan && (
-                    <div className="current-plan-info">
-                        <h3>Plan de Riego Activo:</h3>
-                        <p><strong>Título:</strong> {selectedPlan.titulo}</p>
-                        <p><strong>Inicio:</strong> {new Date(selectedPlan.inicio).toLocaleDateString()}</p>
-                        <p><strong>Fin:</strong> {new Date(selectedPlan.fin).toLocaleDateString()}</p>
-                    </div>
-                )}
-            </div>
+            <button
+              onClick={() => setShowCreatePlanForm(!showCreatePlanForm)}
+              className="boton-toggle-plan-form"
+            >
+              {showCreatePlanForm ? "Cerrar Formulario de Plan" : "Crear Nuevo Plan de Riego"}
+            </button>
+
+          {showCreatePlanForm && (
+  <div className="modal-overlay">
+    <div className="modal-content">
+      <h3>Crear Nuevo Plan de Riego</h3>
+
+      <input
+        type="text"
+        placeholder="Título del Plan"
+        value={newPlanTitle}
+        onChange={(e) => setNewPlanTitle(e.target.value)}
+        className="input-estilizado"
+      />
+
+      <label>Fecha de Inicio:</label>
+      <input
+        type="date"
+        value={newPlanStartDate}
+        onChange={(e) => setNewPlanStartDate(e.target.value)}
+        className="input-estilizado"
+      />
+
+      <label>Fecha de Fin:</label>
+      <input
+        type="date"
+        value={newPlanEndDate}
+        onChange={(e) => setNewPlanEndDate(e.target.value)}
+        className="input-estilizado"
+      />
+
+      <label>Informe Vinculado:</label>
+      <select
+        value={selectedInformeId}
+        onChange={(e) => setSelectedInformeId(e.target.value)}
+        className="input-estilizado"
+      >
+        <option value="">-- Seleccionar Informe --</option>
+        {informesDisponibles.map((informe) => (
+          <option key={informe.id} value={informe.id}>
+            {informe.titulo || informe.nombre || `Informe #${informe.id}`}
+          </option>
+        ))}
+      </select>
+
+      <div className="modal-buttons-horizontal">
+        <button onClick={handleCreatePlan} className="boton boton-verde">
+          Guardar Plan de Riego
+        </button>
+        <button
+          type="button"
+          onClick={() => setShowCreatePlanForm(false)}
+          className="boton boton-rojo"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+            {allPlanes.length > 0 && (
+              <div className="existing-plans">
+                <h3>Planes de Riego Existentes:</h3>
+                <div role="group" className="plan-buttons-group">
+                  {allPlanes.map(plan => (
+                    <button
+                      key={plan.id}
+                      className={`plan-item-button ${selectedPlan && selectedPlan.id === plan.id ? 'selected-plan-item' : ''}`}
+                      onClick={() => handlePlanSelection(plan)}
+                    >
+                      {plan.titulo}
+                      {selectedPlan && selectedPlan.id === plan.id && <span className="current-plan-indicator">(Activo)</span>}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         )}
 
         <div className="calendarioContainer">
@@ -531,119 +589,119 @@ const Calendario = () => {
               </div>
               <div className="modal-body">
                 {selectedPlan ? (
-                    <p>Plan de Riego Seleccionado: <strong>{selectedPlan.titulo || `ID: ${selectedPlan.id}`}</strong></p>
+                  <p>Plan de Riego Seleccionado: <strong>{selectedPlan.titulo || `ID: ${selectedPlan.id}`}</strong></p>
                 ) : (
-                    <p className="error-message">No hay un Plan de Riego seleccionado. Por favor, crea uno en la sección de "Gestión de Planes de Riego".</p>
+                  <p className="error-message">No hay un Plan de Riego seleccionado. Por favor, crea uno en la sección de "Gestión de Planes de Riego".</p>
                 )}
 
                 {filteredEvents.length > 0 ? (
                   <ul>
-                        {filteredEvents.map((event) => (
-                          <li key={event.id} className="event-list-item" style={{ backgroundColor: event.color, color: '#fff' }}>
-                            <span>{event.titulo}</span>
-                            {userRol === 'admin' && (
-                              <div className="event-actions">
-                                <button className="boton-actualizar" onClick={() => handleEventClick(event)}>
-                                  Actualizar
-                                </button>
-                                <button
-                                  className="boton-eliminar"
-                                  onClick={() => deleteEvent(event.id)}
-                                >
-                                  Eliminar
-                                </button>
-                              </div>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>No hay eventos para esta fecha.</p>
-                    )}
-
-                    {showForm && formType === 'create' && (
-                      <form className="formulario-editar-evento">
-                        <label>Título:</label>
-                        <input
-                          type="text"
-                          name="title"
-                          placeholder="Título"
-                          className="form-titulo"
-                          value={eventData.title}
-                          onChange={handleInputChange}
-                          style={{ width: '100%' }}
-                        />
-                        <label>Color:</label>
-                        <div className="color-picker-wrapper">
-                          {Object.entries(predefinedColors).map(([name, hex]) => (
-                            <button
-                              key={name}
-                              type="button"
-                              className={`color-option ${eventData.color === hex ? 'selected' : ''}`}
-                              style={{ backgroundColor: hex }}
-                              onClick={() => setEventData(prev => ({ ...prev, color: hex }))}
-                              title={name}
-                            >
-                              {eventData.color === hex && '✓'}
+                    {filteredEvents.map((event) => (
+                      <li key={event.id} className="event-list-item" style={{ backgroundColor: event.color, color: '#fff' }}>
+                        <span>{event.titulo}</span>
+                        {userRol === 'admin' && (
+                          <div className="event-actions">
+                            <button className="boton-actualizar" onClick={() => handleEventClick(event)}>
+                              Actualizar
                             </button>
-                          ))}
-                        </div>
-                        <button type="button" className="boton" onClick={createEvent}>
-                          Guardar Evento
-                        </button>
-                        <button type="button" className="boton-cancelar" onClick={() => setShowForm(false)}>
-                          Cerrar Formulario
-                        </button>
-                      </form>
-                    )}
-
-                    {showForm && formType === 'update' && selectedEvent && (
-                      <form className="formulario-editar-evento">
-                        <label>Título:</label>
-                        <input
-                          type="text"
-                          name="title"
-                          placeholder="Título"
-                          className="form-titulo"
-                          value={eventData.title}
-                          onChange={handleInputChange}
-                          style={{ width: '100%' }}
-                        />
-                        <label>Color:</label>
-                        <div className="color-picker-wrapper">
-                          {Object.entries(predefinedColors).map(([name, hex]) => (
                             <button
-                              key={name}
-                              type="button"
-                              className={`color-option ${eventData.color === hex ? 'selected' : ''}`}
-                              style={{ backgroundColor: hex }}
-                              onClick={() => setEventData(prev => ({ ...prev, color: hex }))}
-                              title={name}
+                              className="boton-eliminar"
+                              onClick={() => deleteEvent(event.id)}
                             >
-                              {eventData.color === hex && '✓'}
+                              Eliminar
                             </button>
-                          ))}
-                        </div>
-                        <button type="button" className="boton" onClick={updateEvent}>
-                          Actualizar Evento
-                        </button>
-                        <button type="button" className="boton-cancelar" onClick={() => setShowForm(false)}>
-                          Cerrar Formulario
-                        </button>
-                      </form>
-                    )}
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No hay eventos para esta fecha.</p>
+                )}
 
-                    <button onClick={() => { setFormType('create'); setShowForm(true); setEventData({ ...eventData, title: '', color: predefinedColors.green, id: null }); }} className="boton-agregar-evento">
-                      Agregar Evento
+                {showForm && formType === 'create' && (
+                  <form className="formulario-editar-evento">
+                    <label>Título:</label>
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder="Título"
+                      className="form-titulo"
+                      value={eventData.title}
+                      onChange={handleInputChange}
+                      style={{ width: '100%' }}
+                    />
+                    <label>Color:</label>
+                    <div className="color-picker-wrapper">
+                      {Object.entries(predefinedColors).map(([name, hex]) => (
+                        <button
+                          key={name}
+                          type="button"
+                          className={`color-option ${eventData.color === hex ? 'selected' : ''}`}
+                          style={{ backgroundColor: hex }}
+                          onClick={() => setEventData(prev => ({ ...prev, color: hex }))}
+                          title={name}
+                        >
+                          {eventData.color === hex && '✓'}
+                        </button>
+                      ))}
+                    </div>
+                    <button type="button" className="boton" onClick={createEvent}>
+                      Guardar Evento
                     </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <Footer />
-        </div>
-      );
-    };
+                    <button type="button" className="boton-cancelar" onClick={() => setShowForm(false)}>
+                      Cerrar Formulario
+                    </button>
+                  </form>
+                )}
 
-    export default Calendario;
+                {showForm && formType === 'update' && selectedEvent && (
+                  <form className="formulario-editar-evento">
+                    <label>Título:</label>
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder="Título"
+                      className="form-titulo"
+                      value={eventData.title}
+                      onChange={handleInputChange}
+                      style={{ width: '100%' }}
+                    />
+                    <label>Color:</label>
+                    <div className="color-picker-wrapper">
+                      {Object.entries(predefinedColors).map(([name, hex]) => (
+                        <button
+                          key={name}
+                          type="button"
+                          className={`color-option ${eventData.color === hex ? 'selected' : ''}`}
+                          style={{ backgroundColor: hex }}
+                          onClick={() => setEventData(prev => ({ ...prev, color: hex }))}
+                          title={name}
+                        >
+                          {eventData.color === hex && '✓'}
+                        </button>
+                      ))}
+                    </div>
+                    <button type="button" className="boton" onClick={updateEvent}>
+                      Actualizar Evento
+                    </button>
+                    <button type="button" className="boton-cancelar" onClick={() => setShowForm(false)}>
+                      Cerrar Formulario
+                    </button>
+                  </form>
+                )}
+
+                <button onClick={() => { setFormType('create'); setShowForm(true); setEventData({ ...eventData, title: '', color: predefinedColors.green, id: null }); }} className="boton-agregar-evento">
+                  Agregar Evento
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default Calendario;

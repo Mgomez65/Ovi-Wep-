@@ -286,3 +286,14 @@ exports.descargarInforme = async (req, res) => {
         res.status(500).json({ message: "Error del servidor al intentar generar el PDF del informe.", error: error.message });
     }
 };
+
+exports.lista = async (req, res) => {
+    try {
+        const informes = await informeService.informeSincalendrio();
+        res.status(200).json({ informes });
+    } catch (error) {
+        console.error("Error en el controlador al obtener informes:", error);
+        res.status(500).json({ message: "Error al obtener los informes", error: error.message });
+    }
+
+}

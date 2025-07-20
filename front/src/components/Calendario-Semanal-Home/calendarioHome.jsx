@@ -5,113 +5,87 @@ import './calendarioHome.css';
 const Calendario = ({ hideHeader }) => {
   const [date, setDate] = useState(new Date());
   const [events, setEvents] = useState([]);
-  const [selectedPlanId, setSelectedPlanId] = useState(null); // Nuevo estado para el ID del plan seleccionado
-  const [loading, setLoading] = useState(true); // Estado de carga
-  const [error, setError] = useState(null); // Estado de error
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const getAuthToken = () => {
-    return localStorage.getItem('token');
-  };
+  const getAuthToken = () => localStorage.getItem('token');
 
   const axiosInstance = axios.create({
     withCredentials: true,
     baseURL: 'http://localhost:3000',
   });
 
-  // Efecto para cargar el primer plan de riego disponible
+  // 🔄 Cargar eventos de todos los planes para el día actual
   useEffect(() => {
-    const fetchFirstPlan = async () => {
-      try {
-        const token = getAuthToken();
-        if (!token) {
-          throw new Error("Token JWT no encontrado");
-        }
-        const response = await axiosInstance.get("/calendario/getPlanDeRiego", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.data && response.data.length > 0) {
-          setSelectedPlanId(response.data[0].id); // Seleccionar el ID del primer plan
-        } else {
-          console.info("No hay planes de riego disponibles para cargar eventos en el Home.");
-          setSelectedPlanId(null); // Asegurarse de que no haya un plan seleccionado
-        }
-      } catch (err) {
-        console.error("Error al obtener el primer plan de riego:", err);
-        setError("Error al cargar los planes de riego.");
-        setSelectedPlanId(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchFirstPlan();
-  }, []); // Se ejecuta solo una vez al montar el componente
-
-  // Efecto para cargar los eventos una vez que se tiene un plan seleccionado
-  useEffect(() => {
-    const fetchEvents = async () => {
-      if (selectedPlanId === null) {
-        setEvents([]); // Si no hay plan seleccionado, no hay eventos
-        setLoading(false);
-        return;
-      }
-
+    const fetchAllEvents = async () => {
       setLoading(true);
       setError(null);
       try {
         const token = getAuthToken();
-        if (!token) {
-          throw new Error("Token JWT no encontrado");
+        if (!token) throw new Error("Token JWT no encontrado");
+
+        // 1. Obtener todos los planes
+        const plansRes = await axiosInstance.get("/calendario/getPlanDeRiego", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const plans = plansRes.data || [];
+        if (plans.length === 0) {
+          setEvents([]);
+          return;
         }
 
-        // Obtener el inicio y fin del día actual en UTC
+        // 2. Obtener el inicio y fin del día en UTC
         const today = new Date();
         const startOfDayUTC = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0));
         const endOfDayUTC = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999));
 
-        const response = await axiosInstance.get(
-          "/calendario/allPlanDia",
-          {
-            params: { // Enviar como query parameters
-              fechaInicio: startOfDayUTC.toISOString(),
-              fechaFin: endOfDayUTC.toISOString(),
-              idPlan: selectedPlanId,
-            },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        // 3. Para cada plan, obtener tareas del día
+        const allEvents = [];
 
-        // Formatear la respuesta para su uso en el calendario
-        setEvents(
-          response.data.map((event) => ({
-            id: event.id,
-            title: event.titulo,
-            start: new Date(event.fechaDia), // Convertir a objeto Date
-            color: event.color || "#000000",
-          }))
-        );
-      } catch (err) {
-        console.error("Error al obtener los eventos:", err);
-        if (err.response && err.response.status === 404) {
-          setEvents([]); // No hay eventos para hoy, no es un error crítico
-          console.info("No hay eventos para la fecha actual en este plan.");
-        } else {
-          setError("Error al cargar los eventos: " + (err.response?.data?.message || err.message));
-          setEvents([]);
+        for (const plan of plans) {
+          try {
+            const response = await axiosInstance.get("/calendario/allPlanDia", {
+              params: {
+                fechaInicio: startOfDayUTC.toISOString(),
+                fechaFin: endOfDayUTC.toISOString(),
+                idPlan: plan.id,
+              },
+              headers: { Authorization: `Bearer ${token}` },
+            });
+
+            const eventos = response.data.map((event) => ({
+              id: event.id,
+              title: `${event.titulo} (Plan: ${plan.titulo})`,
+              start: new Date(event.fechaDia),
+              color: event.color || "#000000",
+            }));
+
+            allEvents.push(...eventos);
+          } catch (errorPlan) {
+            // Si el plan no tiene eventos, no es un error crítico
+            if (errorPlan?.response?.status !== 404) {
+              console.error(`Error cargando eventos para el plan ${plan.titulo}:`, errorPlan);
+            }
+          }
         }
+
+        setEvents(allEvents);
+      } catch (err) {
+        console.error("Error general al cargar eventos:", err);
+        setError("No se pudieron cargar las tareas del día.");
+        setEvents([]);
       } finally {
         setLoading(false);
       }
     };
-    fetchEvents();
-  }, [date, selectedPlanId]); // Dependencia de selectedPlanId para recargar cuando se obtiene
 
+    fetchAllEvents();
+  }, [date]);
+
+  // 🖼 Render
   if (loading) {
-    return <div className="calendario-container1"><p>Cargando eventos...</p></div>;
+    return <div className="calendario-container1"><p>Cargando tareas del día...</p></div>;
   }
 
   if (error) {
@@ -122,14 +96,16 @@ const Calendario = ({ hideHeader }) => {
     <div className="calendario-container1">
       <div className="calendario1">
         <div className="week-view">
-            <div className="day-tile">
-            <h3>
-              {date.toLocaleDateString("es", {
-                weekday: "long",
-                month: "short",
-                day: "numeric",
-              })}
-            </h3>
+          <div className="day-tile">
+           <h3 className="day-title">
+  {new Intl.DateTimeFormat("es-AR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  })
+    .format(date)
+    .replace(/^./, (str) => str.toUpperCase())}
+</h3>
             <ul>
               {events.length > 0 ? (
                 events.map((event, index) => (

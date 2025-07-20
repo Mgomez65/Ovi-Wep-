@@ -3,6 +3,7 @@ const router = express.Router();
 const informeController = require('./controller/informe.controller');
 
 router.get('/', informeController.getInforme);
+router.get('/lista', informeController.lista);
 router.post('/create', informeController.createIforme);
 router.get('/:id', informeController.getInformeId);
 router.put('/update/:id', informeController.updateInforme);

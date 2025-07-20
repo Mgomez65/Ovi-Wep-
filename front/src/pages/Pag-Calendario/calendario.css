@@ -303,7 +303,7 @@ span {
 }
 
 .modal-content {
-    background-color: #272e3a;
+    background-color: #374151;
     border-radius: 8px;
     max-width: 400px;
     width: 100%;
@@ -381,6 +381,7 @@ span {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
 }
 
 .botonCerrar:hover,
@@ -868,4 +869,114 @@ span {
     display: flex;
     flex-direction: column;
     gap: 5px; /* Espacio entre los botones de planes */
+}
+.boton {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.boton:hover {
+  transform: scale(1.02);
+}
+
+/* Botón verde (confirmar/crear) */
+.boton-verde {
+  background-color: #10b981; /* verde */
+  color: #fff;
+}
+.boton-verde:hover {
+  background-color: #059669;
+}
+
+/* Botón rojo (cancelar) */
+.boton-rojo {
+  background-color: #ef4444; /* rojo */
+  color: #fff;
+}
+.boton-rojo:hover {
+  background-color: #dc2626;
+}
+
+/* Contenedor de botones en fila */
+.modal-buttons-horizontal {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.modal-content input[type="text"],
+.modal-content input[type="date"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #4b5563; /* gris oscuro */
+  border-radius: 6px;
+  background-color: #1f2937; /* fondo oscuro */
+  color: #f9fafb; /* texto claro */
+  font-size: 1em;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.modal-content input[type="text"]::placeholder {
+  color: #9ca3af; /* placeholder gris claro */
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="date"]:focus {
+  border-color: #10b981; /* verde al enfocar */
+  outline: none;
+}
+
+/* Estilo para los labels también */
+.modal-content label {
+  color: #d1d5db; /* gris claro */
+  margin-bottom: 4px;
+  display: block;
+  font-size: 0.95em;
+}
+
+.boton-toggle-plan-form {
+  background-color: #374151; /* gris oscuro */
+  color: #f9fafb; /* texto blanco */
+  padding: 10px 18px;
+  font-size: 1em;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 15px;
+  display: inline-block;
+   background-color: #1f2937;
+}
+
+
+.boton-toggle-plan-form:active {
+  transform: scale(0.98); /* efecto al hacer clic */
+}
+
+.input-estilizado {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #1f2937;
+  border: 1px solid #4b5563;
+  color: #f9fafb;
+  font-size: 1em;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.input-estilizado:focus {
+  outline: none;
+  border-color: #10b981; /* Verde foco */
+  background-color: #111827;
 }

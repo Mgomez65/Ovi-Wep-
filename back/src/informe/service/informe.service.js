@@ -174,3 +174,19 @@ exports.searchInforme = async (termino) => {
         throw new Error("Error al buscar informes");
     }
 }
+exports.informeSincalendrio = async () => {
+  try {
+    return await prisma.informe.findMany({
+      where: {
+        planDeRiego: null, // solo los que no tienen plan de riego asociado
+      },
+      include: {
+        planDeRiego: true,
+        imagenes: true,
+      },
+    });
+  } catch (error) {
+    console.error("Error al consultar los informes sin calendario:", error);
+    throw error;
+  }
+};
