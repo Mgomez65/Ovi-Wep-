@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bot de WhatsApp - Anders</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 500px;
+        }
+
+        .info-section {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #bfdbfe;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            color: #dbeafe;
+            margin-bottom: 30px;
+        }
+
+        .description p {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .whatsapp-icon {
+            background: #25d366;
+            border-radius: 50%;
+            padding: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .whatsapp-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .qr-section {
+            background: #f8fafc;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-instruction {
+            color: #64748b;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.5rem;
+            }
+
+            .qr-code {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes dots {
+
+            0%,
+            20% {
+                content: "";
+            }
+
+            40% {
+                content: ".";
+            }
+
+            60% {
+                content: "..";
+            }
+
+            80%,
+            100% {
+                content: "...";
+            }
+        }
+
+        #esperando::after {
+            content: "";
+            animation: dots 1.5s infinite steps(4, end);
+            display: inline-block;
+            width: 1em;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sección de información -->
+        <div class="info-section">
+            <div class="logo">
+                <img src="/logo.png" alt="Anders Logo">
+
+            </div>
+            <h1 class="title">Bot de WhatsApp</h1>
+            <h2 class="subtitle">ElandersBot</h2>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-code">
+                <img id="qr-img" src="<%= qr || '' %>" alt="Código QR de WhatsApp"
+                    style="max-width: 100%; max-height: 100%;"
+                    class="<%= connected ? 'hidden' : (qr ? '' : 'hidden') %>" />
+
+                <p id="esperando" class="<%= (qr || connected) ? 'hidden' : '' %>">Esperando código QR</p>
+
+                <p id="vinculado" class="<%= connected ? '' : 'hidden' %>">Bot vinculado ✅</p>
+            </div>
+            <p class="qr-instruction">Escanea el código QR con tu teléfono</p>
+        </div>
+    </div>
+    <script>
+        async function actualizarQR() {
+            try {
+                const res = await fetch('/whatsapp/qr');
+                const data = await res.json();
+                const qrImg = document.getElementById('qr-img');
+                const esperandoTxt = document.getElementById('esperando');
+                const vinculadoTxt = document.getElementById('vinculado');
+                console.log('Datos del QR:', data);
+                if (data.connected) {
+                    qrImg.classList.add('hidden');
+                    esperandoTxt.classList.add('hidden');
+                    vinculadoTxt.classList.remove('hidden');
+                } else if (data.qr) {
+                    qrImg.classList.remove('hidden');
+                    qrImg.src = data.qr;
+                    esperandoTxt.classList.add('hidden');
+                    vinculadoTxt.classList.add('hidden');
+                } else {
+                    qrImg.classList.add('hidden');
+                    esperandoTxt.classList.remove('hidden');
+                    vinculadoTxt.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error al obtener QR:', error);
+            }
+        }
+
+        setInterval(actualizarQR, 2000);
+        actualizarQR();
+    </script>
+</body>
+
+</html>

@@ -5,7 +5,22 @@ const Mapa = () => {
     const [humidity1, setHumidity1] = useState(null);
     const [humidity2, setHumidity2] = useState(null);
     const [humidity3, setHumidity3] = useState(null); // Inicializar a null para que se cargue del backend
-
+    const enviarMensaje = async (zona, valor) => {
+        try {
+            await fetch('http://localhost:7000/whatsapp/groups/message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `⚠️ La humedad en ${zona} es muy baja: ${valor}% se va activar el riego automático.`
+                })
+            });
+            console.log(`Mensaje enviado para ${zona}`);
+        } catch (error) {
+            console.error('Error al enviar mensaje:', error);
+        }
+    };
     useEffect(() => {
         const fetchHumidityData = async () => {
             try {
@@ -13,9 +28,20 @@ const Mapa = () => {
                 const data = await response.json();
                 
                 // Actualizar los estados con los datos del backend
-                setHumidity1(data.humedad1 !== "No disponible" ? parseInt(data.humedad1) : null); 
-                setHumidity2(data.humedad2 !== "No disponible" ? parseInt(data.humedad2) : null); 
-                setHumidity3(data.humedad3 !== "No disponible" ? parseInt(data.humedad3) : null); // Usar data.humedad3 del backend
+                const h1 = data.humedad1 !== "No disponible" ? parseInt(data.humedad1) : null;
+                const h2 = data.humedad2 !== "No disponible" ? parseInt(data.humedad2) : null;
+                const h3 = data.humedad3 !== "No disponible" ? parseInt(data.humedad3) : null;
+
+                setHumidity1(h1);
+                setHumidity2(h2);
+                setHumidity3(h3);
+
+                // Chequear si es menor al 10% y enviar mensaje
+                if (h1 !== null && h1 < 10) enviarMensaje('Zona 1', h1);
+                if (h2 !== null && h2 < 10) enviarMensaje('Zona 2', h2);
+                if (h3 !== null && h3 < 10) enviarMensaje('Zona 3', h3);
+            
+            
             } catch (error) {
                 console.error('Error al obtener los datos de humedad:', error);
                 // Opcional: Establecer humedades a null o 0 en caso de error para indicar que no hay datos

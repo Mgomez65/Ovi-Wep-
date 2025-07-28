@@ -176,6 +176,37 @@ function Header() {
       setFilteredFiles([]);
     }
   };
+  const handleShareFile = async (fileId, titulo) => {
+    console.log("🔥 Enviando solicitud para compartir:", fileId, titulo);
+
+    try {
+      const fileUrl = `http://localhost:3000/informe/descargar/${fileId}`;
+
+      const response = await fetch("http://localhost:7000/whatsapp/groups/file", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fileUrl: fileUrl,
+          caption: `📄 Compartió el informe "${titulo}"`,
+        }),
+      });
+
+      // Si el servidor responde con error (404, 500, etc)
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("⚠️ Error desde el servidor:", errorText);
+        alert(`⚠️ No se pudo compartir el informe. Respuesta: ${errorText}`);
+        return;
+      }
+
+      alert(`✅ El informe "${titulo}" se compartió correctamente por WhatsApp`);
+    } catch (error) {
+      console.error("🚨 Error de conexión al compartir el informe:", error);
+      alert("❌ Hubo un error de conexión al compartir el informe");
+    }
+  };
 
   return (
     <header className="header">
@@ -255,20 +286,39 @@ function Header() {
                                   className="Descargar"
                                 />
                               </button>
+                              {/* Botón de compartir para admin */}
+                              <button
+                                onClick={() => handleShareFile(file.id, file.titulo)}
+                                className="botonEliminar"
+                                style={{ marginLeft: '10px' }}
+                              >
+                                📤
+                              </button>
                             </>
                           ) : (
-                            <button
-                              onClick={() => handleDownload(file.id)}
-                              className="botonEliminar"
-                            >
-                              <img
-                                src={descargarIcon}
-                                alt="Descargar"
-                                className="Descargar"
-                              />
-                            </button>
+                            <>
+                              <button
+                                onClick={() => handleDownload(file.id)}
+                                className="botonEliminar"
+                              >
+                                <img
+                                  src={descargarIcon}
+                                  alt="Descargar"
+                                  className="Descargar"
+                                />
+                              </button>
+                              {/* Botón de compartir para usuarios no admin */}
+                              <button
+                                onClick={() => handleShareFile(file.id, file.titulo)}
+                                className="botonEliminar"
+                                style={{ marginLeft: '10px' }}
+                              >
+                                📤
+                              </button>
+                            </>
                           )}
                         </div>
+
                       </div>
                     ))
                   ) : (
